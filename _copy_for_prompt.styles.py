@@ -36,33 +36,16 @@ exclude_files = [
 include_files = [
     # "package.json",
     # "*.ts",
-    # "package.json",
+    # "*.json",
 
     # App code
-    # "app/**/*.css",
-    # "app/**/*.ts",
-    # "app/**/*.tsx",
-
-    # Ask tests
-    # "**/*.test.*",
-
-    # Components
-    # "**/components/**/*.*",
-    # Hooks
-    # "**/hooks/**/*.*",
-    # Routes
-    # "**/routes/**/*.*",
-
-    # Features (Vector Nodes)
-    "**/features/vector-nodes/**/*.css",
-    "**/features/vector-nodes/**/*.ts",
-    "**/features/vector-nodes/**/*.tsx",
-
-    # Custom
-    # "/Users/jethroestrada/Desktop/External_Projects/Jet_Projects/jet_server/routes/rag.py",
+    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobGraph/*",
+    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobGraph/state.ts",
+    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobGraph/types.ts",
+    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobGraph/useData.ts",
 ]
 structure_include = [
-    "*"
+    # "*"
 ]
 structure_exclude = [
     "*.md",
@@ -75,25 +58,25 @@ exclude_content = []
 
 # Args defaults
 SHORTEN_FUNCTS = False
-INCLUDE_FILE_STRUCTURE = True
+INCLUDE_FILE_STRUCTURE = False
 
 DEFAULT_SYSTEM_MESSAGE = """
-Add 
 """.strip()
 
 DEFAULT_QUERY_MESSAGE = """
-Add "Query LLM" button beside "Search Nodes"
+Handle number and boolean forms.
 """.strip()
 
 # Project specific
 DEFAULT_QUERY_MESSAGE += (
     "\n\n"
     "Guidelines:"
-    "\n- Use aliases for imports"
+    "\n- Use relative paths for imports"
     "\n\n"
     "Applicable to html and css related code if generated:"
     "\n- Render beautiful UI/UX in terms of element positions, color themes and contrasts, typography, font sizes, spacing, alignments, animations, and other modern conventions."
     "\n- Use appropriate element tags, attributes and props."
+    "\n- Generated styles should match existing theme if any."
 )
 
 DEFAULT_INSTRUCTIONS_MESSAGE = """

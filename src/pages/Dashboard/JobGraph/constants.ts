@@ -116,20 +116,20 @@ export const DEFAULT_FILTER_OPTIONS: Array<Filter> = [
   {
     name: "Split Mode",
     key: "split_mode",
-    type: "checkbox",
+    type: "list",
     placeholder: "Select split modes",
     options: ["markdown", "hierarchy"],
   },
   {
     name: "Fusion Mode",
     key: "fusion_mode",
-    type: "select",
+    type: "radio",
     placeholder: "Select fusion mode",
     options: [
-      "reciprocal_rerank",
-      "relative_score",
-      "dist_based_score",
-      "simple",
+      { label: "reciprocal_rerank", value: "reciprocal_rerank" },
+      { label: "relative_score", value: "relative_score" },
+      { label: "dist_based_score", value: "dist_based_score" },
+      { label: "simple", value: "simple" },
     ],
   },
 ];
