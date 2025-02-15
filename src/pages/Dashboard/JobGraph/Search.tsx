@@ -5,13 +5,26 @@ import { DEFAULT_FILTER_OPTIONS, DEFAULT_FILTERS } from "../JobGraph/constants";
 import { Filter } from "../JobGraph/types";
 import styled from "styled-components";
 
-export const Input = ({ type = "text", placeholder, value, onChange }) => {
+export const Input = ({
+  type = "text",
+  placeholder,
+  value,
+  onChange,
+  onEnter,
+}) => {
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter" && onEnter) {
+      onEnter();
+    }
+  };
+
   return (
     <StyledInput
       type={type}
       placeholder={placeholder}
       value={value}
       onChange={onChange}
+      onKeyDown={handleKeyDown}
     />
   );
 };
@@ -116,9 +129,9 @@ const CheckboxContainer = styled.label`
 `;
 
 const RadioContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 1rem;
 `;
 
 const RadioLabel = styled.label`
@@ -177,7 +190,7 @@ const Search = () => {
   };
 
   const handleSearch = () => {
-    fetchVectorNodes(query);
+    fetchVectorNodes(query, filters);
   };
 
   return (
@@ -188,6 +201,7 @@ const Search = () => {
           placeholder="Search jobs..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          onEnter={handleSearch}
         />
         <Button onClick={handleSearch}>Search</Button>
       </SearchBar>

@@ -1,5 +1,5 @@
 import { atom } from "jotai";
-import { VectorNode, JobResult } from "./types";
+import { VectorNode, JobResult, QueryOptions } from "./types";
 import { RAG_NODES_URL } from "./config";
 import { DEFAULT_FILTERS } from "./constants";
 import { toSnakeCase } from "../../../utils/transformers";
@@ -12,12 +12,12 @@ export const errorAtom = atom<Error | null>(null);
 
 export const fetchVectorNodesAtom = atom(
   null,
-  async (get, set, query: string) => {
+  async (get, set, query: string, filters?: QueryOptions) => {
     set(loadingAtom, true);
     set(errorAtom, null);
 
     try {
-      const finalOptions = toSnakeCase(DEFAULT_FILTERS);
+      const finalOptions = toSnakeCase({ ...DEFAULT_FILTERS, ...filters });
       const response = await fetch(RAG_NODES_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
