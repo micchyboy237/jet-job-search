@@ -1,11 +1,11 @@
-import React from 'react'
-import ActivityList from './pages/Dashboard/ActivityList'
-import ProfileCard from './pages/Dashboard/ProfileCard'
-import SettingsPanel from './pages/Dashboard/SettingsPanel'
-import StatisticsGraph from './pages/Dashboard/StatisticsGraph'
-import { AppBody, AppContainer, AppHeader, PageTitle } from './styles'
-import GlobalStyle from './theme/GlobalStyle'
-import { ThemeProviderWrapper } from './theme/ThemeContext'
+import React from "react";
+import ActivityList from "./pages/Dashboard/ActivityList";
+import ProfileCard from "./pages/Dashboard/ProfileCard";
+import SettingsPanel from "./pages/Dashboard/SettingsPanel";
+import JobGraph from "./pages/Dashboard/JobGraph";
+import { AppBody, AppContainer, AppHeader, PageTitle } from "./styles";
+import GlobalStyle from "./theme/GlobalStyle";
+import { ThemeProviderWrapper } from "./theme/ThemeContext";
 
 const App: React.FC = () => {
   return (
@@ -18,12 +18,12 @@ const App: React.FC = () => {
         </AppHeader>
         <AppBody>
           <ProfileCard />
-          <StatisticsGraph />
+          <JobGraph />
           <ActivityList />
         </AppBody>
       </AppContainer>
     </ThemeProviderWrapper>
-  )
-}
+  );
+};
 
-export default App
+export default App;
