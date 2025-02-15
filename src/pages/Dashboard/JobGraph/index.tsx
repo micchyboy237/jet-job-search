@@ -14,6 +14,7 @@ import {
   Legend,
   ChartOptions,
 } from "chart.js";
+import Card from "../../../components/Card";
 
 ChartJS.register(
   CategoryScale,
@@ -87,7 +88,11 @@ const JobGraph: React.FC = () => {
     },
   };
 
-  return <Scatter data={data} options={options} />;
+  return (
+    <Card title="Vector Graph">
+      <Scatter data={data} options={options} />
+    </Card>
+  );
 };
 
 export default JobGraph;
