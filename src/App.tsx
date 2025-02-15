@@ -18,8 +18,8 @@ const App: React.FC = () => {
         </AppHeader>
         <AppBody>
           <ProfileCard />
-          <JobGraph />
           <ActivityList />
+          <JobGraph />
         </AppBody>
       </AppContainer>
     </ThemeProviderWrapper>

@@ -64,7 +64,7 @@ const JobGraph: React.FC = () => {
         callbacks: {
           label: (context) => {
             const point = context.raw;
-            return `Score: ${point.y}\nTexts: ${point.text}`;
+            return `Score: ${point.y}\nText: ${point.text}`;
           },
         },
       },
