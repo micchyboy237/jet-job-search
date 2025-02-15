@@ -1,9 +1,8 @@
-// src/pages/Dashboard/JobGraph/index.tsx
-
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useAtom } from "jotai";
 import { Scatter } from "react-chartjs-2";
 import { vectorNodesAtom, fetchVectorNodesAtom } from "./state";
+import Search from "./Search";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -28,10 +27,11 @@ ChartJS.register(
 const JobGraph: React.FC = () => {
   const [vectorNodes] = useAtom(vectorNodesAtom);
   const [, fetchVectorNodes] = useAtom(fetchVectorNodesAtom);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
-    fetchVectorNodes("sample query");
-  }, [fetchVectorNodes]);
+    if (query) fetchVectorNodes(query);
+  }, [query, fetchVectorNodes]);
 
   const data = {
     datasets: [
@@ -40,7 +40,7 @@ const JobGraph: React.FC = () => {
         data: vectorNodes.map((node) => ({
           x: node.id,
           y: node.score,
-          text: node.text,
+          text: node.description,
         })),
         backgroundColor: "rgba(75, 192, 192, 0.6)",
         borderColor: "rgba(75, 192, 192, 1)",
@@ -90,6 +90,7 @@ const JobGraph: React.FC = () => {
 
   return (
     <Card title="Vector Graph">
+      <Search onSearch={setQuery} />
       <Scatter data={data} options={options} />
     </Card>
   );

@@ -64,8 +64,19 @@ DEFAULT_SYSTEM_MESSAGE = """
 """.strip()
 
 DEFAULT_QUERY_MESSAGE = """
-Update to use scatter points for the chart.
+Update JobGraph to use Search.
 """.strip()
+
+# DEFAULT_QUERY_MESSAGE += (
+#     "\n\n"
+#     "Guidelines:"
+#     "\n- Use relative paths for imports"
+#     "\n\n"
+#     "Applicable to html and css related code if generated:"
+#     "\n- Render beautiful UI/UX in terms of element positions, color themes and contrasts, typography, font sizes, spacing, alignments, animations, and other modern conventions."
+#     "\n- Use appropriate element tags, attributes and props."
+#     "\n- Generated styles should match existing theme if any."
+# )
 
 DEFAULT_INSTRUCTIONS_MESSAGE = """
 """.strip()

@@ -80,32 +80,26 @@ export interface VectorNodeMetadata {
 export interface VectorNode {
   id: string;
   score: number; // Float
-  text: string;
-  metadata: VectorNodeMetadata;
+  description: string;
+  tags: string[];
 }
 
-export interface DailyLogin {
-  date: string;
-  count: number;
-}
+export interface JobGraph {}
 
-export interface ProfileView {
-  date: string;
-  count: number;
-}
-
-export interface JobGraph {
-  dailyLogins: DailyLogin[];
-  profileViews: ProfileView[];
-}
-
-export interface VectorNodeMetadata {
-  [key: string]: any; // Allowing any attribute values in metadata
-}
-
-export interface VectorNode {
+export interface JobResult {
   id: string;
-  score: number; // Float
+  score: number;
   text: string;
-  metadata: VectorNodeMetadata;
+  metadata: {
+    id: string;
+    link: string;
+    company: string;
+    posted_date: string;
+    salary: string;
+    job_type: string;
+    overview: string;
+    tags: string[];
+    domain: string;
+    location: string | null;
+  };
 }
