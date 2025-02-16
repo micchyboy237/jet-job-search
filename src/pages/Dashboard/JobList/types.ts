@@ -2,7 +2,7 @@ export interface Job {
   id: string;
   score: number;
   formattedScore: string;
-  title: string; // Added Job Title
+  title: string;
   description: string;
   company: string;
   location: string | null;
@@ -10,4 +10,5 @@ export interface Job {
   salary: string;
   job_type: string;
   tags: string[];
+  link: string; // Added link to the job
 }

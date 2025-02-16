@@ -23,14 +23,12 @@ const JobList: React.FC = () => {
     key: string;
     direction: string;
   }>({ key: "score", direction: "desc" });
-
   const itemsPerPage = 10;
   const totalPages = Math.ceil(jobs.length / itemsPerPage);
   const paginatedJobs = jobs.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
-
   const handleSort = (key: string) => {
     let direction = "asc";
     if (sortConfig.key === key && sortConfig.direction === "asc") {
@@ -38,7 +36,6 @@ const JobList: React.FC = () => {
     }
     setSortConfig({ key, direction });
   };
-
   const sortedJobs = [...paginatedJobs].sort((a, b) => {
     if (a[sortConfig.key] < b[sortConfig.key]) {
       return sortConfig.direction === "asc" ? -1 : 1;
@@ -48,7 +45,6 @@ const JobList: React.FC = () => {
     }
     return 0;
   });
-
   return (
     <Card title="Available Jobs">
       <JobTableWrapper>
@@ -64,9 +60,6 @@ const JobList: React.FC = () => {
               <JobTableHeader onClick={() => handleSort("company")}>
                 Company
               </JobTableHeader>
-              <JobTableHeader onClick={() => handleSort("posted_date")}>
-                Posted
-              </JobTableHeader>
               <JobTableHeader onClick={() => handleSort("location")}>
                 Location
               </JobTableHeader>
@@ -78,6 +71,12 @@ const JobList: React.FC = () => {
               </JobTableHeader>
               <JobTableHeader onClick={() => handleSort("tags")}>
                 Tags
+              </JobTableHeader>
+              <JobTableHeader onClick={() => handleSort("link")}>
+                Link
+              </JobTableHeader>
+              <JobTableHeader onClick={() => handleSort("posted_date")}>
+                Posted
               </JobTableHeader>
             </tr>
           </thead>
@@ -99,16 +98,21 @@ const JobList: React.FC = () => {
                 </JobTableData>
                 <JobTableData title={job.title}>{job.title}</JobTableData>
                 <JobTableData title={job.company}>{job.company}</JobTableData>
+                <JobTableData>{job.location}</JobTableData>
+                <JobTableData>{job.salary}</JobTableData>
+                <JobTableData>{job.job_type}</JobTableData>
+                <JobTableData>{job.tags.join(", ")}</JobTableData>
+                <JobTableData>
+                  <a href={job.link} target="_blank" rel="noopener noreferrer">
+                    {job.link ? "View Job" : "No Link"}
+                  </a>
+                </JobTableData>
                 <JobTableData>
                   {job.posted_date &&
                   !isNaN(new Date(job.posted_date).getTime())
                     ? format(new Date(job.posted_date), "MMM d, yyyy")
                     : "Unknown"}
                 </JobTableData>
-                <JobTableData>{job.location}</JobTableData>
-                <JobTableData>{job.salary}</JobTableData>
-                <JobTableData>{job.job_type}</JobTableData>
-                <JobTableData>{job.tags.join(", ")}</JobTableData>
               </JobTableRow>
             ))}
           </tbody>
@@ -141,5 +145,4 @@ const JobList: React.FC = () => {
     </Card>
   );
 };
-
 export default JobList;

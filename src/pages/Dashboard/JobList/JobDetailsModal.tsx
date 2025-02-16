@@ -20,10 +20,8 @@ const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose }) => {
   };
 
   useEffect(() => {
-    // Disable scrolling when modal is open
     document.body.style.overflow = "hidden";
     return () => {
-      // Re-enable scrolling when modal closes
       document.body.style.overflow = "auto";
     };
   }, []);
@@ -32,10 +30,20 @@ const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose }) => {
     <Modal onClick={handleBackdropClick}>
       <ModalContent>
         <ModalHeader>
-          {job.company} - {job.description}
+          {job.company} - {job.title}
           <ModalClose onClick={onClose}>&times;</ModalClose>
         </ModalHeader>
         <ModalBody>
+          <p>
+            <strong>Link:</strong>{" "}
+            {job.link ? (
+              <a href={job.link} target="_blank" rel="noopener noreferrer">
+                {job.link}
+              </a>
+            ) : (
+              "No link available"
+            )}
+          </p>
           <p>
             <strong>Location:</strong> {job.location || "Not specified"}
           </p>
@@ -47,6 +55,19 @@ const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose }) => {
           </p>
           <p>
             <strong>Job Type:</strong> {job.job_type || "Full-time"}
+          </p>
+          <p>
+            <strong>Tags:</strong> {job.tags.join(", ") || "None"}
+          </p>
+          <p>
+            <strong>Overview:</strong> {job.overview || "No overview provided"}
+          </p>
+          <p>
+            <strong>Domain:</strong> {job.domain || "No domain specified"}
+          </p>
+          <p>
+            <strong>Description:</strong> <br />
+            {job.description || "No description provided."}
           </p>
         </ModalBody>
       </ModalContent>

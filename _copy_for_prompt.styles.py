@@ -38,6 +38,9 @@ include_files = [
     # "*.ts",
     # "*.json",
 
+    # Theme
+    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/theme/*",
+
     # App code
     "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobList/*",
     # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobGraph/index.tsx",
@@ -64,8 +67,8 @@ DEFAULT_SYSTEM_MESSAGE = """
 """.strip()
 
 DEFAULT_QUERY_MESSAGE = """
-- Add remaining columns in table and format if needed to be readable
-- Add sort feature for all columns so that I can toggle click the headers to sort by asc or desc
+- Move posted_date column as the last column
+- Add the link column on 2nd to the last, should be clickable to open on new tab
 """.strip()
 
 # Project specific

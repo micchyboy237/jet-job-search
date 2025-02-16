@@ -88,17 +88,17 @@ export const Modal = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Ensure the modal appears above other elements */
+  z-index: 1000;
 `;
 
 export const ModalContent = styled.div`
-  background: white;
+  background: ${({ theme }) => theme.colors.modalBackground};
   padding: 2rem;
   border-radius: 8px;
   width: 80%;
   max-width: 800px;
   max-height: 80vh;
-  overflow-y: auto; /* Scroll only inside the modal */
+  overflow-y: auto;
   z-index: 1001;
 `;
 
@@ -107,6 +107,17 @@ export const ModalBody = styled.div`
   max-height: 60vh;
   overflow-y: auto;
   padding-right: 1rem;
+  line-height: 1.5;
+  font-size: 1rem;
+
+  p {
+    margin-bottom: 0.8rem;
+  }
+
+  strong {
+    font-weight: bold;
+    color: ${({ theme }) => theme.colors.text};
+  }
 `;
 
 export const ModalHeader = styled.div`
@@ -114,9 +125,11 @@ export const ModalHeader = styled.div`
   font-weight: bold;
   display: flex;
   justify-content: space-between;
+  color: ${({ theme }) => theme.colors.text};
 `;
 
 export const ModalClose = styled.span`
   cursor: pointer;
   font-size: 1.5rem;
+  color: ${({ theme }) => theme.colors.text};
 `;
