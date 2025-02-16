@@ -1,7 +1,7 @@
 import React from "react";
-import ActivityList from "./pages/Dashboard/ActivityList";
 import ProfileCard from "./pages/Dashboard/ProfileCard";
 import SettingsPanel from "./pages/Dashboard/SettingsPanel";
+import JobList from "./pages/Dashboard/JobList";
 import JobGraph from "./pages/Dashboard/JobGraph";
 import { AppBody, AppContainer, AppHeader, PageTitle } from "./styles";
 import GlobalStyle from "./theme/GlobalStyle";
@@ -18,7 +18,7 @@ const App: React.FC = () => {
         </AppHeader>
         <AppBody>
           <ProfileCard />
-          <ActivityList />
+          <JobList />
           <JobGraph />
         </AppBody>
       </AppContainer>

@@ -39,7 +39,7 @@ include_files = [
     # "*.json",
 
     # App code
-    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobGraph/*",
+    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobList/*",
     # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobGraph/state.ts",
     # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobGraph/types.ts",
     # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobGraph/useData.ts",
@@ -64,7 +64,8 @@ DEFAULT_SYSTEM_MESSAGE = """
 """.strip()
 
 DEFAULT_QUERY_MESSAGE = """
-Handle number and boolean forms.
+- Update table to be paginated with 10 items per page
+- Update modal to use more width and should have max height and scrollable content.
 """.strip()
 
 # Project specific
