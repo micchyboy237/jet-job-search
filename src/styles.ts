@@ -24,7 +24,7 @@ export const AppHeader = styled.div`
 `;
 
 export const AppBody = styled.div`
-  max-width: 100rem;
+  max-width: 120rem;
   width: 100%;
   display: grid;
   gap: 1.25rem;

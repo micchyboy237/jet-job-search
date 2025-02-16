@@ -1,6 +1,5 @@
-import { useAtomValue } from "jotai";
 import React, { useState } from "react";
-import Card from "../../../components/Card";
+import { useAtomValue } from "jotai";
 import { jobsAtom } from "./state";
 import {
   JobTableWrapper,
@@ -14,18 +13,41 @@ import {
 } from "./styles";
 import { format } from "date-fns";
 import JobDetailsModal from "./JobDetailsModal";
+import Card from "../../../components/Card";
 
 const JobList: React.FC = () => {
   const jobs = useAtomValue(jobsAtom);
   const [selectedJob, setSelectedJob] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const [sortConfig, setSortConfig] = useState<{
+    key: string;
+    direction: string;
+  }>({ key: "score", direction: "desc" });
 
+  const itemsPerPage = 10;
   const totalPages = Math.ceil(jobs.length / itemsPerPage);
   const paginatedJobs = jobs.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+
+  const handleSort = (key: string) => {
+    let direction = "asc";
+    if (sortConfig.key === key && sortConfig.direction === "asc") {
+      direction = "desc";
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const sortedJobs = [...paginatedJobs].sort((a, b) => {
+    if (a[sortConfig.key] < b[sortConfig.key]) {
+      return sortConfig.direction === "asc" ? -1 : 1;
+    }
+    if (a[sortConfig.key] > b[sortConfig.key]) {
+      return sortConfig.direction === "asc" ? 1 : -1;
+    }
+    return 0;
+  });
 
   return (
     <Card title="Available Jobs">
@@ -33,15 +55,34 @@ const JobList: React.FC = () => {
         <JobTable>
           <thead>
             <tr>
-              <JobTableHeader>Score</JobTableHeader>
-              <JobTableHeader>Title</JobTableHeader>{" "}
-              {/* Moved Job Title here */}
-              <JobTableHeader>Company</JobTableHeader>
-              <JobTableHeader>Posted</JobTableHeader>
+              <JobTableHeader onClick={() => handleSort("score")}>
+                Score
+              </JobTableHeader>
+              <JobTableHeader onClick={() => handleSort("title")}>
+                Title
+              </JobTableHeader>
+              <JobTableHeader onClick={() => handleSort("company")}>
+                Company
+              </JobTableHeader>
+              <JobTableHeader onClick={() => handleSort("posted_date")}>
+                Posted
+              </JobTableHeader>
+              <JobTableHeader onClick={() => handleSort("location")}>
+                Location
+              </JobTableHeader>
+              <JobTableHeader onClick={() => handleSort("salary")}>
+                Salary
+              </JobTableHeader>
+              <JobTableHeader onClick={() => handleSort("job_type")}>
+                Job Type
+              </JobTableHeader>
+              <JobTableHeader onClick={() => handleSort("tags")}>
+                Tags
+              </JobTableHeader>
             </tr>
           </thead>
           <tbody>
-            {paginatedJobs.map((job) => (
+            {sortedJobs.map((job) => (
               <JobTableRow key={job.id} onClick={() => setSelectedJob(job)}>
                 <JobTableData>
                   <Score
@@ -56,8 +97,7 @@ const JobList: React.FC = () => {
                     {job.formattedScore}
                   </Score>
                 </JobTableData>
-                <JobTableData title={job.title}>{job.title}</JobTableData>{" "}
-                {/* Added Job Title Here */}
+                <JobTableData title={job.title}>{job.title}</JobTableData>
                 <JobTableData title={job.company}>{job.company}</JobTableData>
                 <JobTableData>
                   {job.posted_date &&
@@ -65,12 +105,15 @@ const JobList: React.FC = () => {
                     ? format(new Date(job.posted_date), "MMM d, yyyy")
                     : "Unknown"}
                 </JobTableData>
+                <JobTableData>{job.location}</JobTableData>
+                <JobTableData>{job.salary}</JobTableData>
+                <JobTableData>{job.job_type}</JobTableData>
+                <JobTableData>{job.tags.join(", ")}</JobTableData>
               </JobTableRow>
             ))}
           </tbody>
         </JobTable>
       </JobTableWrapper>
-
       {/* Pagination Controls */}
       <PaginationWrapper>
         <PaginationButton
@@ -89,7 +132,6 @@ const JobList: React.FC = () => {
           Next
         </PaginationButton>
       </PaginationWrapper>
-
       {selectedJob && (
         <JobDetailsModal
           job={selectedJob}

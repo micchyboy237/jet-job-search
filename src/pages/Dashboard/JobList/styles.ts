@@ -11,11 +11,18 @@ export const JobTable = styled.table`
   border-collapse: collapse;
 `;
 
-export const JobTableHeader = styled.th`
+export const JobTableHeader = styled.th<{ isSorted: boolean }>`
   padding: 1rem;
   text-align: left;
   border-bottom: 2px solid ${({ theme }) => theme.colors.tableRowBorder};
   background-color: ${({ theme }) => theme.colors.tableHeadBackground};
+  cursor: pointer;
+  ${({ isSorted }) =>
+    isSorted &&
+    `
+      background-color: ${({ theme }) => theme.colors.tableSortedHeader};
+      font-weight: bold;
+    `}
 `;
 
 export const JobTableRow = styled.tr`
