@@ -67,6 +67,7 @@ export const Modal = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000; /* Ensure the modal appears above other elements */
 `;
 
 export const ModalContent = styled.div`
@@ -76,7 +77,8 @@ export const ModalContent = styled.div`
   width: 80%;
   max-width: 800px;
   max-height: 80vh;
-  overflow-y: auto;
+  overflow-y: auto; /* Scroll only inside the modal */
+  z-index: 1001;
 `;
 
 export const ModalBody = styled.div`

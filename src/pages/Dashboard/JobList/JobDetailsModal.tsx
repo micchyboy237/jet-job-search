@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Modal,
   ModalContent,
@@ -13,8 +13,23 @@ interface JobDetailsModalProps {
 }
 
 const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose }) => {
+  const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (event.target === event.currentTarget) {
+      onClose();
+    }
+  };
+
+  useEffect(() => {
+    // Disable scrolling when modal is open
+    document.body.style.overflow = "hidden";
+    return () => {
+      // Re-enable scrolling when modal closes
+      document.body.style.overflow = "auto";
+    };
+  }, []);
+
   return (
-    <Modal>
+    <Modal onClick={handleBackdropClick}>
       <ModalContent>
         <ModalHeader>
           {job.company} - {job.description}
