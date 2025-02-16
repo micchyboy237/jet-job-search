@@ -10,5 +10,6 @@ export interface Job {
   salary: string;
   job_type: string;
   tags: string[];
-  link: string; // Added link to the job
+  link: string;
+  timeAgo?: string;
 }

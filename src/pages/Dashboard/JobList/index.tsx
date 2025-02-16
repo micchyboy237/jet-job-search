@@ -11,9 +11,20 @@ import {
   PaginationButton,
   Score,
 } from "./styles";
-import { format } from "date-fns";
+import { format, formatDistanceToNow, parseISO } from "date-fns";
 import JobDetailsModal from "./JobDetailsModal";
 import Card from "../../../components/Card";
+
+// Helper function to calculate the time ago string
+const getTimeAgo = (date: string) => {
+  const parsedDate = parseISO(date); // Parse the posted date string to Date
+  return formatDistanceToNow(parsedDate, { addSuffix: true }); // e.g., "2 days ago"
+};
+
+const getTimeAgoTimestamp = (date: string) => {
+  const parsedDate = parseISO(date); // Parse the posted date string to Date
+  return Date.now() - parsedDate.getTime(); // Return the time difference in milliseconds
+};
 
 const JobList: React.FC = () => {
   const jobs = useAtomValue(jobsAtom);
@@ -29,6 +40,7 @@ const JobList: React.FC = () => {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+
   const handleSort = (key: string) => {
     let direction = "asc";
     if (sortConfig.key === key && sortConfig.direction === "asc") {
@@ -36,15 +48,27 @@ const JobList: React.FC = () => {
     }
     setSortConfig({ key, direction });
   };
+
+  // Sorting logic including the timeAgo sorting based on timestamps
   const sortedJobs = [...paginatedJobs].sort((a, b) => {
-    if (a[sortConfig.key] < b[sortConfig.key]) {
+    const aValue =
+      sortConfig.key === "timeAgo"
+        ? getTimeAgoTimestamp(a.posted_date)
+        : a[sortConfig.key];
+    const bValue =
+      sortConfig.key === "timeAgo"
+        ? getTimeAgoTimestamp(b.posted_date)
+        : b[sortConfig.key];
+
+    if (aValue < bValue) {
       return sortConfig.direction === "asc" ? -1 : 1;
     }
-    if (a[sortConfig.key] > b[sortConfig.key]) {
+    if (aValue > bValue) {
       return sortConfig.direction === "asc" ? 1 : -1;
     }
     return 0;
   });
+
   return (
     <Card title="Available Jobs">
       <JobTableWrapper>
@@ -78,6 +102,10 @@ const JobList: React.FC = () => {
               <JobTableHeader onClick={() => handleSort("posted_date")}>
                 Posted
               </JobTableHeader>
+              <JobTableHeader onClick={() => handleSort("timeAgo")}>
+                Time Ago
+              </JobTableHeader>{" "}
+              {/* New "Time Ago" Column */}
             </tr>
           </thead>
           <tbody>
@@ -113,6 +141,10 @@ const JobList: React.FC = () => {
                     ? format(new Date(job.posted_date), "MMM d, yyyy")
                     : "Unknown"}
                 </JobTableData>
+                <JobTableData>
+                  {getTimeAgo(job.posted_date)} {/* Show relative time */}
+                </JobTableData>{" "}
+                {/* Display Time Ago */}
               </JobTableRow>
             ))}
           </tbody>
@@ -145,4 +177,5 @@ const JobList: React.FC = () => {
     </Card>
   );
 };
+
 export default JobList;

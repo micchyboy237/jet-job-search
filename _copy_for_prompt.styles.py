@@ -67,8 +67,8 @@ DEFAULT_SYSTEM_MESSAGE = """
 """.strip()
 
 DEFAULT_QUERY_MESSAGE = """
-- Move posted_date column as the last column
-- Add the link column on 2nd to the last, should be clickable to open on new tab
+- Add another column that shows the time difference since last posted
+- Sample values are "< 1d", "1d", "2w"
 """.strip()
 
 # Project specific
