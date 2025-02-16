@@ -1,12 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import SettingsPanel from "./pages/Dashboard/SettingsPanel";
 import JobList from "./pages/Dashboard/JobList";
 import JobGraph from "./pages/Dashboard/JobGraph";
-import { AppBody, AppContainer, AppHeader, PageTitle } from "./styles";
+import JobSearch from "./pages/Dashboard/JobSearch"; // Import Search
+import {
+  AppBody,
+  AppContainer,
+  AppHeader,
+  PageTitle,
+  TabButtons,
+} from "./styles";
 import GlobalStyle from "./theme/GlobalStyle";
 import { ThemeProviderWrapper } from "./theme/ThemeContext";
 
 const App: React.FC = () => {
+  const [activeTab, setActiveTab] = useState("graph");
+
+  const handleTabChange = (tab: string) => {
+    setActiveTab(tab);
+  };
+
   return (
     <ThemeProviderWrapper>
       <GlobalStyle />
@@ -16,8 +29,13 @@ const App: React.FC = () => {
           <SettingsPanel />
         </AppHeader>
         <AppBody>
-          <JobGraph />
-          <JobList />
+          <JobSearch />
+          <TabButtons>
+            <button onClick={() => handleTabChange("graph")}>Job Graph</button>
+            <button onClick={() => handleTabChange("list")}>Job List</button>
+          </TabButtons>
+          {activeTab === "graph" && <JobGraph />}
+          {activeTab === "list" && <JobList />}
         </AppBody>
       </AppContainer>
     </ThemeProviderWrapper>

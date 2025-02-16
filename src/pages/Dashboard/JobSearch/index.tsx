@@ -158,18 +158,21 @@ const FilterContainer = styled.div`
   padding: 1rem;
   background: ${({ theme }) => theme.colors.background};
   border-radius: 8px;
+  margin-bottom: 1rem; // Add margin to separate from content below
 `;
 
 const SearchBar = styled.div`
   display: flex;
   gap: 10px;
   margin-bottom: 1rem;
+  width: 100%; // Ensure full-width search bar
 `;
 
 const Filters = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
+  width: 100%;
 `;
 
 const FilterItem = styled.div`

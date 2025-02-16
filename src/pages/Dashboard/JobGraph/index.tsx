@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useAtom } from "jotai";
 import { Scatter } from "react-chartjs-2";
 import { vectorNodesAtom, fetchVectorNodesAtom } from "./state";
-import Search from "./Search";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -90,10 +89,8 @@ const JobGraph: React.FC = () => {
 
   return (
     <Card title="Vector Graph">
-      <Search onSearch={setQuery} />
       <Scatter data={data} options={options} />
     </Card>
   );
 };
-
 export default JobGraph;
