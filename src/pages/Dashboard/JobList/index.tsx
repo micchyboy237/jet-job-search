@@ -10,6 +10,7 @@ import {
   JobTableRow,
   PaginationWrapper,
   PaginationButton,
+  Score,
 } from "./styles";
 import { format } from "date-fns";
 import JobDetailsModal from "./JobDetailsModal";
@@ -32,6 +33,7 @@ const JobList: React.FC = () => {
         <JobTable>
           <thead>
             <tr>
+              <JobTableHeader>Score</JobTableHeader> {/* New Column */}
               <JobTableHeader>Company</JobTableHeader>
               <JobTableHeader>Position</JobTableHeader>
               <JobTableHeader>Posted</JobTableHeader>
@@ -40,6 +42,19 @@ const JobList: React.FC = () => {
           <tbody>
             {paginatedJobs.map((job) => (
               <JobTableRow key={job.id} onClick={() => setSelectedJob(job)}>
+                <JobTableData>
+                  <Score
+                    className={
+                      job.score >= 0.7
+                        ? "high"
+                        : job.score >= 0.4
+                        ? "medium"
+                        : "low"
+                    }
+                  >
+                    {job.formattedScore}
+                  </Score>
+                </JobTableData>
                 <JobTableData title={job.company}>{job.company}</JobTableData>
                 <JobTableData title={job.description}>
                   {job.description}

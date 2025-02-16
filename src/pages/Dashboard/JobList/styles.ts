@@ -31,6 +31,20 @@ export const JobTableData = styled.td`
   overflow: hidden;
   text-overflow: ellipsis;
   border-bottom: 1px solid ${({ theme }) => theme.colors.tableRowBorder};
+  max-width: 200px; /* Truncate long text */
+`;
+
+export const Score = styled.span`
+  font-weight: bold;
+  &.high {
+    color: green;
+  }
+  &.medium {
+    color: orange;
+  }
+  &.low {
+    color: red;
+  }
 `;
 
 // Pagination styles

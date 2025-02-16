@@ -64,8 +64,8 @@ DEFAULT_SYSTEM_MESSAGE = """
 """.strip()
 
 DEFAULT_QUERY_MESSAGE = """
-- Update table to be paginated with 10 items per page
-- Update modal to use more width and should have max height and scrollable content.
+- Include score as percentage with 2 decimals on first column. Use color code for low medium high. Use bold
+- Each column should have a max width so that long texts will cut using ellipsis if it overflows.
 """.strip()
 
 # Project specific
