@@ -1,5 +1,4 @@
 import React from "react";
-import ProfileCard from "./pages/Dashboard/ProfileCard";
 import SettingsPanel from "./pages/Dashboard/SettingsPanel";
 import JobList from "./pages/Dashboard/JobList";
 import JobGraph from "./pages/Dashboard/JobGraph";
@@ -17,9 +16,8 @@ const App: React.FC = () => {
           <SettingsPanel />
         </AppHeader>
         <AppBody>
-          <ProfileCard />
-          <JobList />
           <JobGraph />
+          <JobList />
         </AppBody>
       </AppContainer>
     </ThemeProviderWrapper>
