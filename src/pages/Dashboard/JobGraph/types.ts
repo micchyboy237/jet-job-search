@@ -80,8 +80,17 @@ export interface VectorNodeMetadata {
 export interface VectorNode {
   id: string;
   score: number; // Float
+  title: string;
   description: string;
+  link: string;
+  company: string;
+  posted_date: string;
+  salary: string;
+  job_type: string;
+  overview: string;
   tags: string[];
+  domain: string;
+  location: string | null;
 }
 
 export interface JobGraph {}

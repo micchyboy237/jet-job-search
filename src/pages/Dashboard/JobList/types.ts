@@ -1,7 +1,8 @@
 export interface Job {
   id: string;
   score: number;
-  formattedScore: string; // Added formatted score
+  formattedScore: string;
+  title: string; // Added Job Title
   description: string;
   company: string;
   location: string | null;

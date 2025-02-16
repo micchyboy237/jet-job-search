@@ -33,9 +33,10 @@ const JobList: React.FC = () => {
         <JobTable>
           <thead>
             <tr>
-              <JobTableHeader>Score</JobTableHeader> {/* New Column */}
+              <JobTableHeader>Score</JobTableHeader>
+              <JobTableHeader>Title</JobTableHeader>{" "}
+              {/* Moved Job Title here */}
               <JobTableHeader>Company</JobTableHeader>
-              <JobTableHeader>Position</JobTableHeader>
               <JobTableHeader>Posted</JobTableHeader>
             </tr>
           </thead>
@@ -55,10 +56,9 @@ const JobList: React.FC = () => {
                     {job.formattedScore}
                   </Score>
                 </JobTableData>
+                <JobTableData title={job.title}>{job.title}</JobTableData>{" "}
+                {/* Added Job Title Here */}
                 <JobTableData title={job.company}>{job.company}</JobTableData>
-                <JobTableData title={job.description}>
-                  {job.description}
-                </JobTableData>
                 <JobTableData>
                   {job.posted_date &&
                   !isNaN(new Date(job.posted_date).getTime())
