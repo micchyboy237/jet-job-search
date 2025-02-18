@@ -35,7 +35,7 @@ export const DEFAULT_FILTERS: QueryOptions = {
   mode: "fusion",
   store_path:
     "/Users/jethroestrada/Desktop/External_Projects/Jet_Projects/jet_server/.cache/deeplake/store_1",
-  score_threshold: 0.0,
+  score_threshold: 0.7,
   split_mode: [],
   fusion_mode: "simple",
 };
