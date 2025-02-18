@@ -56,9 +56,9 @@ const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose }) => {
           <p>
             <strong>Job Type:</strong> {job.job_type || "Full-time"}
           </p>
-          <p>
+          {/* <p>
             <strong>Tags:</strong> {job.tags.join(", ") || "None"}
-          </p>
+          </p> */}
           <p>
             <strong>Overview:</strong> {job.overview || "No overview provided"}
           </p>

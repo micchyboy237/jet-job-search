@@ -1,51 +1,109 @@
-// Example of usage in a component (React)
+import React, { useEffect } from "react";
 import { useAtom } from "jotai";
-import React from "react";
 import { JobEntity } from "./types";
-import { jobEntitiesAtom } from "./state";
+import { fetchJobEntitiesAtom, jobEntitiesAtom } from "./state";
+import { Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ChartOptions,
+} from "chart.js";
+
+// Register the necessary chart elements
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const JobEntities: React.FC = () => {
   const [jobEntities, setJobEntities] = useAtom(jobEntitiesAtom);
+  const [, fetchJobEntities] = useAtom(fetchJobEntitiesAtom);
 
-  // Function to add a new job posting
-  const addJobPosting = () => {
-    const newJob: JobEntity = {
-      id: "1314608-onlinejobs.ph",
-      text: `Job Title: Backend Developer (Node.js)
+  useEffect(() => {
+    fetchJobEntities();
+  }, [fetchJobEntities]);
 
-Role Overview:
+  // Group the entities by label
+  const labelCounts = jobEntities.reduce((acc, job) => {
+    job.entities.forEach((entity) => {
+      if (!acc[entity.label]) {
+        acc[entity.label] = 0;
+      }
+      acc[entity.label] += 1;
+    });
+    return acc;
+  }, {} as Record<string, number>);
 
-We are looking for a Backend Developer to work on building scalable, high-performance server-side applications for our platform. You will work with a team of engineers to create cutting-edge, backend solutions.
+  // Prepare the data for the chart
+  const chartData = {
+    labels: Object.keys(labelCounts),
+    datasets: [
+      {
+        label: "Entity Label Counts",
+        data: Object.values(labelCounts),
+        backgroundColor: "rgba(75, 192, 192, 0.6)",
+        borderColor: "rgba(75, 192, 192, 1)",
+        borderWidth: 1,
+      },
+    ],
+  };
 
-Responsibilities:
-
-- Develop backend services using Node.js
-- Integrate APIs and databases
-- Optimize server-side performance
-- Write and maintain technical documentation
-
-Qualifications:
-
-- Strong experience with Node.js, Express, and MongoDB
-- Knowledge of REST APIs and microservices architecture
-- Familiarity with cloud-based services (AWS, GCP, etc.)
-- Excellent problem-solving and debugging skills`,
-      entities: [
-        {
-          text: "Backend Developer",
-          label: "role",
-          score: "0.9052",
+  const options: ChartOptions<"bar"> = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: true,
+        text: "Entity Label Counts Across Jobs",
+      },
+      tooltip: {
+        callbacks: {
+          label: (context) => {
+            const label = context.label;
+            const count = context.raw;
+            return `${label}: ${count} occurrences`;
+          },
         },
-      ],
-    };
-
-    // Update state with the new job posting
-    setJobEntities([...jobEntities, newJob]);
+      },
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: "Entity Label",
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: "Count",
+        },
+        min: 0,
+      },
+    },
   };
 
   return (
     <div>
-      <h1>Job Postings</h1>
+      <h1>Job Entities</h1>
+
+      {/* Chart showing entity label counts */}
+      <div style={{ marginBottom: "30px" }}>
+        <Bar data={chartData} options={options} />
+      </div>
+
+      {/* Displaying the job entities and their grouped labels */}
       <ul>
         {jobEntities.map((job) => (
           <li key={job.id}>
@@ -62,7 +120,16 @@ Qualifications:
           </li>
         ))}
       </ul>
-      <button onClick={addJobPosting}>Add New Job Posting</button>
+
+      {/* Display grouped label counts */}
+      <h3>Grouped Entity Labels</h3>
+      <ul>
+        {Object.entries(labelCounts).map(([label, count]) => (
+          <li key={label}>
+            {label}: {count} occurrences
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

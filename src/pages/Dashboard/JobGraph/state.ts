@@ -26,11 +26,14 @@ export const fetchVectorNodesAtom = atom(
 
       if (!response.ok) throw new Error(`Failed: ${response.statusText}`);
       const result: { data: JobResult[] } = await response.json();
+
       const vectorNodes: VectorNode[] = result.data.map((job) => ({
+        id: job.id,
         score: job.score,
         description: job.text,
         ...job.metadata,
       }));
+
       set(vectorNodesAtom, vectorNodes);
     } catch (err: any) {
       set(errorAtom, err);

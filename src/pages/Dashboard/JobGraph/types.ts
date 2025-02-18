@@ -58,6 +58,8 @@ export interface QueryOptions {
   rag_dir: string;
   extensions: string[];
   json_attributes: string[];
+  exclude_json_attributes: string[];
+  metadata_attributes: string[];
   system: string;
   chunk_size: number;
   chunk_overlap: number;

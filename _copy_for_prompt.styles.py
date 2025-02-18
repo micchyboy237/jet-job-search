@@ -67,8 +67,7 @@ DEFAULT_SYSTEM_MESSAGE = """
 """.strip()
 
 DEFAULT_QUERY_MESSAGE = """
-- Add another column that shows the time difference since last posted
-- Sample values are "< 1d", "1d", "2w"
+Why rows are rendering 1 more row on the first row? Please fix
 """.strip()
 
 # Project specific

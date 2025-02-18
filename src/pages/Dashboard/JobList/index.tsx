@@ -34,22 +34,17 @@ const JobList: React.FC = () => {
     key: string;
     direction: string;
   }>({ key: "score", direction: "desc" });
+
   const itemsPerPage = 10;
   const totalPages = Math.ceil(jobs.length / itemsPerPage);
+
+  // Step 1: Get paginated jobs
   const paginatedJobs = jobs.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
 
-  const handleSort = (key: string) => {
-    let direction = "asc";
-    if (sortConfig.key === key && sortConfig.direction === "asc") {
-      direction = "desc";
-    }
-    setSortConfig({ key, direction });
-  };
-
-  // Sorting logic including the timeAgo sorting based on timestamps
+  // Step 2: Sort only after pagination to avoid issues with rows
   const sortedJobs = [...paginatedJobs].sort((a, b) => {
     const aValue =
       sortConfig.key === "timeAgo"
@@ -68,6 +63,14 @@ const JobList: React.FC = () => {
     }
     return 0;
   });
+
+  const handleSort = (key: string) => {
+    let direction = "asc";
+    if (sortConfig.key === key && sortConfig.direction === "asc") {
+      direction = "desc";
+    }
+    setSortConfig({ key, direction });
+  };
 
   return (
     <Card title="Available Jobs">
@@ -93,9 +96,6 @@ const JobList: React.FC = () => {
               <JobTableHeader onClick={() => handleSort("job_type")}>
                 Job Type
               </JobTableHeader>
-              <JobTableHeader onClick={() => handleSort("tags")}>
-                Tags
-              </JobTableHeader>
               <JobTableHeader onClick={() => handleSort("link")}>
                 Link
               </JobTableHeader>
@@ -104,8 +104,7 @@ const JobList: React.FC = () => {
               </JobTableHeader>
               <JobTableHeader onClick={() => handleSort("timeAgo")}>
                 Time Ago
-              </JobTableHeader>{" "}
-              {/* New "Time Ago" Column */}
+              </JobTableHeader>
             </tr>
           </thead>
           <tbody>
@@ -129,7 +128,6 @@ const JobList: React.FC = () => {
                 <JobTableData>{job.location}</JobTableData>
                 <JobTableData>{job.salary}</JobTableData>
                 <JobTableData>{job.job_type}</JobTableData>
-                <JobTableData>{job.tags.join(", ")}</JobTableData>
                 <JobTableData>
                   <a href={job.link} target="_blank" rel="noopener noreferrer">
                     {job.link ? "View Job" : "No Link"}
@@ -141,16 +139,12 @@ const JobList: React.FC = () => {
                     ? format(new Date(job.posted_date), "MMM d, yyyy")
                     : "Unknown"}
                 </JobTableData>
-                <JobTableData>
-                  {getTimeAgo(job.posted_date)} {/* Show relative time */}
-                </JobTableData>{" "}
-                {/* Display Time Ago */}
+                <JobTableData>{getTimeAgo(job.posted_date)}</JobTableData>
               </JobTableRow>
             ))}
           </tbody>
         </JobTable>
       </JobTableWrapper>
-      {/* Pagination Controls */}
       <PaginationWrapper>
         <PaginationButton
           disabled={currentPage === 1}

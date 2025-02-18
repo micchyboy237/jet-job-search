@@ -1,40 +1,34 @@
 import { atom } from "jotai";
 import { JobEntity } from "./types";
+import { NER_ENTITIES_URL } from "./config";
 
-// Initial value for the JobEntitiesArray state
-const initialJobEntities: JobEntity[] = [
-  {
-    id: "1314607-onlinejobs.ph",
-    text: `Job Title: App Developer (iOS/Android)
+const initialJobEntities: JobEntity[] = [];
 
-Role Overview:
+export const jobEntitiesAtom = atom(initialJobEntities);
+export const loadingAtom = atom(false);
+export const errorAtom = atom<Error | null>(null);
 
-We are seeking a skilled app developer to build our mobile app from scratch, integrating travel booking, relocation services, and community features. You will lead the design, development, and launch of our travel app.
+export const fetchJobEntitiesAtom = atom(
+  null,
+  async (get, set, query?: string) => {
+    set(loadingAtom, true);
+    set(errorAtom, null);
 
-Responsibilities:
+    try {
+      const response = await fetch(NER_ENTITIES_URL, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
 
-- Develop and maintain a scalable mobile app for iOS & Android
-- Integrate booking systems, payment gateways, and user profiles
-- Ensure seamless user experience & mobile responsiveness
-- Work with the team to test & refine the app before launch
-- Implement security features to protect user data
-
-Qualifications:
-
-- 3+ years of mobile app development (React Native, Flutter, Swift, or Kotlin)
-- Experience with APIs, databases, and cloud-based deployment
-- Strong UI/UX skills to create a user-friendly interface
-- Previous work on travel, booking, or e-commerce apps (preferred)
-- Ability to work independently & meet deadlines`,
-    entities: [
-      {
-        text: "App Developer",
-        label: "role",
-        score: "0.8984",
-      },
-    ],
-  },
-];
-
-// Define the Jotai atom for JobEntitiesArray state
-export const jobEntitiesAtom = atom<JobEntity[]>(initialJobEntities);
+      if (!response.ok) throw new Error(`Failed: ${response.statusText}`);
+      const result: { data: JobEntity[] } = await response.json();
+      const jobEntities: JobEntity[] = result.data;
+      set(jobEntitiesAtom, jobEntities);
+    } catch (err: any) {
+      set(errorAtom, err);
+      console.error(err);
+    } finally {
+      set(loadingAtom, false);
+    }
+  }
+);

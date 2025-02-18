@@ -12,6 +12,7 @@ import {
 } from "./styles";
 import GlobalStyle from "./theme/GlobalStyle";
 import { ThemeProviderWrapper } from "./theme/ThemeContext";
+import JobEntities from "./pages/Dashboard/JobEntities";
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState("graph");
@@ -33,9 +34,13 @@ const App: React.FC = () => {
           <TabButtons>
             <button onClick={() => handleTabChange("graph")}>Job Graph</button>
             <button onClick={() => handleTabChange("list")}>Job List</button>
+            <button onClick={() => handleTabChange("entities")}>
+              Job Entities
+            </button>
           </TabButtons>
           {activeTab === "graph" && <JobGraph />}
           {activeTab === "list" && <JobList />}
+          {activeTab === "entities" && <JobEntities />}
         </AppBody>
       </AppContainer>
     </ThemeProviderWrapper>

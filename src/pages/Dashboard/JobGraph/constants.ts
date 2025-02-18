@@ -4,7 +4,21 @@ export const DEFAULT_FILTERS: QueryOptions = {
   rag_dir:
     "/Users/jethroestrada/Desktop/External_Projects/Jet_Projects/my-jobs/saved/jobs.json",
   extensions: [".md", ".mdx", ".rst"],
-  json_attributes: ["title", "job_type", "salary", "tags", "details"],
+  json_attributes: ["title", "tags", "details"],
+  exclude_json_attributes: ["overview"],
+  // metadata_attributes: ["entities"],
+  metadata_attributes: [
+    // "id",
+    "title",
+    "link",
+    "company",
+    "posted_date",
+    "salary",
+    "job_type",
+    "domain",
+    "location",
+    "entities",
+  ],
   system: `You are a job applicant providing tailored responses during an interview.
   Always answer questions using the provided context as if it is your resume, 
   and avoid referencing the context directly.
