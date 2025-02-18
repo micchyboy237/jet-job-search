@@ -8,7 +8,7 @@ export const DEFAULT_FILTERS: QueryOptions = {
   exclude_json_attributes: ["overview"],
   // metadata_attributes: ["entities"],
   metadata_attributes: [
-    // "id",
+    "id",
     "title",
     "link",
     "company",
