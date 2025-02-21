@@ -12,14 +12,18 @@ export const jobsAtom = atom((get) => {
       title: node.title,
       description: node.description,
       company: node.company,
-      location: node.location || "Remote",
       posted_date: node.posted_date,
       salary: node.salary,
       job_type: node.job_type,
+      hours_per_week: node.hours_per_week,
       tags: node.tags,
       link: node.link,
-      overview: node.overview,
       domain: node.domain,
+      keywords: node.keywords,
+      role: node.entities.role || [],
+      application: node.entities.application || [],
+      technology_stack: node.entities.technology_stack || [],
+      qualifications: node.entities.qualifications || [],
     };
   });
 });

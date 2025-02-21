@@ -45,7 +45,22 @@ const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose }) => {
             )}
           </p>
           <p>
-            <strong>Location:</strong> {job.location || "Not specified"}
+            <strong>Keywords:</strong> {job.keywords.join(", ") || "None"}
+          </p>
+          <p>
+            <strong>Roles:</strong> {job.role.join(", ") || "None"}
+          </p>
+          <p>
+            <strong>Applications:</strong>{" "}
+            {job.application.join(", ") || "None"}
+          </p>
+          <p>
+            <strong>Tech stack:</strong>{" "}
+            {job.technology_stack.join(", ") || "None"}
+          </p>
+          <p>
+            <strong>Qualifications:</strong>{" "}
+            {job.qualifications.join(", ") || "None"}
           </p>
           <p>
             <strong>Posted:</strong> {job.posted_date || "Unknown"}
@@ -56,11 +71,8 @@ const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose }) => {
           <p>
             <strong>Job Type:</strong> {job.job_type || "Full-time"}
           </p>
-          {/* <p>
-            <strong>Tags:</strong> {job.tags.join(", ") || "None"}
-          </p> */}
           <p>
-            <strong>Overview:</strong> {job.overview || "No overview provided"}
+            <strong>Tags:</strong> {job.tags.join(", ") || "None"}
           </p>
           <p>
             <strong>Domain:</strong> {job.domain || "No domain specified"}

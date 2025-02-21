@@ -79,6 +79,12 @@ export interface VectorNodeMetadata {
   [key: string]: any; // Allowing any attribute values in metadata
 }
 
+export interface VectorNodeEntities {
+  role: string[];
+  application: string[];
+  technology_stack: string[];
+  qualifications: string[];
+}
 export interface VectorNode {
   id: string;
   score: number; // Float
@@ -89,28 +95,33 @@ export interface VectorNode {
   posted_date: string;
   salary: string;
   job_type: string;
-  overview: string;
-  tags: string[];
+  hours_per_week: number;
   domain: string;
-  location: string | null;
+  tags: string[];
+  keywords: string[];
+  entities: VectorNodeEntities;
 }
 
 export interface JobGraph {}
 
+export interface JobResultMetadata {
+  id: string;
+  link: string;
+  title: string;
+  company: string;
+  posted_date: string;
+  salary: string;
+  job_type: string;
+  hours_per_week: number;
+  tags: string[];
+  domain: string;
+  keywords: string[];
+  entities: VectorNodeEntities;
+}
 export interface JobResult {
   id: string;
   score: number;
+  title: string;
   text: string;
-  metadata: {
-    id: string;
-    link: string;
-    company: string;
-    posted_date: string;
-    salary: string;
-    job_type: string;
-    overview: string;
-    tags: string[];
-    domain: string;
-    location: string | null;
-  };
+  metadata: JobResultMetadata;
 }

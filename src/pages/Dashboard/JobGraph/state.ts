@@ -31,6 +31,7 @@ export const fetchVectorNodesAtom = atom(
         id: job.id,
         score: job.score,
         description: job.text,
+        title: job.title,
         ...job.metadata,
       }));
 

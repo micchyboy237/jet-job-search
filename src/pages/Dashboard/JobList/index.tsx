@@ -46,14 +46,18 @@ const JobList: React.FC = () => {
 
   // Step 2: Sort only after pagination to avoid issues with rows
   const sortedJobs = [...paginatedJobs].sort((a, b) => {
-    const aValue =
-      sortConfig.key === "timeAgo"
-        ? getTimeAgoTimestamp(a.posted_date)
-        : a[sortConfig.key];
-    const bValue =
-      sortConfig.key === "timeAgo"
-        ? getTimeAgoTimestamp(b.posted_date)
-        : b[sortConfig.key];
+    let aValue, bValue;
+
+    if (sortConfig.key === "timeAgo") {
+      aValue = getTimeAgoTimestamp(a.posted_date);
+      bValue = getTimeAgoTimestamp(b.posted_date);
+    } else if (sortConfig.key === "keywords") {
+      aValue = a.keywords.length;
+      bValue = b.keywords.length;
+    } else {
+      aValue = a[sortConfig.key];
+      bValue = b[sortConfig.key];
+    }
 
     if (aValue < bValue) {
       return sortConfig.direction === "asc" ? -1 : 1;
@@ -87,8 +91,11 @@ const JobList: React.FC = () => {
               <JobTableHeader onClick={() => handleSort("company")}>
                 Company
               </JobTableHeader>
-              <JobTableHeader onClick={() => handleSort("location")}>
-                Location
+              <JobTableHeader onClick={() => handleSort("keywords")}>
+                Keywords
+              </JobTableHeader>
+              <JobTableHeader onClick={() => handleSort("technology_stack")}>
+                Tech stack
               </JobTableHeader>
               <JobTableHeader onClick={() => handleSort("salary")}>
                 Salary
@@ -109,7 +116,10 @@ const JobList: React.FC = () => {
           </thead>
           <tbody>
             {sortedJobs.map((job) => (
-              <JobTableRow key={job.id} onClick={() => setSelectedJob(job)}>
+              <JobTableRow
+                key={JSON.stringify(job)}
+                onClick={() => setSelectedJob(job)}
+              >
                 <JobTableData>
                   <Score
                     className={
@@ -125,7 +135,8 @@ const JobList: React.FC = () => {
                 </JobTableData>
                 <JobTableData title={job.title}>{job.title}</JobTableData>
                 <JobTableData title={job.company}>{job.company}</JobTableData>
-                <JobTableData>{job.location}</JobTableData>
+                <JobTableData>{job.keywords.join(", ")}</JobTableData>
+                <JobTableData>{job.technology_stack.join(", ")}</JobTableData>
                 <JobTableData>{job.salary}</JobTableData>
                 <JobTableData>{job.job_type}</JobTableData>
                 <JobTableData>

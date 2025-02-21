@@ -4,8 +4,16 @@ export const DEFAULT_FILTERS: QueryOptions = {
   rag_dir:
     "/Users/jethroestrada/Desktop/External_Projects/Jet_Projects/my-jobs/saved/jobs.json",
   extensions: [".md", ".mdx", ".rst"],
-  json_attributes: ["title", "tags", "details"],
-  exclude_json_attributes: ["overview"],
+  json_attributes: [
+    "title",
+    // "keywords",
+    "entities.role",
+    "entities.application",
+    "entities.technology_stack",
+    "entities.qualifications",
+    "details",
+  ],
+  exclude_json_attributes: [],
   // metadata_attributes: ["entities"],
   metadata_attributes: [
     "id",
@@ -15,9 +23,14 @@ export const DEFAULT_FILTERS: QueryOptions = {
     "posted_date",
     "salary",
     "job_type",
+    "hours_per_week",
     "domain",
-    "location",
-    "entities",
+    "tags",
+    "keywords",
+    "entities.role",
+    "entities.application",
+    "entities.technology_stack",
+    "entities.qualifications",
   ],
   system: `You are a job applicant providing tailored responses during an interview.
   Always answer questions using the provided context as if it is your resume, 
@@ -37,7 +50,7 @@ export const DEFAULT_FILTERS: QueryOptions = {
     "/Users/jethroestrada/Desktop/External_Projects/Jet_Projects/jet_server/.cache/deeplake/store_1",
   score_threshold: 0.7,
   split_mode: [],
-  fusion_mode: "simple",
+  fusion_mode: "relative_score",
 };
 
 export const DEFAULT_FILTER_OPTIONS: Array<Filter> = [
