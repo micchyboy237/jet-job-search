@@ -79,12 +79,6 @@ export interface VectorNodeMetadata {
   [key: string]: any; // Allowing any attribute values in metadata
 }
 
-export interface VectorNodeEntities {
-  role: string[];
-  application: string[];
-  technology_stack: string[];
-  qualifications: string[];
-}
 export interface VectorNode {
   id: string;
   score: number; // Float
@@ -99,7 +93,10 @@ export interface VectorNode {
   domain: string;
   tags: string[];
   keywords: string[];
-  entities: VectorNodeEntities;
+  role: string[];
+  application: string[];
+  technology_stack: string[];
+  qualifications: string[];
 }
 
 export interface JobGraph {}

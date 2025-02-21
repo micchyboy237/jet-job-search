@@ -20,10 +20,10 @@ export const jobsAtom = atom((get) => {
       link: node.link,
       domain: node.domain,
       keywords: node.keywords,
-      role: node.entities.role || [],
-      application: node.entities.application || [],
-      technology_stack: node.entities.technology_stack || [],
-      qualifications: node.entities.qualifications || [],
+      role: node.role || [],
+      application: node.application || [],
+      technology_stack: node.technology_stack || [],
+      qualifications: node.qualifications || [],
     };
   });
 });
