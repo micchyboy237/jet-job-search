@@ -127,7 +127,15 @@ export const DEFAULT_FILTER_OPTIONS: Array<Filter> = [
     key: "mode",
     type: "select",
     placeholder: "Enter mode",
-    options: ["fusion", "hierarchy", "deeplake", "faiss", "graph_nx"],
+    options: [
+      "annoy",
+      "fusion",
+      "bm25",
+      "hierarchy",
+      "deeplake",
+      "faiss",
+      "graph_nx",
+    ],
   },
   // {
   //   name: "Store Path",

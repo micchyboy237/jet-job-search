@@ -1,4 +1,11 @@
-type Mode = "fusion" | "hierarchy" | "deeplake" | "faiss" | "graph_nx";
+type Mode =
+  | "annoy"
+  | "fusion"
+  | "bm25"
+  | "hierarchy"
+  | "deeplake"
+  | "faiss"
+  | "graph_nx";
 
 type SplitMode = "markdown" | "hierarchy";
 
