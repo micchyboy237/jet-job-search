@@ -65,7 +65,7 @@ const JobList: React.FC = () => {
     key: string;
     direction: string;
   }>({
-    key: "posted_date",
+    key: "score",
     direction: "desc",
   });
 
