@@ -74,8 +74,30 @@ const JobList: React.FC = () => {
 
   // Step 1: Sort all jobs before pagination
   const sortedJobs = [...jobs].sort((a, b) => {
-    let aValue, bValue;
+    if (sortConfig.key === "score") {
+      const getScoreCategory = (score) => {
+        if (score >= 0.7) return 3; // High
+        if (score >= 0.4) return 2; // Medium
+        return 1; // Low
+      };
 
+      const aCategory = getScoreCategory(a.score);
+      const bCategory = getScoreCategory(b.score);
+
+      // Primary sort by score category
+      const categorySort =
+        sortConfig.direction === "asc"
+          ? aCategory - bCategory
+          : bCategory - aCategory;
+      if (categorySort !== 0) return categorySort;
+
+      // Secondary sort within category by posted_date (descending always)
+      return (
+        new Date(b.posted_date).getTime() - new Date(a.posted_date).getTime()
+      );
+    }
+
+    let aValue, bValue;
     if (sortConfig.key === "posted_date") {
       aValue = new Date(a.posted_date).getTime();
       bValue = new Date(b.posted_date).getTime();
@@ -90,16 +112,7 @@ const JobList: React.FC = () => {
       bValue = b[sortConfig.key];
     }
 
-    // Primary sorting
-    const primarySort =
-      sortConfig.direction === "asc" ? aValue - bValue : bValue - aValue;
-
-    // Apply secondary sorting by score if the primary values are equal and key is not "score"
-    if (primarySort === 0 && sortConfig.key !== "score") {
-      return b.score - a.score; // Always descending order for score
-    }
-
-    return primarySort;
+    return sortConfig.direction === "asc" ? aValue - bValue : bValue - aValue;
   });
 
   // Step 2: Get paginated jobs from sorted data

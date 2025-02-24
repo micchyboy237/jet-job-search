@@ -48,7 +48,7 @@ export const DEFAULT_FILTERS: QueryOptions = {
   mode: "fusion",
   store_path:
     "/Users/jethroestrada/Desktop/External_Projects/Jet_Projects/jet_server/.cache/deeplake/store_1",
-  score_threshold: 0.7,
+  score_threshold: 0.4,
   split_mode: [],
   fusion_mode: "relative_score",
   disable_chunking: true,
@@ -177,6 +177,12 @@ export const DEFAULT_FILTER_OPTIONS: Array<Filter> = [
     default: 0,
     min: 0,
     max: 14,
+  },
+  {
+    name: "Disable Chunking",
+    key: "disable_chunking",
+    type: "boolean",
+    placeholder: "Disable chunking",
   },
 ];
 
