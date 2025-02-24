@@ -18,7 +18,7 @@ import Card from "../../../components/Card";
 // Helper function to calculate the time ago string
 const getTimeAgo = (date: string) => {
   const parsedDate = parseISO(date); // Parse the posted date string to Date
-  return formatDistanceToNow(parsedDate, { addSuffix: true }); // e.g., "2 days ago"
+  return format(parsedDate, "MMM dd, EEE"); // Format as "Fri, Feb 25"
 };
 
 const getTimeAgoTimestamp = (date: string) => {
@@ -33,7 +33,7 @@ const JobList: React.FC = () => {
   const [sortConfig, setSortConfig] = useState<{
     key: string;
     direction: string;
-  }>({ key: "score", direction: "desc" });
+  }>({ key: "timeAgo", direction: "asc" });
 
   const itemsPerPage = 10;
   const totalPages = Math.ceil(jobs.length / itemsPerPage);
@@ -82,8 +82,8 @@ const JobList: React.FC = () => {
         <JobTable>
           <thead>
             <tr>
-              <JobTableHeader onClick={() => handleSort("score")}>
-                Score
+              <JobTableHeader onClick={() => handleSort("timeAgo")}>
+                Time Ago
               </JobTableHeader>
               <JobTableHeader onClick={() => handleSort("title")}>
                 Title
@@ -109,8 +109,8 @@ const JobList: React.FC = () => {
               <JobTableHeader onClick={() => handleSort("posted_date")}>
                 Posted
               </JobTableHeader>
-              <JobTableHeader onClick={() => handleSort("timeAgo")}>
-                Time Ago
+              <JobTableHeader onClick={() => handleSort("score")}>
+                Score
               </JobTableHeader>
             </tr>
           </thead>
@@ -120,19 +120,7 @@ const JobList: React.FC = () => {
                 key={JSON.stringify(job)}
                 onClick={() => setSelectedJob(job)}
               >
-                <JobTableData>
-                  <Score
-                    className={
-                      job.score >= 0.7
-                        ? "high"
-                        : job.score >= 0.4
-                        ? "medium"
-                        : "low"
-                    }
-                  >
-                    {job.formattedScore}
-                  </Score>
-                </JobTableData>
+                <JobTableData>{getTimeAgo(job.posted_date)}</JobTableData>
                 <JobTableData title={job.title}>{job.title}</JobTableData>
                 <JobTableData title={job.company}>{job.company}</JobTableData>
                 <JobTableData>{job.keywords.join(", ")}</JobTableData>
@@ -150,7 +138,19 @@ const JobList: React.FC = () => {
                     ? format(new Date(job.posted_date), "MMM d, yyyy")
                     : "Unknown"}
                 </JobTableData>
-                <JobTableData>{getTimeAgo(job.posted_date)}</JobTableData>
+                <JobTableData>
+                  <Score
+                    className={
+                      job.score >= 0.7
+                        ? "high"
+                        : job.score >= 0.4
+                        ? "medium"
+                        : "low"
+                    }
+                  >
+                    {job.formattedScore}
+                  </Score>
+                </JobTableData>
               </JobTableRow>
             ))}
           </tbody>
