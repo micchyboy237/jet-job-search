@@ -60,7 +60,10 @@ const JobList: React.FC = () => {
   const [sortConfig, setSortConfig] = useState<{
     key: string;
     direction: string;
-  }>({ key: "score", direction: "desc" });
+  }>({
+    key: "timeAgo",
+    direction: "asc",
+  });
 
   const itemsPerPage = 10;
   const totalPages = Math.ceil(jobs.length / itemsPerPage);
