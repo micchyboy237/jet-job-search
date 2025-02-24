@@ -38,7 +38,7 @@ export const DEFAULT_FILTERS: QueryOptions = {
   Some rules to follow:
   1. Never directly mention the context or say 'According to my resume' or similar phrases.
   2. Provide responses as if you are the individual described in the context, focusing on professionalism and relevance.`,
-  chunk_size: 1024,
+  chunk_size: null,
   chunk_overlap: 40,
   sub_chunk_sizes: [512, 256, 128],
   with_hierarchy: false,
@@ -51,6 +51,7 @@ export const DEFAULT_FILTERS: QueryOptions = {
   score_threshold: 0.7,
   split_mode: [],
   fusion_mode: "relative_score",
+  disable_chunking: true,
 };
 
 export const DEFAULT_FILTER_OPTIONS: Array<Filter> = [

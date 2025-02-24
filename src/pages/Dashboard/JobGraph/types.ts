@@ -80,6 +80,7 @@ export interface QueryOptions {
   score_threshold: number;
   split_mode: SplitMode[];
   fusion_mode: FusionMode;
+  disable_chunking: boolean;
 }
 
 export interface VectorNodeMetadata {
