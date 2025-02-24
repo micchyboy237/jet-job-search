@@ -61,8 +61,8 @@ const JobList: React.FC = () => {
     key: string;
     direction: string;
   }>({
-    key: "timeAgo",
-    direction: "asc",
+    key: "score",
+    direction: "desc",
   });
 
   const itemsPerPage = 10;
