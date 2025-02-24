@@ -169,6 +169,15 @@ export const DEFAULT_FILTER_OPTIONS: Array<Filter> = [
       { label: "simple", value: "simple" },
     ],
   },
+  {
+    name: "Days",
+    key: "days",
+    type: "slider",
+    placeholder: "Select number of days to filter",
+    default: 0,
+    min: 0,
+    max: 14,
+  },
 ];
 
 DEFAULT_FILTER_OPTIONS.map((item) => {

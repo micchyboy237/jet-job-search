@@ -41,7 +41,11 @@ include_files = [
     # "*.json",
 
     # App code
-    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobList/*",
+    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobList/index.tsx",
+    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobGraph/constants.ts",
+    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobSearch/index.tsx",
+    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobGraph/types.ts",
+    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobSearch/index.tsx",
 ]
 structure_include = [
     # "*"
@@ -61,7 +65,7 @@ DEFAULT_SYSTEM_MESSAGE = """
 """.strip()
 
 DEFAULT_QUERY_MESSAGE = """
-Fix sort logic so that it applies to all results in pagination.
+Add filter logic range for posted date to update lists.
 """.strip()
 
 # DEFAULT_QUERY_MESSAGE += (

@@ -23,7 +23,8 @@ export type FilterType =
   | "radio"
   | "select"
   | "checkbox"
-  | "list";
+  | "list"
+  | "slider";
 
 // Discriminated union with `value` and `options` tailored per type
 export type Filter =
@@ -53,6 +54,13 @@ export type Filter =
       type: "list";
       options: string[] | number[];
       value?: string[]; // Array of strings
+    })
+  | (BaseFilter & {
+      type: "slider";
+      min?: number;
+      max?: number;
+      default?: number;
+      value?: number;
     });
 
 type FusionMode =
@@ -81,6 +89,10 @@ export interface QueryOptions {
   split_mode: SplitMode[];
   fusion_mode: FusionMode;
   disable_chunking: boolean;
+}
+
+export interface UIOptions {
+  days: number;
 }
 
 export interface VectorNodeMetadata {

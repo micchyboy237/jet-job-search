@@ -36,7 +36,11 @@ const getTimeAgo = (date: string) => {
     return "Today";
   }
 
-  return formatDistance(parsedDate, startOfToday, { addSuffix: true });
+  // Get the time difference string
+  const timeAgo = formatDistance(parsedDate, startOfToday, { addSuffix: true });
+
+  // If timeAgo is "less than a minute ago", return "Today"
+  return timeAgo.includes("less than a minute") ? "Today" : timeAgo;
 };
 
 const getTimeAgoTimestamp = (date: string) => {
@@ -61,7 +65,7 @@ const JobList: React.FC = () => {
     key: string;
     direction: string;
   }>({
-    key: "score",
+    key: "posted_date",
     direction: "desc",
   });
 
@@ -71,7 +75,11 @@ const JobList: React.FC = () => {
   // Step 1: Sort all jobs before pagination
   const sortedJobs = [...jobs].sort((a, b) => {
     let aValue, bValue;
-    if (sortConfig.key === "timeAgo") {
+
+    if (sortConfig.key === "posted_date") {
+      aValue = new Date(a.posted_date).getTime();
+      bValue = new Date(b.posted_date).getTime();
+    } else if (sortConfig.key === "timeAgo") {
       aValue = getTimeAgoTimestamp(a.posted_date);
       bValue = getTimeAgoTimestamp(b.posted_date);
     } else if (sortConfig.key === "keywords") {
@@ -81,7 +89,17 @@ const JobList: React.FC = () => {
       aValue = a[sortConfig.key];
       bValue = b[sortConfig.key];
     }
-    return sortConfig.direction === "asc" ? aValue - bValue : bValue - aValue;
+
+    // Primary sorting
+    const primarySort =
+      sortConfig.direction === "asc" ? aValue - bValue : bValue - aValue;
+
+    // Apply secondary sorting by score if the primary values are equal and key is not "score"
+    if (primarySort === 0 && sortConfig.key !== "score") {
+      return b.score - a.score; // Always descending order for score
+    }
+
+    return primarySort;
   });
 
   // Step 2: Get paginated jobs from sorted data
@@ -91,10 +109,7 @@ const JobList: React.FC = () => {
   );
 
   const handleSort = (key: string) => {
-    let direction = "asc";
-    if (sortConfig.key === key && sortConfig.direction === "asc") {
-      direction = "desc";
-    }
+    const direction = sortConfig.direction === "asc" ? "desc" : "asc";
     setSortConfig({ key, direction });
   };
 

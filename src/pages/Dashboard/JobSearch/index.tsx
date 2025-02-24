@@ -1,9 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useAtom } from "jotai";
-import { vectorNodesAtom, fetchVectorNodesAtom } from "../JobGraph/state";
+import {
+  vectorNodesAtom,
+  fetchVectorNodesAtom,
+  filtersAtom,
+  uiFiltersAtom,
+  uiFiltersHandlerAtom,
+} from "../JobGraph/state";
 import { DEFAULT_FILTER_OPTIONS, DEFAULT_FILTERS } from "../JobGraph/constants";
-import { Filter } from "../JobGraph/types";
+import { Filter, QueryOptions, UIOptions } from "../JobGraph/types";
 import styled from "styled-components";
+import { isEqual } from "../../../utils/comparison";
 
 export const Input = ({
   type = "text",
@@ -153,7 +160,7 @@ const StyledButton = styled.button`
   }
 `;
 
-const FilterContainer = styled.div`
+const FilterContainer = styled.form`
   width: 100%;
   padding: 1rem;
   background: ${({ theme }) => theme.colors.background};
@@ -183,21 +190,113 @@ const FilterItem = styled.div`
   color: ${({ theme }) => theme.colors.text};
 `;
 
-const Search = () => {
+const SliderContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  input {
+    flex: 1;
+    cursor: pointer;
+  }
+  span {
+    min-width: 30px;
+    text-align: center;
+    font-weight: bold;
+  }
+`;
+
+const Slider = ({ min = 0, max = 100, value, defaultValue = 0, onChange }) => {
+  return (
+    <SliderContainer>
+      <input
+        type="range"
+        min={min}
+        max={max}
+        value={value}
+        defaultValue={defaultValue}
+        onChange={(e) => onChange(Number(e.target.value))}
+      />
+      <span>{value}</span>
+    </SliderContainer>
+  );
+};
+
+interface SearchProps {
+  onSubmit?: (query: string, filters: QueryOptions) => void;
+}
+
+type SearchOptions = QueryOptions & UIOptions;
+
+const Search: React.FC<SearchProps> = ({ onSubmit }) => {
   const [, fetchVectorNodes] = useAtom(fetchVectorNodesAtom);
-  const [filters, setFilters] = useState(DEFAULT_FILTERS);
+  const [filters, setFilters] = useAtom(filtersAtom);
+  const [uiFilters, setUIFilters] = useAtom(uiFiltersHandlerAtom);
   const [query, setQuery] = useState("");
 
-  const handleFilterChange = (key, value) => {
-    setFilters((prev) => ({ ...prev, [key]: value }));
+  const prevFiltersRef = useRef<SearchOptions | null>(null);
+
+  const handleFilterChange = (key: string, value: any) => {
+    if (Object.keys(uiFilters).includes(key)) {
+      setUIFilters({ ...uiFilters, [key]: value });
+    } else {
+      setFilters((prev) => ({ ...prev, [key]: value }));
+    }
   };
 
-  const handleSearch = () => {
-    fetchVectorNodes(query, filters);
+  const handleSearch = (e?: React.FormEvent) => {
+    if (e) {
+      e.preventDefault();
+    }
+    if (!query) {
+      return;
+    }
+
+    const newFilters = {
+      ...filters,
+      query,
+    };
+
+    if (!isEqual(prevFiltersRef.current, newFilters)) {
+      fetchVectorNodes(query);
+      prevFiltersRef.current = newFilters;
+    }
+
+    if (onSubmit) {
+      onSubmit(query, filters);
+    }
   };
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        handleSearch();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [query, filters]);
+
+  const filter_options = useMemo(() => {
+    return DEFAULT_FILTER_OPTIONS.map((option) => {
+      let value;
+      if (Object.keys(uiFilters).includes(option.key)) {
+        value = uiFilters[option.key];
+      } else {
+        value = filters[option.key];
+      }
+      return {
+        ...option,
+        value,
+      };
+    });
+  }, [filters, uiFilters]);
 
   return (
-    <FilterContainer>
+    <FilterContainer onSubmit={handleSearch}>
       <SearchBar>
         <Input
           type="text"
@@ -206,10 +305,10 @@ const Search = () => {
           onChange={(e) => setQuery(e.target.value)}
           onEnter={handleSearch}
         />
-        <Button onClick={handleSearch}>Search</Button>
+        <Button type="submit">Search</Button>
       </SearchBar>
       <Filters>
-        {DEFAULT_FILTER_OPTIONS.map((filter) => (
+        {filter_options.map((filter) => (
           <FilterItem key={filter.key}>
             <label>{filter.name}</label>
             {filter.type === "radio" ? (
@@ -234,6 +333,14 @@ const Search = () => {
             ) : filter.type === "boolean" ? (
               <Switch
                 checked={filters[filter.key] || false}
+                onChange={(value) => handleFilterChange(filter.key, value)}
+              />
+            ) : filter.type === "slider" ? (
+              <Slider
+                min={filter.min}
+                max={filter.max}
+                defaultValue={filter.default}
+                value={filter.value}
                 onChange={(value) => handleFilterChange(filter.key, value)}
               />
             ) : filter.type === "list" ? (
