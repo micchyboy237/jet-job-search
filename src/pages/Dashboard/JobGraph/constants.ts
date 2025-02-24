@@ -143,12 +143,12 @@ export const DEFAULT_FILTER_OPTIONS: Array<Filter> = [
   //   type: "text",
   //   placeholder: "Enter store path",
   // },
-  // {
-  //   name: "Score Threshold",
-  //   key: "score_threshold",
-  //   type: "number",
-  //   placeholder: "Set score threshold",
-  // },
+  {
+    name: "Score Threshold",
+    key: "score_threshold",
+    type: "number",
+    placeholder: "Set score threshold",
+  },
   // {
   //   name: "Split Mode",
   //   key: "split_mode",

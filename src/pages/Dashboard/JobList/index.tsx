@@ -11,19 +11,46 @@ import {
   PaginationButton,
   Score,
 } from "./styles";
-import { format, formatDistanceToNow, parseISO } from "date-fns";
+import {
+  format,
+  formatDistance,
+  formatDistanceToNow,
+  parseISO,
+} from "date-fns";
 import JobDetailsModal from "./JobDetailsModal";
 import Card from "../../../components/Card";
 
 // Helper function to calculate the time ago string
 const getTimeAgo = (date: string) => {
-  const parsedDate = parseISO(date); // Parse the posted date string to Date
-  return format(parsedDate, "MMM dd, EEE"); // Format as "Fri, Feb 25"
+  const parsedDate = parseISO(date);
+
+  // Set parsed date to the last second of the day
+  parsedDate.setHours(23, 59, 59, 999);
+
+  // Set today's base to the first second of the day
+  const startOfToday = new Date();
+  startOfToday.setHours(0, 0, 0, 0);
+
+  // If parsed date is in the future, return "Today"
+  if (parsedDate > startOfToday) {
+    return "Today";
+  }
+
+  return formatDistance(parsedDate, startOfToday, { addSuffix: true });
 };
 
 const getTimeAgoTimestamp = (date: string) => {
-  const parsedDate = parseISO(date); // Parse the posted date string to Date
-  return Date.now() - parsedDate.getTime(); // Return the time difference in milliseconds
+  const parsedDate = parseISO(date);
+
+  // Set parsed date to the last second of the day
+  parsedDate.setHours(23, 59, 59, 999);
+
+  // Set today's base to the first second of the day
+  const startOfToday = new Date();
+  startOfToday.setHours(0, 0, 0, 0);
+
+  // Return timestamp for proper sorting
+  return parsedDate.getTime();
 };
 
 const JobList: React.FC = () => {
@@ -33,21 +60,14 @@ const JobList: React.FC = () => {
   const [sortConfig, setSortConfig] = useState<{
     key: string;
     direction: string;
-  }>({ key: "timeAgo", direction: "asc" });
+  }>({ key: "score", direction: "desc" });
 
   const itemsPerPage = 10;
   const totalPages = Math.ceil(jobs.length / itemsPerPage);
 
-  // Step 1: Get paginated jobs
-  const paginatedJobs = jobs.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
-
-  // Step 2: Sort only after pagination to avoid issues with rows
-  const sortedJobs = [...paginatedJobs].sort((a, b) => {
+  // Step 1: Sort all jobs before pagination
+  const sortedJobs = [...jobs].sort((a, b) => {
     let aValue, bValue;
-
     if (sortConfig.key === "timeAgo") {
       aValue = getTimeAgoTimestamp(a.posted_date);
       bValue = getTimeAgoTimestamp(b.posted_date);
@@ -58,15 +78,14 @@ const JobList: React.FC = () => {
       aValue = a[sortConfig.key];
       bValue = b[sortConfig.key];
     }
-
-    if (aValue < bValue) {
-      return sortConfig.direction === "asc" ? -1 : 1;
-    }
-    if (aValue > bValue) {
-      return sortConfig.direction === "asc" ? 1 : -1;
-    }
-    return 0;
+    return sortConfig.direction === "asc" ? aValue - bValue : bValue - aValue;
   });
+
+  // Step 2: Get paginated jobs from sorted data
+  const paginatedJobs = sortedJobs.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const handleSort = (key: string) => {
     let direction = "asc";
@@ -115,7 +134,7 @@ const JobList: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {sortedJobs.map((job) => (
+            {paginatedJobs.map((job) => (
               <JobTableRow
                 key={JSON.stringify(job)}
                 onClick={() => setSelectedJob(job)}

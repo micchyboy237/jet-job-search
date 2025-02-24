@@ -41,11 +41,7 @@ include_files = [
     # "*.json",
 
     # App code
-    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/App.tsx",
-    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/styles.ts",
-    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobGraph/index.tsx",
-    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobGraph/Search.tsx",
-    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobGraph/styles.ts",
+    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobList/*",
 ]
 structure_include = [
     # "*"
@@ -65,7 +61,7 @@ DEFAULT_SYSTEM_MESSAGE = """
 """.strip()
 
 DEFAULT_QUERY_MESSAGE = """
-Move the JobGraph Search component outside so that its the first child of AppBody
+Fix sort logic so that it applies to all results in pagination.
 """.strip()
 
 # DEFAULT_QUERY_MESSAGE += (
