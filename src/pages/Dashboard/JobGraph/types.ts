@@ -94,6 +94,7 @@ export interface QueryOptions {
 
 export interface UIOptions {
   days: number;
+  keywords: string[];
 }
 
 export interface VectorNodeMetadata {

@@ -1,4 +1,4 @@
-import { Filter, QueryOptions } from "./types";
+import { Filter, QueryOptions, UIOptions } from "./types";
 
 export const DEFAULT_FILTERS: QueryOptions = {
   rag_dir:
@@ -52,6 +52,11 @@ export const DEFAULT_FILTERS: QueryOptions = {
   split_mode: [],
   fusion_mode: "relative_score",
   disable_chunking: true,
+};
+
+export const DEFAULT_UI_FILTERS: UIOptions = {
+  days: 0,
+  keywords: [],
 };
 
 export const DEFAULT_FILTER_OPTIONS: Array<Filter> = [
