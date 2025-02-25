@@ -236,6 +236,12 @@ const Search: React.FC<SearchProps> = ({ onSubmit }) => {
   const prevFiltersRef = useRef<SearchOptions | null>(null);
 
   const handleFilterChange = (key: string, value: any) => {
+    const option = DEFAULT_FILTER_OPTIONS.find((item) => key === item.key);
+
+    if (option.type === "number") {
+      value = !value ? 0 : Number(value);
+    }
+
     if (Object.keys(uiFilters).includes(key)) {
       setUIFilters({ ...uiFilters, [key]: value });
     } else {
@@ -288,6 +294,11 @@ const Search: React.FC<SearchProps> = ({ onSubmit }) => {
       } else {
         value = filters[option.key];
       }
+
+      if (option.type === "number") {
+        value = String(value || 0);
+      }
+
       return {
         ...option,
         value,
@@ -314,25 +325,25 @@ const Search: React.FC<SearchProps> = ({ onSubmit }) => {
             {filter.type === "radio" ? (
               <RadioGroup
                 options={filter.options}
-                value={filters[filter.key] || ""}
+                value={filter.value || ""}
                 onChange={(value) => handleFilterChange(filter.key, value)}
               />
             ) : filter.type === "text" || filter.type === "number" ? (
               <Input
                 type={filter.type}
                 placeholder={filter.placeholder}
-                value={filters[filter.key] || ""}
+                value={filter.value || ""}
                 onChange={(e) => handleFilterChange(filter.key, e.target.value)}
               />
             ) : filter.type === "select" ? (
               <Select
                 options={filter.options}
-                value={filters[filter.key] || ""}
+                value={filter.value || ""}
                 onChange={(e) => handleFilterChange(filter.key, e.target.value)}
               />
             ) : filter.type === "boolean" ? (
               <Switch
-                checked={filters[filter.key] || false}
+                checked={filter.value || false}
                 onChange={(value) => handleFilterChange(filter.key, value)}
               />
             ) : filter.type === "slider" ? (
@@ -348,11 +359,11 @@ const Search: React.FC<SearchProps> = ({ onSubmit }) => {
                 <Checkbox
                   key={option}
                   label={option}
-                  checked={filters[filter.key]?.includes(option) || false}
+                  checked={filter.value?.includes(option) || false}
                   onChange={(e) => {
                     const newValues = e.target.checked
-                      ? [...(filters[filter.key] || []), option]
-                      : filters[filter.key]?.filter((v) => v !== option);
+                      ? [...(filter.value || []), option]
+                      : filter.value?.filter((v) => v !== option);
                     handleFilterChange(filter.key, newValues);
                   }}
                 />

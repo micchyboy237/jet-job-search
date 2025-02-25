@@ -14,6 +14,7 @@ type BaseFilter = {
   key: string;
   type: FilterType;
   placeholder?: string;
+  value?: any;
 };
 
 export type FilterType =
