@@ -53,7 +53,9 @@ export const fetchVectorNodesAtom = atom(
         "MongoDB",
         "Firebase",
         "AWS",
-      ];
+      ]
+        .map((item) => item.trim().toLowerCase())
+        .filter((item) => !!item);
 
       const updatedVectorNodes = vectorNodes.map((node) => {
         const baseKeywords = [...node.keywords, ...node.technology_stack];
