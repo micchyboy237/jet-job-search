@@ -142,7 +142,7 @@ const JobList: React.FC = () => {
                 Company
               </JobTableHeader>
               <JobTableHeader onClick={() => handleSort("keywords")}>
-                Keywords
+                Matched Skills
               </JobTableHeader>
               <JobTableHeader onClick={() => handleSort("technology_stack")}>
                 Tech stack

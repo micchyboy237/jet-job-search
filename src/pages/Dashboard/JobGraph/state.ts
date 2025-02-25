@@ -40,10 +40,20 @@ export const fetchVectorNodesAtom = atom(
         ...job.metadata,
       }));
 
-      const search_keywords = query
-        .split(",")
-        .map((item) => item.trim().toLowerCase())
-        .filter((item) => !!item);
+      // const search_keywords = query
+      //   .split(",")
+      //   .map((item) => item.trim().toLowerCase())
+      //   .filter((item) => !!item);
+      const search_keywords = [
+        "React.js",
+        "React Native",
+        "Node.js",
+        "Python",
+        "PostgreSQL",
+        "MongoDB",
+        "Firebase",
+        "AWS",
+      ];
 
       const updatedVectorNodes = vectorNodes.map((node) => {
         const baseKeywords = [...node.keywords, ...node.technology_stack];
