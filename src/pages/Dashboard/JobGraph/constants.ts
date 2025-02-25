@@ -7,10 +7,10 @@ export const DEFAULT_FILTERS: QueryOptions = {
   json_attributes: [
     "title",
     "keywords",
-    "tags",
+    // "tags",
     // "entities.role",
     // "entities.application",
-    "entities.technology_stack",
+    // "entities.technology_stack",
     // "entities.qualifications",
     "details",
   ],
