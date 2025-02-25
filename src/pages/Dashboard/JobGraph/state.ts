@@ -45,9 +45,9 @@ export const fetchVectorNodesAtom = atom(
       //   .map((item) => item.trim().toLowerCase())
       //   .filter((item) => !!item);
       const search_keywords = [
-        "React.js",
+        "React",
         "React Native",
-        "Node.js",
+        "Node",
         "Python",
         "PostgreSQL",
         "MongoDB",
