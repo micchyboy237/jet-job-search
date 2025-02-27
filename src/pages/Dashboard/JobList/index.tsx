@@ -107,6 +107,9 @@ const JobList: React.FC = () => {
     } else if (sortConfig.key === "keywords") {
       aValue = a.keywords.length;
       bValue = b.keywords.length;
+    } else if (sortConfig.key === "matched_skills") {
+      aValue = a.matched_skills.length;
+      bValue = b.matched_skills.length;
     } else {
       aValue = a[sortConfig.key];
       bValue = b[sortConfig.key];
@@ -162,7 +165,7 @@ const JobList: React.FC = () => {
               <JobTableHeader onClick={() => handleSort("company")}>
                 Company
               </JobTableHeader>
-              <JobTableHeader onClick={() => handleSort("keywords")}>
+              <JobTableHeader onClick={() => handleSort("matched_skills")}>
                 Matched Skills
               </JobTableHeader>
               <JobTableHeader onClick={() => handleSort("technology_stack")}>

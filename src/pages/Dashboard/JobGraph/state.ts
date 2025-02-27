@@ -3,6 +3,7 @@ import { VectorNode, JobResult, QueryOptions, UIOptions } from "./types";
 import { RAG_NODES_URL } from "./config";
 import { DEFAULT_FILTERS, DEFAULT_UI_FILTERS } from "./constants";
 import { toSnakeCase } from "../../../utils/transformers";
+import { sortWithPriority } from "../../../utils/sort";
 
 const initialVectorNodes: VectorNode[] = [];
 
@@ -91,11 +92,22 @@ export const fetchVectorNodesAtom = atom(
               .map((keyword) => keyword.toLowerCase())
           )
         );
+
+        const priorityKeywords = ["react", "react native"];
+        const sorted_keywords = sortWithPriority(
+          matchedSearchKeywords,
+          priorityKeywords
+        );
+        const sorted_matched_skills = sortWithPriority(
+          matchedSkillsKeywords,
+          priorityKeywords
+        );
         const result: VectorNode = {
           ...node,
-          keywords: matchedSearchKeywords,
-          matched_skills: matchedSkillsKeywords,
+          keywords: sorted_keywords,
+          matched_skills: sorted_matched_skills,
         };
+
         return result;
       });
 
