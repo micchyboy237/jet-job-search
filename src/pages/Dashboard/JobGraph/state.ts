@@ -40,11 +40,11 @@ export const fetchVectorNodesAtom = atom(
         ...job.metadata,
       }));
 
-      // const search_keywords = query
-      //   .split(",")
-      //   .map((item) => item.trim().toLowerCase())
-      //   .filter((item) => !!item);
-      const search_keywords = [
+      const search_keywords = query
+        .split(",")
+        .map((item) => item.trim().toLowerCase())
+        .filter((item) => !!item);
+      const match_skills_keywords = [
         "React",
         "React Native",
         "Node",
@@ -57,18 +57,20 @@ export const fetchVectorNodesAtom = atom(
         .map((item) => item.trim().toLowerCase())
         .filter((item) => !!item);
 
-      const updatedVectorNodes = vectorNodes.map((node) => {
-        const baseKeywords = [...node.keywords, ...node.technology_stack];
-        const matchedKeywords = Array.from(
+      const updatedVectorNodes: VectorNode[] = vectorNodes.map((node) => {
+        const baseKeywords = [...node.keywords, ...node.technology_stack].map(
+          (item) => item.trim().toLowerCase()
+        );
+
+        const matchedSearchKeywords = Array.from(
           new Set(
             baseKeywords
               .filter((baseKeyword) =>
                 search_keywords.some((searchKeyword) => {
-                  const loweredBaseKeyword = baseKeyword.toLowerCase();
-                  const match1 = loweredBaseKeyword.includes(
+                  const match1 = baseKeyword.includes(
                     searchKeyword.toLowerCase()
                   );
-                  const match2 = loweredBaseKeyword
+                  const match2 = baseKeyword
                     .split(" ")
                     .includes(searchKeyword.toLowerCase());
                   return match1 || match2;
@@ -77,10 +79,24 @@ export const fetchVectorNodesAtom = atom(
               .map((keyword) => keyword.toLowerCase())
           )
         );
-        return {
+
+        const matchedSkillsKeywords = Array.from(
+          new Set(
+            baseKeywords
+              .filter((baseKeyword) =>
+                match_skills_keywords.some((searchKeyword) => {
+                  return searchKeyword == baseKeyword;
+                })
+              )
+              .map((keyword) => keyword.toLowerCase())
+          )
+        );
+        const result: VectorNode = {
           ...node,
-          keywords: matchedKeywords,
+          keywords: matchedSearchKeywords,
+          matched_skills: matchedSkillsKeywords,
         };
+        return result;
       });
 
       set(baseVectorNodesAtom, updatedVectorNodes);

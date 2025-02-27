@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAtom } from "jotai";
 import { Scatter } from "react-chartjs-2";
-import { vectorNodesAtom, fetchVectorNodesAtom } from "./state";
+import { vectorNodesAtom } from "./state";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -25,12 +25,6 @@ ChartJS.register(
 
 const JobGraph: React.FC = () => {
   const [vectorNodes] = useAtom(vectorNodesAtom);
-  const [, fetchVectorNodes] = useAtom(fetchVectorNodesAtom);
-  const [query, setQuery] = useState("");
-
-  useEffect(() => {
-    if (query) fetchVectorNodes(query);
-  }, [query, fetchVectorNodes]);
 
   const data = {
     datasets: [

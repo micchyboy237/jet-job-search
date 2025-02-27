@@ -233,7 +233,7 @@ const Search: React.FC<SearchProps> = ({ onSubmit }) => {
   const [uiFilters, setUIFilters] = useAtom(uiFiltersHandlerAtom);
   const [query, setQuery] = useState("");
 
-  const prevFiltersRef = useRef<SearchOptions | null>(null);
+  // const prevFiltersRef = useRef<SearchOptions | null>(null);
 
   const handleFilterChange = (key: string, value: any) => {
     const option = DEFAULT_FILTER_OPTIONS.find((item) => key === item.key);
@@ -257,15 +257,15 @@ const Search: React.FC<SearchProps> = ({ onSubmit }) => {
       return;
     }
 
-    const newFilters = {
-      ...filters,
-      query,
-    };
+    // const newFilters = {
+    //   ...filters,
+    //   query,
+    // };
 
-    if (!isEqual(prevFiltersRef.current, newFilters)) {
-      fetchVectorNodes(query);
-      prevFiltersRef.current = newFilters;
-    }
+    // if (!isEqual(prevFiltersRef.current, newFilters)) {
+    fetchVectorNodes(query);
+    // prevFiltersRef.current = newFilters;
+    // }
 
     if (onSubmit) {
       onSubmit(query, filters);
@@ -284,7 +284,7 @@ const Search: React.FC<SearchProps> = ({ onSubmit }) => {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [query, filters]);
+  }, []);
 
   const filter_options = useMemo(() => {
     return DEFAULT_FILTER_OPTIONS.map((option) => {
