@@ -156,6 +156,7 @@ const JobList: React.FC = () => {
         <JobTable>
           <thead>
             <tr>
+              <JobTableHeader>#</JobTableHeader>
               <JobTableHeader onClick={() => handleSort("timeAgo")}>
                 Time Ago
               </JobTableHeader>
@@ -189,11 +190,14 @@ const JobList: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {paginatedJobs.map((job) => (
+            {paginatedJobs.map((job, index) => (
               <JobTableRow
                 key={JSON.stringify(job)}
                 onClick={() => setSelectedJob(job)}
               >
+                <JobTableData>
+                  {(currentPage - 1) * itemsPerPage + index + 1}
+                </JobTableData>
                 <JobTableData>{getTimeAgo(job.posted_date)}</JobTableData>
                 <JobTableData title={job.title}>{job.title}</JobTableData>
                 <JobTableData title={job.company}>{job.company}</JobTableData>

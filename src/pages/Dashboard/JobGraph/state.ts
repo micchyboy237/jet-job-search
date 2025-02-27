@@ -149,15 +149,19 @@ export const uiFiltersHandlerAtom = atom(
       const matchesDays =
         newFilters.days > 0 ? diffDays <= newFilters.days : true;
 
-      const baseKeywords = [...node.keywords, ...node.technology_stack];
-      const matchesKeywords =
-        newFilters.keywords.length > 0
-          ? baseKeywords.some((keyword) =>
-              newFilters.keywords.includes(keyword)
-            )
-          : true;
+      // const filtersKeywords = newFilters.keywords.map((item) =>
+      //   item.trim().toLowerCase()
+      // );
+      // const baseKeywords = [...node.keywords, ...node.technology_stack].map(
+      //   (item) => item.trim().toLowerCase()
+      // );
+      // const matchesKeywords =
+      //   filtersKeywords.length > 0
+      //     ? baseKeywords.some((keyword) => filtersKeywords.includes(keyword))
+      //     : true;
 
-      return matchesDays && matchesKeywords; // Apply AND condition
+      // return matchesDays && matchesKeywords; // Apply AND condition
+      return matchesDays;
     });
 
     set(vectorNodesAtom, updatedVectorNodes); // Update the nodes state
