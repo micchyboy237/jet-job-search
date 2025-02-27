@@ -173,7 +173,7 @@ const JobList: React.FC = () => {
                 <JobTableData>{getTimeAgo(job.posted_date)}</JobTableData>
                 <JobTableData title={job.title}>{job.title}</JobTableData>
                 <JobTableData title={job.company}>{job.company}</JobTableData>
-                <JobTableData>{job.keywords.join(", ")}</JobTableData>
+                <JobTableData>{job.matched_skills.join(", ")}</JobTableData>
                 <JobTableData>{job.technology_stack.join(", ")}</JobTableData>
                 <JobTableData>{job.salary}</JobTableData>
                 <JobTableData>{job.job_type}</JobTableData>

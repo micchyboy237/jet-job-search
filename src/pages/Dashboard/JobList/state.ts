@@ -20,6 +20,7 @@ export const jobsAtom = atom((get) => {
       link: node.link,
       domain: node.domain,
       keywords: node.keywords,
+      matched_skills: node.matched_skills,
       role: node.role || [],
       application: node.application || [],
       technology_stack: node.technology_stack || [],
