@@ -153,23 +153,75 @@ const JobList: React.FC = () => {
         <JobTable>
           <thead>
             <tr>
+              <JobTableHeader onClick={() => handleSort("timeAgo")}>
+                Time Ago
+              </JobTableHeader>
               <JobTableHeader onClick={() => handleSort("title")}>
                 Title
               </JobTableHeader>
               <JobTableHeader onClick={() => handleSort("company")}>
                 Company
               </JobTableHeader>
+              <JobTableHeader onClick={() => handleSort("keywords")}>
+                Matched Skills
+              </JobTableHeader>
+              <JobTableHeader onClick={() => handleSort("technology_stack")}>
+                Tech stack
+              </JobTableHeader>
               <JobTableHeader onClick={() => handleSort("salary")}>
                 Salary
+              </JobTableHeader>
+              <JobTableHeader onClick={() => handleSort("job_type")}>
+                Job Type
+              </JobTableHeader>
+              <JobTableHeader onClick={() => handleSort("link")}>
+                Link
+              </JobTableHeader>
+              <JobTableHeader onClick={() => handleSort("posted_date")}>
+                Posted
+              </JobTableHeader>
+              <JobTableHeader onClick={() => handleSort("score")}>
+                Score
               </JobTableHeader>
             </tr>
           </thead>
           <tbody>
             {paginatedJobs.map((job) => (
-              <JobTableRow key={job.id} onClick={() => setSelectedJob(job)}>
-                <JobTableData>{job.title}</JobTableData>
-                <JobTableData>{job.company}</JobTableData>
+              <JobTableRow
+                key={JSON.stringify(job)}
+                onClick={() => setSelectedJob(job)}
+              >
+                <JobTableData>{getTimeAgo(job.posted_date)}</JobTableData>
+                <JobTableData title={job.title}>{job.title}</JobTableData>
+                <JobTableData title={job.company}>{job.company}</JobTableData>
+                <JobTableData>{job.matched_skills.join(", ")}</JobTableData>
+                <JobTableData>{job.technology_stack.join(", ")}</JobTableData>
                 <JobTableData>{job.salary}</JobTableData>
+                <JobTableData>{job.job_type}</JobTableData>
+                <JobTableData>
+                  <a href={job.link} target="_blank" rel="noopener noreferrer">
+                    {job.link ? "View Job" : "No Link"}
+                  </a>
+                </JobTableData>
+                <JobTableData>
+                  {job.posted_date &&
+                  !isNaN(new Date(job.posted_date).getTime())
+                    ? format(new Date(job.posted_date), "MMM d, yyyy")
+                    : "Unknown"}
+                </JobTableData>
+                <JobTableData>
+                  <Score
+                    className={
+                      job.score >= 0.6
+                        ? "high"
+                        : job.score >= 0.4
+                        ? "medium"
+                        : "low"
+                    }
+                  >
+                    {job.formattedScore}
+                  </Score>
+                </JobTableData>
               </JobTableRow>
             ))}
           </tbody>
