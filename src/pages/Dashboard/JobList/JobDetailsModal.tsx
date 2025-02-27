@@ -47,9 +47,10 @@ const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose }) => {
               "No link available"
             )}
           </p>
-          {/* <p>
-            <strong>Keywords:</strong> {job.keywords.join(", ") || "None"}
-          </p> */}
+          <p>
+            <strong>Search Keywords:</strong>{" "}
+            {job.keywords.join(", ") || "None"}
+          </p>
           <p>
             <strong>Matched Skills:</strong>{" "}
             {job.matched_skills.join(", ") || "None"}

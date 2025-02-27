@@ -41,11 +41,11 @@ export const fetchVectorNodesAtom = atom(
         ...job.metadata,
       }));
 
-      const search_keywords = query
+      const searchKeywords = query
         .split(",")
         .map((item) => item.trim().toLowerCase())
         .filter((item) => !!item);
-      const match_skills_keywords = [
+      const mySkillsKeywords = [
         "React",
         "React Native",
         "Node",
@@ -59,20 +59,30 @@ export const fetchVectorNodesAtom = atom(
         .filter((item) => !!item);
 
       const updatedVectorNodes: VectorNode[] = vectorNodes.map((node) => {
-        const searchBaseKeywords = [
-          ...node.keywords,
-          ...node.technology_stack,
+        const nodeTechnologyStack = node.technology_stack
+          .map((item) => item.trim().toLowerCase())
+          .filter((item) => !!item);
+        const nodeApplication = (node?.application || [])
+          .map((item) => item.trim().toLowerCase())
+          .filter((item) => !!item);
+        const baseSkillKeywords = [
+          ...nodeTechnologyStack,
+          ...nodeApplication,
         ].map((item) => item.trim().toLowerCase());
+
+        const baseSearchKeywords = [...node.keywords, ...baseSkillKeywords].map(
+          (item) => item.trim().toLowerCase()
+        );
 
         const matchedSearchKeywords = Array.from(
           new Set(
-            searchBaseKeywords
-              .filter((baseKeyword) =>
-                search_keywords.some((searchKeyword) => {
-                  const match1 = baseKeyword.includes(
+            baseSearchKeywords
+              .filter((baseSearchKeyword) =>
+                searchKeywords.some((searchKeyword) => {
+                  const match1 = baseSearchKeyword.includes(
                     searchKeyword.toLowerCase()
                   );
-                  const match2 = baseKeyword
+                  const match2 = baseSearchKeyword
                     .split(" ")
                     .includes(searchKeyword.toLowerCase());
                   return match1 || match2;
@@ -82,35 +92,41 @@ export const fetchVectorNodesAtom = atom(
           )
         );
 
-        const skillBaseKeywords = [...node.technology_stack].map((item) =>
-          item.trim().toLowerCase()
-        );
-
         const matchedSkillsKeywords = Array.from(
           new Set(
-            skillBaseKeywords
-              .filter((baseKeyword) =>
-                match_skills_keywords.some((searchKeyword) => {
-                  return searchKeyword == baseKeyword;
+            baseSkillKeywords
+              .filter((baseSkillKeyword) =>
+                mySkillsKeywords.some((matchedSkillKeyword) => {
+                  return matchedSkillKeyword == baseSkillKeyword;
                 })
               )
               .map((keyword) => keyword.toLowerCase())
           )
         );
 
-        const priorityKeywords = ["react", "react native"];
-        const sorted_keywords = sortWithPriority(
+        const priorityKeywords = mySkillsKeywords;
+        const sortedTechnologyStack = sortWithPriority(
+          nodeTechnologyStack,
+          priorityKeywords
+        );
+        const sortedApplications = sortWithPriority(
+          nodeApplication,
+          priorityKeywords
+        );
+        const sortedKeywords = sortWithPriority(
           matchedSearchKeywords,
           priorityKeywords
         );
-        const sorted_matched_skills = sortWithPriority(
+        const sortedMatchedSkills = sortWithPriority(
           matchedSkillsKeywords,
           priorityKeywords
         );
         const result: VectorNode = {
           ...node,
-          keywords: sorted_keywords,
-          matched_skills: sorted_matched_skills,
+          technology_stack: sortedTechnologyStack,
+          application: sortedApplications,
+          keywords: sortedKeywords,
+          matched_skills: sortedMatchedSkills,
         };
 
         return result;
@@ -119,7 +135,7 @@ export const fetchVectorNodesAtom = atom(
       set(baseVectorNodesAtom, updatedVectorNodes);
       // set(vectorNodesAtom, updatedVectorNodes);
 
-      set(uiFiltersHandlerAtom, { ...uiFilters, keywords: search_keywords });
+      set(uiFiltersHandlerAtom, { ...uiFilters, keywords: searchKeywords });
     } catch (err: any) {
       set(errorAtom, err);
       console.error(err);
