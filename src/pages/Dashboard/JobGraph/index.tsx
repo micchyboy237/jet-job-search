@@ -82,7 +82,7 @@ const JobGraph: React.FC = () => {
   };
 
   return (
-    <Card title="Vector Graph">
+    <Card title={`Vector Graph (${vectorNodes.length})`}>
       <Scatter data={data} options={options} />
     </Card>
   );
