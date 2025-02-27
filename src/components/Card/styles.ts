@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 export const Container = styled.div`
   margin: 0 auto;
@@ -15,15 +15,26 @@ export const Container = styled.div`
   @media (min-width: 480px) {
     padding: 1.25rem;
   }
-
   @media (min-width: 768px) {
     padding: 1.5rem;
   }
-`
+`;
+
+export const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+`;
 
 export const Title = styled.h2`
-  margin-top: 0;
   font-size: 1.375rem;
   font-weight: 600;
   color: ${({ theme }) => theme.colors.text};
-`
+`;
+
+export const ExtraContent = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+`;

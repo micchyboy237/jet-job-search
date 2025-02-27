@@ -1,18 +1,24 @@
-import React, { ReactNode } from 'react'
-import { Container, Title } from './styles'
+import React, { ReactNode } from "react";
+import { Container, Header, Title, ExtraContent } from "./styles";
 
 interface CardProps {
-  children: ReactNode
-  title?: string
+  children: ReactNode;
+  title?: string;
+  extra?: ReactNode;
 }
 
-const Card: React.FC<CardProps> = ({ children, title }) => {
+const Card: React.FC<CardProps> = ({ children, title, extra }) => {
   return (
     <Container>
-      {title && <Title>{title}</Title>}
+      {(title || extra) && (
+        <Header>
+          {title && <Title>{title}</Title>}
+          {extra && <ExtraContent>{extra}</ExtraContent>}
+        </Header>
+      )}
       {children}
     </Container>
-  )
-}
+  );
+};
 
-export default Card
+export default Card;

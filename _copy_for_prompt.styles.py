@@ -42,11 +42,8 @@ include_files = [
     # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/theme/*",
 
     # App code
-    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobGraph/*",
+    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/components/Card",
     "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobList/*",
-    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobGraph/index.tsx",
-    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobGraph/Search.tsx",
-    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobGraph/styles.ts",
 ]
 structure_include = [
     # "*"
@@ -68,7 +65,8 @@ DEFAULT_SYSTEM_MESSAGE = """
 """.strip()
 
 DEFAULT_QUERY_MESSAGE = """
-Why rows are rendering 1 more row on the first row? Please fix
+- Update Card so that it can accept an element that may hold any content (preferably with text elements) beside title. Make sure it is aligned as single line.
+- I want to see total paginated jobs length beside title, and move the pagination wrapper on the right side aligned with the card title and paginated jobs length.
 """.strip()
 
 # Project specific
@@ -84,17 +82,6 @@ DEFAULT_QUERY_MESSAGE += (
 )
 
 DEFAULT_INSTRUCTIONS_MESSAGE = """
-- Provide a step by step process of how you would solve the query.
-- Keep the code short, reusable, modular, testable, maintainable and optimized. Follow best practices and industry design patterns.
-- Install any libraries required to run the code.
-- You may add files or update the code structure if necessary.
-- Reuse existing code if possible without breaking anything.
-- Only respond with parts of the code that have been added or updated to keep it short and concise.
-- Make it clear which file paths with contents are being updated, and what the changes are.
-- Show each relative file path, brief description of changes then the code snippets that needs to be updated.
-- Include real world usage examples if applicable.
-- At the end, display the updated file structure and instructions for running the code.
-- Ignore instructions that are not applicable to the query.
 """.strip()
 
 # For existing projects
