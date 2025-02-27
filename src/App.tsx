@@ -15,7 +15,7 @@ import { ThemeProviderWrapper } from "./theme/ThemeContext";
 import JobEntities from "./pages/Dashboard/JobEntities";
 
 const App: React.FC = () => {
-  const [activeTab, setActiveTab] = useState("graph");
+  const [activeTab, setActiveTab] = useState("list");
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
@@ -32,14 +32,14 @@ const App: React.FC = () => {
         <AppBody>
           <JobSearch />
           <TabButtons>
-            <button onClick={() => handleTabChange("graph")}>Job Graph</button>
             <button onClick={() => handleTabChange("list")}>Job List</button>
+            <button onClick={() => handleTabChange("graph")}>Job Graph</button>
             <button onClick={() => handleTabChange("entities")}>
               Job Entities
             </button>
           </TabButtons>
-          {activeTab === "graph" && <JobGraph />}
           {activeTab === "list" && <JobList />}
+          {activeTab === "graph" && <JobGraph />}
           {activeTab === "entities" && <JobEntities />}
         </AppBody>
       </AppContainer>

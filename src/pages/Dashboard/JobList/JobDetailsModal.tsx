@@ -35,6 +35,9 @@ const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose }) => {
         </ModalHeader>
         <ModalBody>
           <p>
+            <strong>ID:</strong> {job.id}
+          </p>
+          <p>
             <strong>Link:</strong>{" "}
             {job.link ? (
               <a href={job.link} target="_blank" rel="noopener noreferrer">
@@ -44,9 +47,9 @@ const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose }) => {
               "No link available"
             )}
           </p>
-          <p>
+          {/* <p>
             <strong>Keywords:</strong> {job.keywords.join(", ") || "None"}
-          </p>
+          </p> */}
           <p>
             <strong>Matched Skills:</strong>{" "}
             {job.matched_skills.join(", ") || "None"}

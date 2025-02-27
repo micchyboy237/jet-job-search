@@ -59,13 +59,14 @@ export const fetchVectorNodesAtom = atom(
         .filter((item) => !!item);
 
       const updatedVectorNodes: VectorNode[] = vectorNodes.map((node) => {
-        const baseKeywords = [...node.keywords, ...node.technology_stack].map(
-          (item) => item.trim().toLowerCase()
-        );
+        const searchBaseKeywords = [
+          ...node.keywords,
+          ...node.technology_stack,
+        ].map((item) => item.trim().toLowerCase());
 
         const matchedSearchKeywords = Array.from(
           new Set(
-            baseKeywords
+            searchBaseKeywords
               .filter((baseKeyword) =>
                 search_keywords.some((searchKeyword) => {
                   const match1 = baseKeyword.includes(
@@ -81,9 +82,13 @@ export const fetchVectorNodesAtom = atom(
           )
         );
 
+        const skillBaseKeywords = [...node.technology_stack].map((item) =>
+          item.trim().toLowerCase()
+        );
+
         const matchedSkillsKeywords = Array.from(
           new Set(
-            baseKeywords
+            skillBaseKeywords
               .filter((baseKeyword) =>
                 match_skills_keywords.some((searchKeyword) => {
                   return searchKeyword == baseKeyword;
