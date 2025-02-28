@@ -49,14 +49,14 @@ export const DEFAULT_FILTERS: QueryOptions = {
   mode: "fusion",
   store_path:
     "/Users/jethroestrada/Desktop/External_Projects/Jet_Projects/jet_server/.cache/deeplake/store_1",
-  score_threshold: 0.0,
+  score_threshold: 0.6,
   split_mode: [],
   fusion_mode: "relative_score",
   disable_chunking: true,
 };
 
 export const DEFAULT_UI_FILTERS: UIOptions = {
-  days: 0,
+  days: 5,
   keywords: [],
 };
 
@@ -180,7 +180,6 @@ export const DEFAULT_FILTER_OPTIONS: Array<Filter> = [
     key: "days",
     type: "slider",
     placeholder: "Select number of days to filter",
-    default: 0,
     min: 0,
     max: 14,
   },
