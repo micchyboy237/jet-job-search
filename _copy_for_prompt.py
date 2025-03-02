@@ -63,12 +63,14 @@ exclude_content = []
 SHORTEN_FUNCTS = False
 INCLUDE_FILE_STRUCTURE = False
 
+DEFAULT_QUERY_MESSAGE = """
+- Update to apply MeanScoresByCategory type
+- Improve the styles for the summary info
+""".strip()
+
 DEFAULT_SYSTEM_MESSAGE = """
 """.strip()
 
-DEFAULT_QUERY_MESSAGE = """
-Update to display domain counts
-""".strip()
 
 DEFAULT_QUERY_MESSAGE += (
     "\n\n"

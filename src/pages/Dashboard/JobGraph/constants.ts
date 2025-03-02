@@ -172,10 +172,10 @@ export const DEFAULT_FILTER_OPTIONS: Array<Filter> = [
     type: "radio",
     placeholder: "Select fusion mode",
     options: [
-      { label: "reciprocal_rerank", value: "reciprocal_rerank" },
-      { label: "relative_score", value: "relative_score" },
-      { label: "dist_based_score", value: "dist_based_score" },
-      { label: "simple", value: "simple" },
+      { label: "Reciprocal Rerank", value: "reciprocal_rerank" },
+      { label: "Relative Score", value: "relative_score" },
+      { label: "Dist Based Score", value: "dist_based_score" },
+      { label: "Simple", value: "simple" },
     ],
   },
   {

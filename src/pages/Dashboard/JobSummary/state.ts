@@ -1,5 +1,5 @@
 import { atom } from "jotai";
-import { JobDomainCount, JobSummaryData } from "./types";
+import { JobDomainCount, JobSummaryData, MeanScoresByCategory } from "./types";
 import { vectorNodesAtom } from "../JobGraph/state";
 import { VectorNode } from "../JobGraph/types";
 
@@ -7,8 +7,11 @@ export const jobSummaryHandlerAtom = atom<JobSummaryData>((get) => {
   const vectorNodes: VectorNode[] = get(vectorNodesAtom);
   const totalJobs = vectorNodes.length;
 
-  // Initialize score categories
-  const categories = { High: [], Medium: [], Low: [] };
+  const categories: Record<"High" | "Medium" | "Low", number[]> = {
+    High: [],
+    Medium: [],
+    Low: [],
+  };
 
   vectorNodes.forEach((node) => {
     if (node.score >= 0.7) categories.High.push(node.score);
@@ -16,15 +19,16 @@ export const jobSummaryHandlerAtom = atom<JobSummaryData>((get) => {
     else categories.Low.push(node.score);
   });
 
-  // Compute mean scores per category
-  const meanScoresByCategory = Object.fromEntries(
-    Object.entries(categories).map(([key, scores]) => [
-      key,
+  const meanScoresByCategory: MeanScoresByCategory[] = Object.entries(
+    categories
+  ).map(([key, scores]) => ({
+    category: key as "High" | "Medium" | "Low",
+    formatted_score:
       scores.length > 0
         ? (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(2)
         : "N/A",
-    ])
-  );
+    jobCount: scores.length,
+  }));
 
   const meanScore =
     totalJobs > 0
@@ -33,19 +37,15 @@ export const jobSummaryHandlerAtom = atom<JobSummaryData>((get) => {
         ).toFixed(2)
       : null;
 
-  const domainCounts = vectorNodes.reduce((acc, node) => {
-    const item = acc.find((a) => a.domain === node.domain) || {
-      domain: node.domain,
-      count: 0,
-    };
-    item.count++;
-
-    if (!acc.includes(item)) {
-      acc.push(item);
+  const domainCounts = vectorNodes.reduce<JobDomainCount[]>((acc, node) => {
+    const existing = acc.find((a) => a.domain === node.domain);
+    if (existing) {
+      existing.count++;
+    } else {
+      acc.push({ domain: node.domain, count: 1 });
     }
-
     return acc;
-  }, [] as JobDomainCount[]);
+  }, []);
 
   return { totalJobs, meanScore, meanScoresByCategory, domainCounts };
 });

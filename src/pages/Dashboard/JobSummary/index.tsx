@@ -1,6 +1,6 @@
 import React from "react";
 import Card from "../../../components/Card";
-import { SummaryContainer, SummaryItem } from "./styles";
+import { SummaryContainer, SummaryItem, ScoreBadge } from "./styles";
 import { useAtomValue } from "jotai";
 import { jobSummaryHandlerAtom } from "./state";
 
@@ -11,21 +11,21 @@ const JobSummary: React.FC = () => {
   return (
     <Card title="Job Summary">
       <SummaryContainer>
-        {/* <SummaryItem>
+        <SummaryItem>
           <strong>Total Jobs:</strong> {totalJobs ?? "N/A"}
-        </SummaryItem> */}
-        <SummaryItem>
-          <strong>Mean Score:</strong> {meanScore ?? "N/A"}
         </SummaryItem>
         <SummaryItem>
-          <strong>High (≥ 0.7):</strong> {meanScoresByCategory.High}
+          <strong>Mean Score:</strong>{" "}
+          <ScoreBadge>{meanScore ?? "N/A"}</ScoreBadge>
         </SummaryItem>
-        <SummaryItem>
-          <strong>Medium (≥ 0.4):</strong> {meanScoresByCategory.Medium}
-        </SummaryItem>
-        <SummaryItem>
-          <strong>Low (≥ 0.0):</strong> {meanScoresByCategory.Low}
-        </SummaryItem>
+        {meanScoresByCategory.map(({ category, formatted_score, jobCount }) => (
+          <SummaryItem key={category}>
+            <strong>
+              {category} ({jobCount} jobs):
+            </strong>
+            <ScoreBadge>{formatted_score}</ScoreBadge>
+          </SummaryItem>
+        ))}
       </SummaryContainer>
 
       <SummaryContainer>
