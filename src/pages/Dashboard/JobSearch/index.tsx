@@ -29,7 +29,7 @@ export const Input: React.FC<InputProps> = ({
   ...rest
 }) => {
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter" && onEnter) {
+    if (onEnter && event.key === "Enter") {
       onEnter();
     }
   };
@@ -237,7 +237,7 @@ interface SearchProps {
 
 type SearchOptions = QueryOptions & UIOptions;
 
-const Search: React.FC<SearchProps> = ({ onSubmit }) => {
+const JobSearch: React.FC<SearchProps> = ({ onSubmit }) => {
   const [, fetchVectorNodes] = useAtom(fetchVectorNodesAtom);
   const [filters, setFilters] = useAtom(filtersAtom);
   const [uiFilters, setUIFilters] = useAtom(uiFiltersHandlerAtom);
@@ -268,14 +268,17 @@ const Search: React.FC<SearchProps> = ({ onSubmit }) => {
       return;
     }
 
+    // const prevFilters = {
+    //   ...prevFiltersRef.current,
+    //   query,
+    // };
     // const newFilters = {
     //   ...filters,
     //   query,
     // };
 
-    // if (!isEqual(prevFiltersRef.current, newFilters)) {
+    // if (!isEqual(prevFilters, newFilters)) {
     fetchVectorNodes(query);
-    // prevFiltersRef.current = newFilters;
     // }
 
     if (onSubmit) {
@@ -291,7 +294,7 @@ const Search: React.FC<SearchProps> = ({ onSubmit }) => {
       const handleKeyDown = (event: KeyboardEvent) => {
         if (event.key === "Enter") {
           event.preventDefault();
-          handleSearch();
+          handleSearch(event);
         }
       };
 
@@ -335,7 +338,6 @@ const Search: React.FC<SearchProps> = ({ onSubmit }) => {
           placeholder="Search jobs..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          onEnter={handleSearch}
         />
         <Button type="submit">Search</Button>
       </SearchBar>
@@ -404,4 +406,4 @@ const Search: React.FC<SearchProps> = ({ onSubmit }) => {
   );
 };
 
-export default Search;
+export default JobSearch;

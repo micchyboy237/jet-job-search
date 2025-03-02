@@ -7,11 +7,11 @@ export const DEFAULT_FILTERS: QueryOptions = {
   json_attributes: [
     "title",
     // "keywords",
-    // "tags",
     // "entities.role",
     // "entities.application",
     // "entities.technology_stack",
     // "entities.qualifications",
+    // "tags",
     "details",
   ],
   exclude_json_attributes: [],
@@ -49,7 +49,7 @@ export const DEFAULT_FILTERS: QueryOptions = {
   mode: "fusion",
   store_path:
     "/Users/jethroestrada/Desktop/External_Projects/Jet_Projects/jet_server/.cache/deeplake/store_1",
-  score_threshold: 0.7,
+  score_threshold: 0.5,
   split_mode: [],
   fusion_mode: "relative_score",
   disable_chunking: true,

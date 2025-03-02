@@ -34,6 +34,7 @@ exclude_files = [
     ".*",
     "*.test.*",
     "firebase.json",
+    "*/JobDetailsModal.tsx",
 ]
 include_files = [
     # "package.json",
@@ -42,7 +43,12 @@ include_files = [
 
     # App code
     "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/components/Card",
-    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobList/*",
+    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/App.tsx",
+    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/styles.ts",
+
+    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobGraph/types.ts",
+    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobList/*",
+    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobSummary/*",
     # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobList/index.tsx",
     # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobGraph/constants.ts",
     # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobSearch/index.tsx",
@@ -67,8 +73,8 @@ DEFAULT_SYSTEM_MESSAGE = """
 """.strip()
 
 DEFAULT_QUERY_MESSAGE = """
-- Update Card so that it can accept an element that may hold any content (preferably with text elements) beside title. Make sure it is aligned as single line.
-- I want to see total paginated jobs length beside title, and move the pagination wrapper on the right side aligned with the card title and paginated jobs length.
+- I want to see summary info that gives me helpful details such as the mean score average, etc. using vectorNodesAtom
+- Complete the JobSummary code and add under JobSearch
 """.strip()
 
 # DEFAULT_QUERY_MESSAGE += (

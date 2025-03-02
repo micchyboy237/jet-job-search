@@ -2,13 +2,13 @@ import { atom } from "jotai";
 import { Job } from "./types";
 import { vectorNodesAtom } from "../JobGraph/state";
 
-export const jobsAtom = atom((get) => {
-  return get(vectorNodesAtom).map((node) => {
+export const jobsAtom = atom<Job[]>((get) => {
+  return get(vectorNodesAtom).map((node): Job => {
     const scorePercentage = (node.score * 100).toFixed(2) + "%";
+
     return {
       id: node.id,
       score: node.score,
-      formattedScore: scorePercentage,
       title: node.title,
       description: node.description,
       company: node.company,
@@ -25,6 +25,8 @@ export const jobsAtom = atom((get) => {
       application: node.application || [],
       technology_stack: node.technology_stack || [],
       qualifications: node.qualifications || [],
+
+      formattedScore: scorePercentage,
     };
   });
 });

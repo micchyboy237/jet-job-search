@@ -1,15 +1,5 @@
-export interface Job {
-  id: string;
-  score: number;
+import { VectorNode } from "../JobGraph/types";
+
+export interface Job extends VectorNode {
   formattedScore: string;
-  title: string;
-  description: string;
-  company: string;
-  location: string | null;
-  posted_date: string;
-  salary: string;
-  job_type: string;
-  tags: string[];
-  link: string;
-  timeAgo?: string;
 }
