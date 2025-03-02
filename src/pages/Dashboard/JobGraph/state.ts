@@ -41,37 +41,37 @@ export const fetchVectorNodesAtom = atom(
         ...job.metadata,
       }));
 
-      const searchKeywords = query
-        .split(",")
-        .map((item) => item.trim().toLowerCase())
-        .filter((item) => !!item);
       const mySkillsKeywords = [
-        "React",
+        "React.js",
         "React Native",
-        "Node",
+        "Node.js",
         "Python",
         "PostgreSQL",
         "MongoDB",
         "Firebase",
         "AWS",
-      ]
-        .map((item) => item.trim().toLowerCase())
+      ];
+
+      const searchKeywords = query
+        .split(",")
+        .map((item) => item.trim())
         .filter((item) => !!item);
+      // const searchKeywords = mySkillsKeywords;
 
       const updatedVectorNodes: VectorNode[] = vectorNodes.map((node) => {
         const nodeTechnologyStack = node.coding_libraries
-          .map((item) => item.trim().toLowerCase())
+          .map((item) => item)
           .filter((item) => !!item);
         const nodeApplication = (node?.application || [])
-          .map((item) => item.trim().toLowerCase())
+          .map((item) => item)
           .filter((item) => !!item);
         const baseSkillKeywords = [
           ...nodeTechnologyStack,
           ...nodeApplication,
-        ].map((item) => item.trim().toLowerCase());
+        ].map((item) => item);
 
         const baseSearchKeywords = [...node.keywords, ...baseSkillKeywords].map(
-          (item) => item.trim().toLowerCase()
+          (item) => item
         );
 
         const matchedSearchKeywords = Array.from(
@@ -79,16 +79,10 @@ export const fetchVectorNodesAtom = atom(
             baseSearchKeywords
               .filter((baseSearchKeyword) =>
                 searchKeywords.some((searchKeyword) => {
-                  const match1 = baseSearchKeyword.includes(
-                    searchKeyword.toLowerCase()
-                  );
-                  const match2 = baseSearchKeyword
-                    .split(" ")
-                    .includes(searchKeyword.toLowerCase());
-                  return match1 || match2;
+                  return baseSearchKeyword == searchKeyword;
                 })
               )
-              .map((keyword) => keyword.toLowerCase())
+              .map((keyword) => keyword)
           )
         );
 
@@ -100,11 +94,11 @@ export const fetchVectorNodesAtom = atom(
                   return matchedSkillKeyword == baseSkillKeyword;
                 })
               )
-              .map((keyword) => keyword.toLowerCase())
+              .map((keyword) => keyword)
           )
         );
 
-        const priorityKeywords = mySkillsKeywords;
+        const priorityKeywords = [...searchKeywords, ...mySkillsKeywords];
         const sortedTechnologyStack = sortWithPriority(
           nodeTechnologyStack,
           priorityKeywords
@@ -166,10 +160,10 @@ export const uiFiltersHandlerAtom = atom(
         newFilters.days > 0 ? diffDays <= newFilters.days : true;
 
       // const filtersKeywords = newFilters.keywords.map((item) =>
-      //   item.trim().toLowerCase()
+      //   item
       // );
       // const baseKeywords = [...node.keywords, ...node.coding_libraries].map(
-      //   (item) => item.trim().toLowerCase()
+      //   (item) => item
       // );
       // const matchesKeywords =
       //   filtersKeywords.length > 0

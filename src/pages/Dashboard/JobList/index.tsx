@@ -65,7 +65,7 @@ const JobList: React.FC = () => {
     key: string;
     direction: string;
   }>({
-    key: "score",
+    key: "searchKeywords",
     direction: "desc",
   });
 
@@ -98,18 +98,44 @@ const JobList: React.FC = () => {
     // }
 
     let aValue, bValue;
+
+    if (["searchKeywords", "matched_skills"].includes(sortConfig.key)) {
+      const aArray = a[sortConfig.key] || [];
+      const bArray = b[sortConfig.key] || [];
+
+      const aCategory = aArray.length;
+      const bCategory = bArray.length;
+
+      // Primary sort by score category
+      const categorySort =
+        sortConfig.direction === "asc"
+          ? aCategory - bCategory
+          : bCategory - aCategory;
+      if (categorySort !== 0) return categorySort;
+
+      aValue = aArray.join(",");
+      bValue = bArray.join(",");
+
+      const primarySort = bValue.localeCompare(aValue);
+      if (primarySort !== 0) return primarySort;
+
+      // Secondary sort by the other key in descending order
+      const secondaryKey =
+        sortConfig.key === "searchKeywords"
+          ? "matched_skills"
+          : "searchKeywords";
+      const aSecondaryValue = (a[secondaryKey] || []).join(",");
+      const bSecondaryValue = (b[secondaryKey] || []).join(",");
+
+      return bSecondaryValue.localeCompare(aSecondaryValue); // Descending order
+    }
+
     if (sortConfig.key === "posted_date") {
       aValue = new Date(a.posted_date).getTime();
       bValue = new Date(b.posted_date).getTime();
     } else if (sortConfig.key === "timeAgo") {
       aValue = getTimeAgoTimestamp(a.posted_date);
       bValue = getTimeAgoTimestamp(b.posted_date);
-    } else if (sortConfig.key === "searchKeywords") {
-      aValue = a.searchKeywords.length;
-      bValue = b.searchKeywords.length;
-    } else if (sortConfig.key === "matched_skills") {
-      aValue = a.matched_skills.length;
-      bValue = b.matched_skills.length;
     } else {
       aValue = a[sortConfig.key];
       bValue = b[sortConfig.key];
@@ -201,8 +227,16 @@ const JobList: React.FC = () => {
                 <JobTableData>{getTimeAgo(job.posted_date)}</JobTableData>
                 <JobTableData title={job.title}>{job.title}</JobTableData>
                 <JobTableData title={job.company}>{job.company}</JobTableData>
-                <JobTableData>{job.searchKeywords.join(", ")}</JobTableData>
-                <JobTableData>{job.matched_skills.join(", ")}</JobTableData>
+                <JobTableData>
+                  {job.searchKeywords.length
+                    ? job.searchKeywords.join(", ")
+                    : "None"}
+                </JobTableData>
+                <JobTableData>
+                  {job.matched_skills.length
+                    ? job.matched_skills.join(", ")
+                    : "None"}
+                </JobTableData>
                 <JobTableData>{job.salary}</JobTableData>
                 <JobTableData>{job.job_type}</JobTableData>
                 <JobTableData>
