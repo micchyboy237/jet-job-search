@@ -41,19 +41,13 @@ include_files = [
     # "*.ts",
     # "*.json",
 
-    # App code
-    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/components/Card",
-    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/App.tsx",
-    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/styles.ts",
+    # Global styles
+    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/theme/*",
 
-    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobGraph/types.ts",
-    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobList/*",
+    # Features code
+    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/SettingsPanel/*"
     "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobSummary/*",
-    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobList/index.tsx",
-    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobGraph/constants.ts",
-    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobSearch/index.tsx",
-    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobGraph/types.ts",
-    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobSearch/index.tsx",
+    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobList/*",
 ]
 structure_include = [
     # "*"
@@ -73,20 +67,19 @@ DEFAULT_SYSTEM_MESSAGE = """
 """.strip()
 
 DEFAULT_QUERY_MESSAGE = """
-- I want to see summary info that gives me helpful details such as the mean score average, etc. using vectorNodesAtom
-- Complete the JobSummary code and add under JobSearch
+Update to display domain counts
 """.strip()
 
-# DEFAULT_QUERY_MESSAGE += (
-#     "\n\n"
-#     "Guidelines:"
-#     "\n- Use relative paths for imports"
-#     "\n\n"
-#     "Applicable to html and css related code if generated:"
-#     "\n- Render beautiful UI/UX in terms of element positions, color themes and contrasts, typography, font sizes, spacing, alignments, animations, and other modern conventions."
-#     "\n- Use appropriate element tags, attributes and props."
-#     "\n- Generated styles should match existing theme if any."
-# )
+DEFAULT_QUERY_MESSAGE += (
+    "\n\n"
+    "Guidelines:"
+    "\n- Use relative paths for imports"
+    "\n\n"
+    "Applicable to html and css related code if generated:"
+    "\n- Render beautiful UI/UX in terms of element positions, color themes and contrasts, typography, font sizes, spacing, alignments, animations, and other modern conventions."
+    "\n- Use appropriate element tags, attributes and props."
+    "\n- Generated styles should match existing theme if any."
+)
 
 DEFAULT_INSTRUCTIONS_MESSAGE = """
 """.strip()
