@@ -12,14 +12,23 @@ import { Filter, QueryOptions, UIOptions } from "../JobGraph/types";
 import styled from "styled-components";
 import { isEqual } from "../../../utils/comparison";
 
-export const Input = ({
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  type?: React.HTMLInputTypeAttribute;
+  placeholder?: string;
+  value?: string | number;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onEnter?: () => void;
+}
+
+export const Input: React.FC<InputProps> = ({
   type = "text",
   placeholder,
   value,
   onChange,
   onEnter,
+  ...rest
 }) => {
-  const handleKeyDown = (event) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter" && onEnter) {
       onEnter();
     }
@@ -32,6 +41,7 @@ export const Input = ({
       value={value}
       onChange={onChange}
       onKeyDown={handleKeyDown}
+      {...rest}
     />
   );
 };
@@ -233,7 +243,8 @@ const Search: React.FC<SearchProps> = ({ onSubmit }) => {
   const [uiFilters, setUIFilters] = useAtom(uiFiltersHandlerAtom);
   const [query, setQuery] = useState("");
 
-  // const prevFiltersRef = useRef<SearchOptions | null>(null);
+  const prevQueryRef = useRef(null);
+  const prevFiltersRef = useRef<QueryOptions | null>(null);
 
   const handleFilterChange = (key: string, value: any) => {
     const option = DEFAULT_FILTER_OPTIONS.find((item) => key === item.key);
@@ -273,18 +284,28 @@ const Search: React.FC<SearchProps> = ({ onSubmit }) => {
   };
 
   useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Enter") {
-        event.preventDefault();
-        handleSearch();
-      }
-    };
+    if (
+      query != prevQueryRef.current ||
+      !isEqual(prevFiltersRef.current, filters)
+    ) {
+      const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          handleSearch();
+        }
+      };
 
-    document.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
+      document.addEventListener("keydown", handleKeyDown);
+      return () => {
+        document.removeEventListener("keydown", handleKeyDown);
+      };
+    }
+  }, [query, filters]);
+
+  useEffect(() => {
+    prevQueryRef.current = query;
+    prevFiltersRef.current = filters;
+  }, [query, filters]);
 
   const filter_options = useMemo(() => {
     return DEFAULT_FILTER_OPTIONS.map((option) => {
@@ -328,12 +349,19 @@ const Search: React.FC<SearchProps> = ({ onSubmit }) => {
                 value={filter.value || ""}
                 onChange={(value) => handleFilterChange(filter.key, value)}
               />
-            ) : filter.type === "text" || filter.type === "number" ? (
+            ) : filter.type === "text" ? (
               <Input
                 type={filter.type}
                 placeholder={filter.placeholder}
                 value={filter.value || ""}
                 onChange={(e) => handleFilterChange(filter.key, e.target.value)}
+              />
+            ) : filter.type === "number" ? (
+              <Input
+                type={filter.type}
+                value={filter.value || ""}
+                onChange={(e) => handleFilterChange(filter.key, e.target.value)}
+                {...filter}
               />
             ) : filter.type === "select" ? (
               <Select

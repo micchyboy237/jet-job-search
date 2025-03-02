@@ -6,7 +6,7 @@ export const DEFAULT_FILTERS: QueryOptions = {
   extensions: [".md", ".mdx", ".rst"],
   json_attributes: [
     "title",
-    "keywords",
+    // "keywords",
     // "tags",
     // "entities.role",
     // "entities.application",
@@ -49,7 +49,7 @@ export const DEFAULT_FILTERS: QueryOptions = {
   mode: "fusion",
   store_path:
     "/Users/jethroestrada/Desktop/External_Projects/Jet_Projects/jet_server/.cache/deeplake/store_1",
-  score_threshold: 0.6,
+  score_threshold: 0.7,
   split_mode: [],
   fusion_mode: "relative_score",
   disable_chunking: true,
@@ -155,6 +155,9 @@ export const DEFAULT_FILTER_OPTIONS: Array<Filter> = [
     key: "score_threshold",
     type: "number",
     placeholder: "Set score threshold",
+    min: 0.0,
+    max: 1.0,
+    step: 0.1,
   },
   // {
   //   name: "Split Mode",

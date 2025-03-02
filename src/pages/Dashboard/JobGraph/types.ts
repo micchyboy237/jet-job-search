@@ -36,6 +36,9 @@ export type Filter =
   | (BaseFilter & {
       type: "number";
       value?: number;
+      min: number;
+      max: number;
+      step: number;
     })
   | (BaseFilter & {
       type: "boolean";

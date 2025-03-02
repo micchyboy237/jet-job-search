@@ -76,7 +76,7 @@ const JobList: React.FC = () => {
   const sortedJobs = [...jobs].sort((a, b) => {
     if (sortConfig.key === "score") {
       const getScoreCategory = (score) => {
-        if (score >= 0.6) return 3; // High
+        if (score >= 0.7) return 3; // High
         if (score >= 0.4) return 2; // Medium
         return 1; // Low
       };
@@ -219,7 +219,7 @@ const JobList: React.FC = () => {
                 <JobTableData>
                   <Score
                     className={
-                      job.score >= 0.6
+                      job.score >= 0.7
                         ? "high"
                         : job.score >= 0.4
                         ? "medium"
