@@ -19,7 +19,7 @@ export const jobsAtom = atom<Job[]>((get) => {
       tags: node.tags,
       link: node.link,
       domain: node.domain,
-      keywords: node.keywords,
+      searchKeywords: node.keywords,
       matched_skills: node.matched_skills,
       role: node.role || [],
       application: node.application || [],

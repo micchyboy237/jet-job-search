@@ -74,28 +74,28 @@ const JobList: React.FC = () => {
 
   // Step 1: Sort all jobs before pagination
   const sortedJobs = [...jobs].sort((a, b) => {
-    if (sortConfig.key === "score") {
-      const getScoreCategory = (score) => {
-        if (score >= 0.7) return 3; // High
-        if (score >= 0.4) return 2; // Medium
-        return 1; // Low
-      };
+    // if (sortConfig.key === "score") {
+    //   const getScoreCategory = (score) => {
+    //     if (score >= 0.7) return 3; // High
+    //     if (score >= 0.4) return 2; // Medium
+    //     return 1; // Low
+    //   };
 
-      const aCategory = getScoreCategory(a.score);
-      const bCategory = getScoreCategory(b.score);
+    //   const aCategory = getScoreCategory(a.score);
+    //   const bCategory = getScoreCategory(b.score);
 
-      // Primary sort by score category
-      const categorySort =
-        sortConfig.direction === "asc"
-          ? aCategory - bCategory
-          : bCategory - aCategory;
-      if (categorySort !== 0) return categorySort;
+    //   // Primary sort by score category
+    //   const categorySort =
+    //     sortConfig.direction === "asc"
+    //       ? aCategory - bCategory
+    //       : bCategory - aCategory;
+    //   if (categorySort !== 0) return categorySort;
 
-      // Secondary sort within category by posted_date (descending always)
-      return (
-        new Date(b.posted_date).getTime() - new Date(a.posted_date).getTime()
-      );
-    }
+    //   // Secondary sort within category by posted_date (descending always)
+    //   return (
+    //     new Date(b.posted_date).getTime() - new Date(a.posted_date).getTime()
+    //   );
+    // }
 
     let aValue, bValue;
     if (sortConfig.key === "posted_date") {
@@ -104,9 +104,9 @@ const JobList: React.FC = () => {
     } else if (sortConfig.key === "timeAgo") {
       aValue = getTimeAgoTimestamp(a.posted_date);
       bValue = getTimeAgoTimestamp(b.posted_date);
-    } else if (sortConfig.key === "keywords") {
-      aValue = a.keywords.length;
-      bValue = b.keywords.length;
+    } else if (sortConfig.key === "searchKeywords") {
+      aValue = a.searchKeywords.length;
+      bValue = b.searchKeywords.length;
     } else if (sortConfig.key === "matched_skills") {
       aValue = a.matched_skills.length;
       bValue = b.matched_skills.length;
@@ -166,11 +166,11 @@ const JobList: React.FC = () => {
               <JobTableHeader onClick={() => handleSort("company")}>
                 Company
               </JobTableHeader>
+              <JobTableHeader onClick={() => handleSort("searchKeywords")}>
+                Keywords
+              </JobTableHeader>
               <JobTableHeader onClick={() => handleSort("matched_skills")}>
                 Matched Skills
-              </JobTableHeader>
-              <JobTableHeader onClick={() => handleSort("technology_stack")}>
-                Tech stack
               </JobTableHeader>
               <JobTableHeader onClick={() => handleSort("salary")}>
                 Salary
@@ -201,8 +201,8 @@ const JobList: React.FC = () => {
                 <JobTableData>{getTimeAgo(job.posted_date)}</JobTableData>
                 <JobTableData title={job.title}>{job.title}</JobTableData>
                 <JobTableData title={job.company}>{job.company}</JobTableData>
+                <JobTableData>{job.searchKeywords.join(", ")}</JobTableData>
                 <JobTableData>{job.matched_skills.join(", ")}</JobTableData>
-                <JobTableData>{job.technology_stack.join(", ")}</JobTableData>
                 <JobTableData>{job.salary}</JobTableData>
                 <JobTableData>{job.job_type}</JobTableData>
                 <JobTableData>

@@ -49,7 +49,7 @@ const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose }) => {
           </p>
           <p>
             <strong>Search Keywords:</strong>{" "}
-            {job.keywords.join(", ") || "None"}
+            {job.searchKeywords.join(", ") || "None"}
           </p>
           <p>
             <strong>Matched Skills:</strong>{" "}
