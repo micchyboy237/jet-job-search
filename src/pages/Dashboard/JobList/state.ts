@@ -23,7 +23,7 @@ export const jobsAtom = atom<Job[]>((get) => {
       matched_skills: node.matched_skills,
       role: node.role || [],
       application: node.application || [],
-      technology_stack: node.technology_stack || [],
+      coding_libraries: node.coding_libraries || [],
       qualifications: node.qualifications || [],
 
       formattedScore: scorePercentage,

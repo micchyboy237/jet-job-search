@@ -59,7 +59,7 @@ export const fetchVectorNodesAtom = atom(
         .filter((item) => !!item);
 
       const updatedVectorNodes: VectorNode[] = vectorNodes.map((node) => {
-        const nodeTechnologyStack = node.technology_stack
+        const nodeTechnologyStack = node.coding_libraries
           .map((item) => item.trim().toLowerCase())
           .filter((item) => !!item);
         const nodeApplication = (node?.application || [])
@@ -123,7 +123,7 @@ export const fetchVectorNodesAtom = atom(
         );
         const result: VectorNode = {
           ...node,
-          technology_stack: sortedTechnologyStack,
+          coding_libraries: sortedTechnologyStack,
           application: sortedApplications,
           keywords: sortedKeywords,
           matched_skills: sortedMatchedSkills,
@@ -168,7 +168,7 @@ export const uiFiltersHandlerAtom = atom(
       // const filtersKeywords = newFilters.keywords.map((item) =>
       //   item.trim().toLowerCase()
       // );
-      // const baseKeywords = [...node.keywords, ...node.technology_stack].map(
+      // const baseKeywords = [...node.keywords, ...node.coding_libraries].map(
       //   (item) => item.trim().toLowerCase()
       // );
       // const matchesKeywords =

@@ -120,7 +120,7 @@ export interface VectorNode {
   keywords: string[];
   role: string[];
   application: string[];
-  technology_stack: string[];
+  coding_libraries: string[];
   qualifications: string[];
   matched_skills: string[];
 }
