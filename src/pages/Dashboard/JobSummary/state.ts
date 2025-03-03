@@ -1,7 +1,13 @@
 import { atom } from "jotai";
-import { JobDomainCount, JobSummaryData, MeanScoresByCategory } from "./types";
+import {
+  JobDomainCount,
+  JobSummaryData,
+  MeanScoresByCategory,
+  SkillKeywordCount,
+} from "./types";
 import { vectorNodesAtom } from "../JobGraph/state";
 import { VectorNode } from "../JobGraph/types";
+import { MY_SKILLS_KEYWORDS } from "../JobGraph/constants";
 
 export const jobSummaryHandlerAtom = atom<JobSummaryData>((get) => {
   const vectorNodes: VectorNode[] = get(vectorNodesAtom);
@@ -13,10 +19,24 @@ export const jobSummaryHandlerAtom = atom<JobSummaryData>((get) => {
     Low: [],
   };
 
+  const skillKeywordCounts: SkillKeywordCount[] = MY_SKILLS_KEYWORDS.map(
+    (skill) => ({
+      skill,
+      count: 0,
+    })
+  );
+
   vectorNodes.forEach((node) => {
     if (node.score >= 0.7) categories.High.push(node.score);
     else if (node.score >= 0.4) categories.Medium.push(node.score);
     else categories.Low.push(node.score);
+
+    MY_SKILLS_KEYWORDS.forEach((skill) => {
+      if (node.matched_skills.includes(skill)) {
+        const skillEntry = skillKeywordCounts.find((s) => s.skill === skill);
+        if (skillEntry) skillEntry.count++;
+      }
+    });
   });
 
   const meanScoresByCategory: MeanScoresByCategory[] = Object.entries(
@@ -47,5 +67,11 @@ export const jobSummaryHandlerAtom = atom<JobSummaryData>((get) => {
     return acc;
   }, []);
 
-  return { totalJobs, meanScore, meanScoresByCategory, domainCounts };
+  return {
+    totalJobs,
+    meanScore,
+    meanScoresByCategory,
+    domainCounts,
+    skillKeywordCounts,
+  };
 });

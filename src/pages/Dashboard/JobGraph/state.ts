@@ -1,7 +1,11 @@
 import { atom } from "jotai";
 import { VectorNode, JobResult, QueryOptions, UIOptions } from "./types";
 import { RAG_NODES_URL } from "./config";
-import { DEFAULT_FILTERS, DEFAULT_UI_FILTERS } from "./constants";
+import {
+  DEFAULT_FILTERS,
+  DEFAULT_UI_FILTERS,
+  MY_SKILLS_KEYWORDS,
+} from "./constants";
 import { toSnakeCase } from "../../../utils/transformers";
 import { sortWithPriority } from "../../../utils/sort";
 
@@ -41,22 +45,11 @@ export const fetchVectorNodesAtom = atom(
         ...job.metadata,
       }));
 
-      const mySkillsKeywords = [
-        "React.js",
-        "React Native",
-        "Node.js",
-        "Python",
-        "PostgreSQL",
-        "MongoDB",
-        "Firebase",
-        "AWS",
-      ];
-
       const searchKeywords = query
         .split(",")
         .map((item) => item.trim())
         .filter((item) => !!item);
-      // const searchKeywords = mySkillsKeywords;
+      // const searchKeywords = MY_SKILLS_KEYWORDS;
 
       const updatedVectorNodes: VectorNode[] = vectorNodes.map((node) => {
         const nodeTechnologyStack = node.coding_libraries
@@ -90,7 +83,7 @@ export const fetchVectorNodesAtom = atom(
           new Set(
             baseSkillKeywords
               .filter((baseSkillKeyword) =>
-                mySkillsKeywords.some((matchedSkillKeyword) => {
+                MY_SKILLS_KEYWORDS.some((matchedSkillKeyword) => {
                   return matchedSkillKeyword == baseSkillKeyword;
                 })
               )
@@ -98,7 +91,7 @@ export const fetchVectorNodesAtom = atom(
           )
         );
 
-        const priorityKeywords = [...searchKeywords, ...mySkillsKeywords];
+        const priorityKeywords = [...searchKeywords, ...MY_SKILLS_KEYWORDS];
         const sortedTechnologyStack = sortWithPriority(
           nodeTechnologyStack,
           priorityKeywords

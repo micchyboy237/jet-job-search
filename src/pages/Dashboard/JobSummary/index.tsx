@@ -5,8 +5,13 @@ import { useAtomValue } from "jotai";
 import { jobSummaryHandlerAtom } from "./state";
 
 const JobSummary: React.FC = () => {
-  const { totalJobs, meanScore, meanScoresByCategory, domainCounts } =
-    useAtomValue(jobSummaryHandlerAtom);
+  const {
+    totalJobs,
+    meanScore,
+    meanScoresByCategory,
+    domainCounts,
+    skillKeywordCounts,
+  } = useAtomValue(jobSummaryHandlerAtom);
 
   return (
     <Card title="Job Summary">
@@ -37,6 +42,19 @@ const JobSummary: React.FC = () => {
           ))
         ) : (
           <SummaryItem>No domains available</SummaryItem>
+        )}
+      </SummaryContainer>
+
+      <SummaryContainer>
+        <h3>Skill Keyword Matches</h3>
+        {skillKeywordCounts.length > 0 ? (
+          skillKeywordCounts.map(({ skill, count }) => (
+            <SummaryItem key={skill}>
+              <strong>{skill}:</strong> {count}
+            </SummaryItem>
+          ))
+        ) : (
+          <SummaryItem>No skills matched</SummaryItem>
         )}
       </SummaryContainer>
     </Card>

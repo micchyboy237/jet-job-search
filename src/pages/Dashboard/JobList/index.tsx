@@ -65,7 +65,7 @@ const JobList: React.FC = () => {
     key: string;
     direction: string;
   }>({
-    key: "searchKeywords",
+    key: "score",
     direction: "desc",
   });
 
@@ -183,20 +183,26 @@ const JobList: React.FC = () => {
           <thead>
             <tr>
               <JobTableHeader>#</JobTableHeader>
+              <JobTableHeader onClick={() => handleSort("score")}>
+                Score
+              </JobTableHeader>
               <JobTableHeader onClick={() => handleSort("timeAgo")}>
                 Time Ago
               </JobTableHeader>
+              <JobTableHeader onClick={() => handleSort("posted_date")}>
+                Posted
+              </JobTableHeader>
               <JobTableHeader onClick={() => handleSort("title")}>
                 Title
-              </JobTableHeader>
-              <JobTableHeader onClick={() => handleSort("company")}>
-                Company
               </JobTableHeader>
               <JobTableHeader onClick={() => handleSort("searchKeywords")}>
                 Keywords
               </JobTableHeader>
               <JobTableHeader onClick={() => handleSort("matched_skills")}>
                 Matched Skills
+              </JobTableHeader>
+              <JobTableHeader onClick={() => handleSort("company")}>
+                Company
               </JobTableHeader>
               <JobTableHeader onClick={() => handleSort("salary")}>
                 Salary
@@ -206,12 +212,6 @@ const JobList: React.FC = () => {
               </JobTableHeader>
               <JobTableHeader onClick={() => handleSort("link")}>
                 Link
-              </JobTableHeader>
-              <JobTableHeader onClick={() => handleSort("posted_date")}>
-                Posted
-              </JobTableHeader>
-              <JobTableHeader onClick={() => handleSort("score")}>
-                Score
               </JobTableHeader>
             </tr>
           </thead>
@@ -223,32 +223,6 @@ const JobList: React.FC = () => {
               >
                 <JobTableData>
                   {(currentPage - 1) * itemsPerPage + index + 1}
-                </JobTableData>
-                <JobTableData>{getTimeAgo(job.posted_date)}</JobTableData>
-                <JobTableData title={job.title}>{job.title}</JobTableData>
-                <JobTableData title={job.company}>{job.company}</JobTableData>
-                <JobTableData>
-                  {job.searchKeywords.length
-                    ? job.searchKeywords.join(", ")
-                    : "None"}
-                </JobTableData>
-                <JobTableData>
-                  {job.matched_skills.length
-                    ? job.matched_skills.join(", ")
-                    : "None"}
-                </JobTableData>
-                <JobTableData>{job.salary}</JobTableData>
-                <JobTableData>{job.job_type}</JobTableData>
-                <JobTableData>
-                  <a href={job.link} target="_blank" rel="noopener noreferrer">
-                    {job.link ? "View Job" : "No Link"}
-                  </a>
-                </JobTableData>
-                <JobTableData>
-                  {job.posted_date &&
-                  !isNaN(new Date(job.posted_date).getTime())
-                    ? format(new Date(job.posted_date), "MMM d, yyyy")
-                    : "Unknown"}
                 </JobTableData>
                 <JobTableData>
                   <Score
@@ -262,6 +236,32 @@ const JobList: React.FC = () => {
                   >
                     {job.formattedScore}
                   </Score>
+                </JobTableData>
+                <JobTableData>{getTimeAgo(job.posted_date)}</JobTableData>
+                <JobTableData>
+                  {job.posted_date &&
+                  !isNaN(new Date(job.posted_date).getTime())
+                    ? format(new Date(job.posted_date), "EEE, MMM d")
+                    : "Unknown"}
+                </JobTableData>
+                <JobTableData title={job.title}>{job.title}</JobTableData>
+                <JobTableData>
+                  {job.searchKeywords.length
+                    ? job.searchKeywords.join(", ")
+                    : "None"}
+                </JobTableData>
+                <JobTableData>
+                  {job.matched_skills.length
+                    ? job.matched_skills.join(", ")
+                    : "None"}
+                </JobTableData>
+                <JobTableData title={job.company}>{job.company}</JobTableData>
+                <JobTableData>{job.salary}</JobTableData>
+                <JobTableData>{job.job_type}</JobTableData>
+                <JobTableData>
+                  <a href={job.link} target="_blank" rel="noopener noreferrer">
+                    {job.link ? "View Job" : "No Link"}
+                  </a>
                 </JobTableData>
               </JobTableRow>
             ))}

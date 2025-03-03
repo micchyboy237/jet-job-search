@@ -64,8 +64,8 @@ SHORTEN_FUNCTS = False
 INCLUDE_FILE_STRUCTURE = False
 
 DEFAULT_QUERY_MESSAGE = """
-- Update to apply MeanScoresByCategory type
-- Improve the styles for the summary info
+Update summary with the ff:
+- Add the counts for each item in MY_SKILLS_KEYWORDS for each existing in job.keywords
 """.strip()
 
 DEFAULT_SYSTEM_MESSAGE = """

@@ -1,5 +1,16 @@
 import { Filter, QueryOptions, UIOptions } from "./types";
 
+export const MY_SKILLS_KEYWORDS = [
+  "React.js",
+  "React Native",
+  "Node.js",
+  "Python",
+  "PostgreSQL",
+  "MongoDB",
+  "Firebase",
+  "AWS",
+];
+
 export const DEFAULT_FILTERS: QueryOptions = {
   rag_dir:
     "/Users/jethroestrada/Desktop/External_Projects/Jet_Projects/my-jobs/saved/jobs.json",

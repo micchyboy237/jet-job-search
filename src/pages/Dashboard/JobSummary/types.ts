@@ -9,9 +9,15 @@ export interface MeanScoresByCategory {
   jobCount: number;
 }
 
+export interface SkillKeywordCount {
+  skill: string;
+  count: number;
+}
+
 export interface JobSummaryData {
   totalJobs: number | null;
   meanScore: string | null;
   meanScoresByCategory: MeanScoresByCategory[];
   domainCounts: JobDomainCount[];
+  skillKeywordCounts: SkillKeywordCount[];
 }
