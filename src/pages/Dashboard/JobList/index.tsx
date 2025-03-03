@@ -19,6 +19,7 @@ import {
 } from "date-fns";
 import JobDetailsModal from "./JobDetailsModal";
 import Card from "../../../components/Card";
+import JobCoverLetterModal from "./JobCoverLetterModal";
 
 // Helper function to calculate the time ago string
 const getTimeAgo = (date: string) => {
@@ -213,6 +214,7 @@ const JobList: React.FC = () => {
               <JobTableHeader onClick={() => handleSort("link")}>
                 Link
               </JobTableHeader>
+              <JobTableHeader>Actions</JobTableHeader>
             </tr>
           </thead>
           <tbody>
@@ -263,14 +265,30 @@ const JobList: React.FC = () => {
                     {job.link ? "View Job" : "No Link"}
                   </a>
                 </JobTableData>
+                <JobTableData>
+                  <button
+                    onClick={() => {
+                      setSelectedJob(job);
+                    }}
+                  >
+                    View Cover Letter
+                  </button>
+                </JobTableData>
               </JobTableRow>
             ))}
           </tbody>
         </JobTable>
       </JobTableWrapper>
 
-      {selectedJob && (
+      {/* {selectedJob && (
         <JobDetailsModal
+          job={selectedJob}
+          onClose={() => setSelectedJob(null)}
+        />
+      )} */}
+
+      {selectedJob && (
+        <JobCoverLetterModal
           job={selectedJob}
           onClose={() => setSelectedJob(null)}
         />

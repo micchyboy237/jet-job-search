@@ -4,9 +4,16 @@ import { vectorNodesAtom } from "../JobGraph/state";
 import { VectorNode } from "../JobGraph/types";
 import { GET_COVER_LETTERS_URL } from "./config";
 
+const API_BASE_URL = "http://0.0.0.0:8002/api/v1/job/cover-letter";
+
 const initialData: UIJobCoverLetter[] = [];
 
 export const coverLettersAtom = atom(initialData);
+export const coverLetterAtom = atom<{
+  subject: string;
+  message: string;
+} | null>(null);
+
 export const loadingAtom = atom(false);
 export const errorAtom = atom<Error | null>(null);
 
@@ -65,3 +72,53 @@ export const relevantJobsAtom = atom<UIJobCoverLetter[]>((get) => {
 
   return highScoreNodesWithCoverLetters;
 });
+
+export const fetchCoverLetterAtom = atom(
+  null,
+  async (get, set, jobId: string) => {
+    set(loadingAtom, true);
+    set(errorAtom, null);
+    try {
+      const response = await fetch(`${API_BASE_URL}/${jobId}`);
+      if (!response.ok) throw new Error(`Failed: ${response.statusText}`);
+
+      const result = await response.json();
+      set(coverLetterAtom, {
+        subject: result.subject,
+        message: result.message,
+      });
+    } catch (err: any) {
+      set(errorAtom, err);
+      console.error(err);
+    } finally {
+      set(loadingAtom, false);
+    }
+  }
+);
+
+export const generateCoverLetterAtom = atom(
+  null,
+  async (get, set, jobId: string) => {
+    set(loadingAtom, true);
+    set(errorAtom, null);
+    try {
+      const response = await fetch(`${API_BASE_URL}/generate-cover-letter`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ job_id: jobId }),
+      });
+      if (!response.ok) throw new Error(`Failed: ${response.statusText}`);
+
+      const result = await response.json();
+      set(coverLetterAtom, {
+        subject: result.subject,
+        message: result.message,
+      });
+    } catch (err: any) {
+      set(errorAtom, err);
+      console.error(err);
+    } finally {
+      set(loadingAtom, false);
+    }
+  }
+);
