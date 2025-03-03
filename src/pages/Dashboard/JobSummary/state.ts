@@ -13,32 +13,53 @@ export const jobSummaryHandlerAtom = atom<JobSummaryData>((get) => {
   const vectorNodes: VectorNode[] = get(vectorNodesAtom);
   const totalJobs = vectorNodes.length;
 
+  // Track categories by score ranges
   const categories: Record<"High" | "Medium" | "Low", number[]> = {
     High: [],
     Medium: [],
     Low: [],
   };
 
+  // Initialize skill keyword counts
   const skillKeywordCounts: SkillKeywordCount[] = MY_SKILLS_KEYWORDS.map(
-    (skill) => ({
-      skill,
-      count: 0,
-    })
+    (skill) => ({ skill, count: 0 })
   );
 
+  // Track skill combination counts
+  const skillCombinationMap: Record<string, number> = {};
+
   vectorNodes.forEach((node) => {
+    // Categorize scores
     if (node.score >= 0.7) categories.High.push(node.score);
     else if (node.score >= 0.4) categories.Medium.push(node.score);
     else categories.Low.push(node.score);
 
+    // Count individual skill matches
     MY_SKILLS_KEYWORDS.forEach((skill) => {
       if (node.matched_skills.includes(skill)) {
         const skillEntry = skillKeywordCounts.find((s) => s.skill === skill);
         if (skillEntry) skillEntry.count++;
       }
     });
+
+    // Count skill combinations (normalized order)
+    if (node.matched_skills.length > 0) {
+      const sortedCombination = [...new Set(node.matched_skills)].sort(); // Sort and remove duplicates
+      const combinationKey = sortedCombination.join(",");
+      skillCombinationMap[combinationKey] =
+        (skillCombinationMap[combinationKey] || 0) + 1;
+    }
   });
 
+  // Convert skill combination map to sorted array (ascending order by count)
+  const skillCombinationCounts = Object.entries(skillCombinationMap)
+    .map(([combination, count]) => ({
+      combination: combination.split(","),
+      count,
+    }))
+    .sort((a, b) => a.count - b.count); // Sort by count in ascending order
+
+  // Calculate mean scores per category
   const meanScoresByCategory: MeanScoresByCategory[] = Object.entries(
     categories
   ).map(([key, scores]) => ({
@@ -73,5 +94,6 @@ export const jobSummaryHandlerAtom = atom<JobSummaryData>((get) => {
     meanScoresByCategory,
     domainCounts,
     skillKeywordCounts,
+    skillCombinationCounts,
   };
 });

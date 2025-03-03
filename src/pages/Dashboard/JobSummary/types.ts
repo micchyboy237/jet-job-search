@@ -14,10 +14,16 @@ export interface SkillKeywordCount {
   count: number;
 }
 
+export interface SkillCombinationCount {
+  combination: string[];
+  count: number;
+}
+
 export interface JobSummaryData {
   totalJobs: number | null;
   meanScore: string | null;
   meanScoresByCategory: MeanScoresByCategory[];
   domainCounts: JobDomainCount[];
   skillKeywordCounts: SkillKeywordCount[];
+  skillCombinationCounts: SkillCombinationCount[];
 }

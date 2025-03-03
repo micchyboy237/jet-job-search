@@ -14,9 +14,10 @@ import GlobalStyle from "./theme/GlobalStyle";
 import { ThemeProviderWrapper } from "./theme/ThemeContext";
 import JobEntities from "./pages/Dashboard/JobEntities";
 import JobSummary from "./pages/Dashboard/JobSummary";
+import JobCoverLetters from "./pages/Dashboard/JobCoverLetters";
 
 const App: React.FC = () => {
-  const [activeTab, setActiveTab] = useState("list");
+  const [activeTab, setActiveTab] = useState("coverLetters");
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
@@ -32,17 +33,24 @@ const App: React.FC = () => {
         </AppHeader>
         <AppBody>
           <JobSearch />
-          <JobSummary />
           <TabButtons>
             <button onClick={() => handleTabChange("list")}>Job List</button>
+            <button onClick={() => handleTabChange("summary")}>
+              Job Summary
+            </button>
             <button onClick={() => handleTabChange("graph")}>Job Graph</button>
             <button onClick={() => handleTabChange("entities")}>
               Job Entities
             </button>
+            <button onClick={() => handleTabChange("coverLetters")}>
+              Cover Letters
+            </button>
           </TabButtons>
           {activeTab === "list" && <JobList />}
+          {activeTab === "summary" && <JobSummary />}
           {activeTab === "graph" && <JobGraph />}
           {activeTab === "entities" && <JobEntities />}
+          {activeTab === "coverLetters" && <JobCoverLetters />}
         </AppBody>
       </AppContainer>
     </ThemeProviderWrapper>

@@ -46,8 +46,14 @@ include_files = [
 
     # Features code
     # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/SettingsPanel/*"
-    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobSummary/*",
+    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobSummary/*",
+    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobGraph/types.ts",
     # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobList/*",
+    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobCoverLetters/*",
+    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobCoverLetters/state.ts",
+    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobCoverLetters/types.ts",
+    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobList/index.tsx",
+    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobList/styles.ts",
 ]
 structure_include = [
     # "*"
@@ -64,8 +70,20 @@ SHORTEN_FUNCTS = False
 INCLUDE_FILE_STRUCTURE = False
 
 DEFAULT_QUERY_MESSAGE = """
-Update summary with the ff:
-- Add the counts for each item in MY_SKILLS_KEYWORDS for each existing in job.keywords
+- Create another column in job list at the end to contain action buttons.
+- Add a button that shows a modal that calls the cover letter endpoint GET - http://0.0.0.0:8002/api/v1/job/cover-letter/{job.id} then displays the response.subject and response.message if available.
+- Modal will have a button to generate cover letter using this API POST - http://0.0.0.0:8002/api/v1/job/cover-letter/generate-cover-letter
+Body:
+{
+    "job_id": "{job.id}"
+}
+Response:
+{
+    "subject": str,
+    "message": str
+}
+- Create the api methods in job cover letters state jotai to be used by jobs list
+
 """.strip()
 
 DEFAULT_SYSTEM_MESSAGE = """
