@@ -47,13 +47,14 @@ include_files = [
     # Features code
     # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/SettingsPanel/*"
     # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobSummary/*",
+    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobGraph/*",
     # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobGraph/types.ts",
     # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobList/*",
     # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobCoverLetters/*",
-    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobCoverLetters/state.ts",
-    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobCoverLetters/types.ts",
-    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobList/index.tsx",
-    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobList/styles.ts",
+    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobCoverLetters/state.ts",
+    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobCoverLetters/types.ts",
+    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobList/index.tsx",
+    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobList/styles.ts",
 ]
 structure_include = [
     # "*"
@@ -70,20 +71,8 @@ SHORTEN_FUNCTS = False
 INCLUDE_FILE_STRUCTURE = False
 
 DEFAULT_QUERY_MESSAGE = """
-- Create another column in job list at the end to contain action buttons.
-- Add a button that shows a modal that calls the cover letter endpoint GET - http://0.0.0.0:8002/api/v1/job/cover-letter/{job.id} then displays the response.subject and response.message if available.
-- Modal will have a button to generate cover letter using this API POST - http://0.0.0.0:8002/api/v1/job/cover-letter/generate-cover-letter
-Body:
-{
-    "job_id": "{job.id}"
-}
-Response:
-{
-    "subject": str,
-    "message": str
-}
-- Create the api methods in job cover letters state jotai to be used by jobs list
-
+- Which data should I display to better understand my current data?
+- Update index to have multiple buttons change the graph data including the current one
 """.strip()
 
 DEFAULT_SYSTEM_MESSAGE = """
@@ -93,7 +82,8 @@ DEFAULT_SYSTEM_MESSAGE = """
 DEFAULT_QUERY_MESSAGE += (
     "\n\n"
     "Guidelines:"
-    "\n- Use relative paths for imports"
+    "\n- Use relative paths (..) for imports"
+    "\n- Add commented file path on top of each updated file"
     "\n\n"
     "Applicable to html and css related code if generated:"
     "\n- Render beautiful UI/UX in terms of element positions, color themes and contrasts, typography, font sizes, spacing, alignments, animations, and other modern conventions."

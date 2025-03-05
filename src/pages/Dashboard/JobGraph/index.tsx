@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useAtom } from "jotai";
 import { Scatter } from "react-chartjs-2";
 import { vectorNodesAtom } from "./state";
+import Button from "../../../components/Button";
+import ToggleButton from "../../../components/ToggleButton";
+import styled from "styled-components";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -23,16 +26,32 @@ ChartJS.register(
   Legend
 );
 
+const GraphWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
+
+const FilterControls = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+`;
+
 const JobGraph: React.FC = () => {
   const [vectorNodes] = useAtom(vectorNodesAtom);
+  const [graphMode, setGraphMode] = useState<"scores" | "dates">("scores");
 
   const data = {
     datasets: [
       {
-        label: "Scores",
+        label: graphMode === "scores" ? "Scores" : "Posted Dates",
         data: vectorNodes.map((node) => ({
-          x: node.id,
-          y: node.score,
+          x: graphMode === "scores" ? node.id : node.posted_date,
+          y:
+            graphMode === "scores"
+              ? node.score
+              : new Date(node.posted_date).getTime(),
           text: node.description,
         })),
         backgroundColor: "rgba(75, 192, 192, 0.6)",
@@ -50,7 +69,7 @@ const JobGraph: React.FC = () => {
       },
       title: {
         display: true,
-        text: "VectorNode Scores",
+        text: graphMode === "scores" ? "VectorNode Scores" : "Posted Dates",
       },
       tooltip: {
         mode: "nearest",
@@ -65,17 +84,17 @@ const JobGraph: React.FC = () => {
     },
     scales: {
       x: {
-        type: "category",
+        type: graphMode === "scores" ? "category" : "time",
         title: {
           display: true,
-          text: "Node ID",
+          text: graphMode === "scores" ? "Node ID" : "Posted Date",
         },
       },
       y: {
         type: "linear",
         title: {
           display: true,
-          text: "Score",
+          text: graphMode === "scores" ? "Score" : "Date",
         },
       },
     },
@@ -83,8 +102,18 @@ const JobGraph: React.FC = () => {
 
   return (
     <Card title={`Vector Graph (${vectorNodes.length})`}>
-      <Scatter data={data} options={options} />
+      <GraphWrapper>
+        <FilterControls>
+          <ToggleButton
+            options={["scores", "dates"]}
+            onChange={(value) => setGraphMode(value as "scores" | "dates")}
+          />
+          <Button variant="outline">Refresh</Button>
+        </FilterControls>
+        <Scatter data={data} options={options} />
+      </GraphWrapper>
     </Card>
   );
 };
+
 export default JobGraph;

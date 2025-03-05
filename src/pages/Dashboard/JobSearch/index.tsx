@@ -7,10 +7,10 @@ import {
   uiFiltersAtom,
   uiFiltersHandlerAtom,
 } from "../JobGraph/state";
-import { DEFAULT_FILTER_OPTIONS, DEFAULT_FILTERS } from "../JobGraph/constants";
 import { Filter, QueryOptions, UIOptions } from "../JobGraph/types";
 import styled from "styled-components";
 import { isEqual } from "../../../utils/comparison";
+import { DEFAULT_FILTER_OPTIONS } from "./constants";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   type?: React.HTMLInputTypeAttribute;
