@@ -5,7 +5,7 @@ import {
   ModalHeader,
   ModalBody,
   ModalClose,
-  JobDetailsContainer,
+  Container,
 } from "./styles";
 
 interface JobDetailsModalProps {
@@ -23,7 +23,7 @@ const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job }) => {
   return (
     <ModalContent>
       <ModalBody>
-        <JobDetailsContainer>
+        <Container>
           <p>
             <strong>ID:</strong>
             {job.id}
@@ -86,7 +86,7 @@ const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job }) => {
             <strong>Description:</strong>
             {job.description || "No description provided."}
           </p>
-        </JobDetailsContainer>
+        </Container>
       </ModalBody>
     </ModalContent>
   );

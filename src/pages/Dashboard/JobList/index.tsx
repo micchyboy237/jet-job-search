@@ -21,6 +21,7 @@ import JobDetailsModal from "./JobDetailsModal";
 import Card from "../../../components/Card";
 import Modal from "../../../components/Modal";
 import JobCoverLetterModal from "./JobCoverLetterModal";
+import Button from "../../../components/Button";
 
 // Helper function to calculate the time ago string
 const getTimeAgo = (date: string) => {
@@ -297,13 +298,13 @@ const ViewCoverLetterButton = ({ job }) => {
 
   return (
     <>
-      <button
+      <Button
         onClick={() => {
           setShowModal(true);
         }}
       >
         View Cover Letter
-      </button>
+      </Button>
       <Modal
         title="Job Details"
         isOpen={showModal}

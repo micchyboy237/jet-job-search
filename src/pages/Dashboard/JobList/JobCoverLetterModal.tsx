@@ -4,8 +4,9 @@ import {
   ModalBody,
   ModalHeader,
   ModalClose,
-  CoverLetterContainer,
+  Container,
 } from "./styles";
+import Button from "../../../components/Button";
 
 interface JobDetailsModalProps {
   job: { id: string; title: string };
@@ -71,7 +72,10 @@ const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job }) => {
   return (
     <ModalContent>
       <ModalBody>
-        <CoverLetterContainer>
+        <Button onClick={generateCoverLetter} disabled={loading}>
+          Generate Cover Letter
+        </Button>
+        <Container>
           {loading ? (
             <p>Loading...</p>
           ) : error ? (
@@ -90,10 +94,7 @@ const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job }) => {
           ) : (
             <p>No cover letter available.</p>
           )}
-        </CoverLetterContainer>
-        <button onClick={generateCoverLetter} disabled={loading}>
-          Generate Cover Letter
-        </button>
+        </Container>
       </ModalBody>
     </ModalContent>
   );

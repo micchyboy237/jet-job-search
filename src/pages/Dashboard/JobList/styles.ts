@@ -110,20 +110,11 @@ export const ModalClose = styled.span`
   color: ${({ theme }) => theme.colors.text};
 `;
 
-export const JobDetailsContainer = styled.div`
+export const Container = styled.div`
   strong {
     display: block;
   }
   p {
-    white-space: pre;
-  }
-`;
-
-export const CoverLetterContainer = styled.div`
-  strong {
-    display: block;
-  }
-  p {
-    white-space: pre;
+    white-space: pre-wrap;
   }
 `;
