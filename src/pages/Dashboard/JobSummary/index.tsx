@@ -22,11 +22,8 @@ const JobSummary: React.FC = () => {
   };
 
   return (
-    <Card title="Job Summary">
+    <Card title={`Job Summary (${totalJobs})`}>
       <SummaryContainer>
-        <SummaryItem onClick={() => handleCopy([totalJobs])}>
-          <strong>Total Jobs:</strong> {totalJobs ?? "N/A"}
-        </SummaryItem>
         <SummaryItem onClick={() => handleCopy([meanScore])}>
           <strong>Mean Score:</strong>{" "}
           <ScoreBadge>{meanScore ?? "N/A"}</ScoreBadge>
