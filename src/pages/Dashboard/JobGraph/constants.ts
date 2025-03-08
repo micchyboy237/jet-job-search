@@ -67,6 +67,6 @@ export const DEFAULT_FILTERS: QueryOptions = {
 };
 
 export const DEFAULT_UI_FILTERS: UIOptions = {
-  days: 5,
+  days: 0,
   keywords: [],
 };
