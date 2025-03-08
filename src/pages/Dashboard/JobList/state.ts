@@ -1,6 +1,6 @@
 import { atom } from "jotai";
 import { Job } from "./types";
-import { vectorNodesAtom } from "../JobGraph/state";
+import { vectorNodesAtom } from "../JobSearch/state";
 
 export const jobsAtom = atom<Job[]>((get) => {
   return get(vectorNodesAtom).map((node): Job => {
@@ -23,7 +23,7 @@ export const jobsAtom = atom<Job[]>((get) => {
       matched_skills: node.matched_skills,
       role: node.role || [],
       application: node.application || [],
-      coding_libraries: node.coding_libraries || [],
+      technology_stack: node.technology_stack || [],
       qualifications: node.qualifications || [],
 
       formattedScore: scorePercentage,

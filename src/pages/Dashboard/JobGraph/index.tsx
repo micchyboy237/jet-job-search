@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useAtom } from "jotai";
 import { Scatter } from "react-chartjs-2";
-import { vectorNodesAtom } from "./state";
+import { vectorNodesAtom } from "../JobSearch/state";
 import Button from "../../../components/Button";
 import ToggleButton from "../../../components/ToggleButton";
 import styled from "styled-components";

@@ -47,8 +47,8 @@ include_files = [
     # Features code
     # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/SettingsPanel/*"
     # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobSummary/*",
-    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobGraph/*",
-    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobGraph/types.ts",
+    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobSearch/*",
+    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobSearch/types.ts",
     # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobList/*",
     # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobCoverLetters/*",
     # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobCoverLetters/state.ts",

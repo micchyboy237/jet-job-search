@@ -5,11 +5,15 @@ import {
   MeanScoresByCategory,
   SkillKeywordCount,
 } from "./types";
-import { vectorNodesAtom } from "../JobGraph/state";
-import { VectorNode } from "../JobGraph/types";
-import { MY_SKILLS_KEYWORDS } from "../JobGraph/constants";
+import { vectorNodesAtom } from "../JobSearch/state";
+import { VectorNode } from "../JobSearch/types";
+import { MY_SKILLS_KEYWORDS } from "../JobSearch/constants";
+import { sortWithPriority } from "../../../utils/sort";
+import { searchKeywordsAtom } from "../JobSearch/state";
 
 export const jobSummaryHandlerAtom = atom<JobSummaryData>((get) => {
+  const searchKeywords = get(searchKeywordsAtom);
+
   const vectorNodes: VectorNode[] = get(vectorNodesAtom);
   const totalJobs = vectorNodes.length;
 
@@ -20,8 +24,10 @@ export const jobSummaryHandlerAtom = atom<JobSummaryData>((get) => {
     Low: [],
   };
 
+  const mySkillsKeywords = sortWithPriority(MY_SKILLS_KEYWORDS, searchKeywords);
+
   // Initialize skill keyword counts
-  const skillKeywordCounts: SkillKeywordCount[] = MY_SKILLS_KEYWORDS.map(
+  const skillKeywordCounts: SkillKeywordCount[] = mySkillsKeywords.map(
     (skill) => ({ skill, count: 0 })
   );
 
@@ -35,7 +41,7 @@ export const jobSummaryHandlerAtom = atom<JobSummaryData>((get) => {
     else categories.Low.push(node.score);
 
     // Count individual skill matches
-    MY_SKILLS_KEYWORDS.forEach((skill) => {
+    mySkillsKeywords.forEach((skill) => {
       if (node.matched_skills.includes(skill)) {
         const skillEntry = skillKeywordCounts.find((s) => s.skill === skill);
         if (skillEntry) skillEntry.count++;

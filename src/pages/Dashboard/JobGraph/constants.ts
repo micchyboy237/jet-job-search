@@ -20,7 +20,7 @@ export const DEFAULT_FILTERS: QueryOptions = {
     // "keywords",
     // "entities.role",
     // "entities.application",
-    // "entities.coding_libraries",
+    // "entities.technology_stack",
     // "entities.qualifications",
     // "tags",
     "details",
@@ -41,7 +41,7 @@ export const DEFAULT_FILTERS: QueryOptions = {
     "keywords",
     "entities.role",
     "entities.application",
-    "entities.coding_libraries",
+    "entities.technology_stack",
     "entities.qualifications",
   ],
   system: `You are a job applicant providing tailored responses during an interview.

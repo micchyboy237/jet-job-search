@@ -11,6 +11,14 @@ import { sortWithPriority } from "../../../utils/sort";
 
 const initialVectorNodes: VectorNode[] = [];
 
+export const queryAtom = atom<string>("");
+export const searchKeywordsAtom = atom((get) =>
+  get(queryAtom)
+    .split(",")
+    .map((item) => item.trim())
+    .filter((item) => !!item)
+);
+
 export const baseVectorNodesAtom = atom(initialVectorNodes);
 export const vectorNodesAtom = atom(initialVectorNodes);
 export const loadingAtom = atom(false);
@@ -52,7 +60,7 @@ export const fetchVectorNodesAtom = atom(
       // const searchKeywords = MY_SKILLS_KEYWORDS;
 
       const updatedVectorNodes: VectorNode[] = vectorNodes.map((node) => {
-        const nodeTechnologyStack = node.coding_libraries
+        const nodeTechnologyStack = node.technology_stack
           .map((item) => item)
           .filter((item) => !!item);
         const nodeApplication = (node?.application || [])
@@ -110,7 +118,7 @@ export const fetchVectorNodesAtom = atom(
         );
         const result: VectorNode = {
           ...node,
-          coding_libraries: sortedTechnologyStack,
+          technology_stack: sortedTechnologyStack,
           application: sortedApplications,
           keywords: sortedKeywords,
           matched_skills: sortedMatchedSkills,
@@ -155,7 +163,7 @@ export const uiFiltersHandlerAtom = atom(
       // const filtersKeywords = newFilters.keywords.map((item) =>
       //   item
       // );
-      // const baseKeywords = [...node.keywords, ...node.coding_libraries].map(
+      // const baseKeywords = [...node.keywords, ...node.technology_stack].map(
       //   (item) => item
       // );
       // const matchesKeywords =

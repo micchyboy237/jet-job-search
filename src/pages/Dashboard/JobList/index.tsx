@@ -66,7 +66,7 @@ const JobList: React.FC = () => {
     key: string;
     direction: string;
   }>({
-    key: "score",
+    key: "searchKeywords",
     direction: "desc",
   });
 
@@ -280,19 +280,19 @@ const JobList: React.FC = () => {
         </JobTable>
       </JobTableWrapper>
 
-      {/* {selectedJob && (
+      {selectedJob && (
         <JobDetailsModal
           job={selectedJob}
           onClose={() => setSelectedJob(null)}
         />
-      )} */}
+      )}
 
-      {selectedJob && (
+      {/* {selectedJob && (
         <JobCoverLetterModal
           job={selectedJob}
           onClose={() => setSelectedJob(null)}
         />
-      )}
+      )} */}
     </Card>
   );
 };

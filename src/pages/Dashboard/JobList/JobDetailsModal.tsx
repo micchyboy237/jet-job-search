@@ -64,7 +64,7 @@ const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose }) => {
           </p>
           <p>
             <strong>Tech stack:</strong>{" "}
-            {job.coding_libraries.join(", ") || "None"}
+            {job.technology_stack.join(", ") || "None"}
           </p>
           <p>
             <strong>Qualifications:</strong>{" "}

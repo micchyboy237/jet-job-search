@@ -1,13 +1,12 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useAtom } from "jotai";
 import {
-  vectorNodesAtom,
+  queryAtom,
   fetchVectorNodesAtom,
   filtersAtom,
-  uiFiltersAtom,
   uiFiltersHandlerAtom,
-} from "../JobGraph/state";
-import { Filter, QueryOptions, UIOptions } from "../JobGraph/types";
+} from "./state";
+import { Filter, QueryOptions, UIOptions } from "../JobSearch/types";
 import styled from "styled-components";
 import { isEqual } from "../../../utils/comparison";
 import { DEFAULT_FILTER_OPTIONS } from "./constants";
@@ -239,9 +238,9 @@ type SearchOptions = QueryOptions & UIOptions;
 
 const JobSearch: React.FC<SearchProps> = ({ onSubmit }) => {
   const [, fetchVectorNodes] = useAtom(fetchVectorNodesAtom);
+  const [query, setQuery] = useAtom(queryAtom);
   const [filters, setFilters] = useAtom(filtersAtom);
   const [uiFilters, setUIFilters] = useAtom(uiFiltersHandlerAtom);
-  const [query, setQuery] = useState("");
 
   const prevQueryRef = useRef(null);
   const prevFiltersRef = useRef<QueryOptions | null>(null);
