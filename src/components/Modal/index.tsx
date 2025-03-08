@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from "react";
 import {
   CloseButton,
   ModalBackdrop,
@@ -6,30 +6,22 @@ import {
   ModalContent,
   ModalHeader,
   ModalTitle,
-} from './styles'
+} from "./styles";
 
-interface ModalProps {
-  isOpen: boolean
-  onClose: () => void
-  title: string
-  children: React.ReactNode
+interface InnerModalProps {
+  onClose: () => void;
+  title: string;
+  children: React.ReactNode;
+}
+interface ModalProps extends InnerModalProps {
+  isOpen: boolean;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
-  useEffect(() => {
-    if (isOpen) {
-      document.body.classList.add('modal-open')
-    } else {
-      document.body.classList.remove('modal-open')
-    }
-
-    return () => {
-      document.body.classList.remove('modal-open')
-    }
-  }, [isOpen])
-
-  if (!isOpen) return null
-
+const ModalInner: React.FC<InnerModalProps> = ({
+  onClose,
+  title,
+  children,
+}) => {
   return (
     <ModalBackdrop onClick={onClose}>
       <ModalContent onClick={(e) => e.stopPropagation()}>
@@ -40,7 +32,25 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
         <ModalBody>{children}</ModalBody>
       </ModalContent>
     </ModalBackdrop>
-  )
-}
+  );
+};
 
-export default Modal
+const Modal: React.FC<ModalProps> = ({ isOpen, ...props }) => {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add("modal-open");
+    } else {
+      document.body.classList.remove("modal-open");
+    }
+
+    return () => {
+      document.body.classList.remove("modal-open");
+    };
+  }, [isOpen]);
+
+  if (!isOpen) return null;
+
+  return <ModalInner {...props} />;
+};
+
+export default Modal;

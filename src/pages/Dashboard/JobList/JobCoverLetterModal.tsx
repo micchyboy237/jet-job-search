@@ -17,7 +17,7 @@ const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job }) => {
     subject: string;
     message: string;
   } | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   // Fetch cover letter when modal opens
@@ -68,6 +68,12 @@ const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job }) => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (!loading && !coverLetter) {
+      generateCoverLetter();
+    }
+  }, [loading, coverLetter]);
 
   return (
     <ModalContent>

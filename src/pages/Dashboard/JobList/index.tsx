@@ -123,14 +123,11 @@ const JobList: React.FC = () => {
       if (primarySort !== 0) return primarySort;
 
       // Secondary sort by the other key in descending order
-      const secondaryKey =
-        sortConfig.key === "searchKeywords"
-          ? "matched_skills"
-          : "searchKeywords";
-      const aSecondaryValue = (a[secondaryKey] || []).join(",");
-      const bSecondaryValue = (b[secondaryKey] || []).join(",");
+      const secondaryKey = "posted_date";
+      const aSecondaryValue = getTimeAgoTimestamp(a[secondaryKey]);
+      const bSecondaryValue = getTimeAgoTimestamp(b[secondaryKey]);
 
-      return bSecondaryValue.localeCompare(aSecondaryValue); // Descending order
+      return bSecondaryValue - aSecondaryValue;
     }
 
     if (sortConfig.key === "posted_date") {
@@ -195,11 +192,11 @@ const JobList: React.FC = () => {
               <JobTableHeader onClick={() => handleSort("posted_date")}>
                 Posted
               </JobTableHeader>
-              <JobTableHeader onClick={() => handleSort("title")}>
-                Title
-              </JobTableHeader>
               <JobTableHeader onClick={() => handleSort("searchKeywords")}>
                 Keywords
+              </JobTableHeader>
+              <JobTableHeader onClick={() => handleSort("title")}>
+                Title
               </JobTableHeader>
               <JobTableHeader onClick={() => handleSort("matched_skills")}>
                 Matched Skills
@@ -248,12 +245,12 @@ const JobList: React.FC = () => {
                     ? format(new Date(job.posted_date), "EEE, MMM d")
                     : "Unknown"}
                 </JobTableData>
-                <JobTableData title={job.title}>{job.title}</JobTableData>
                 <JobTableData>
                   {job.searchKeywords.length
                     ? job.searchKeywords.join(", ")
                     : "None"}
                 </JobTableData>
+                <JobTableData title={job.title}>{job.title}</JobTableData>
                 <JobTableData>
                   {job.matched_skills.length
                     ? job.matched_skills.join(", ")

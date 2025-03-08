@@ -17,7 +17,7 @@ import JobSummary from "./pages/Dashboard/JobSummary";
 import JobCoverLetters from "./pages/Dashboard/JobCoverLetters";
 
 const App: React.FC = () => {
-  const [activeTab, setActiveTab] = useState("coverLetters");
+  const [activeTab, setActiveTab] = useState("list");
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
