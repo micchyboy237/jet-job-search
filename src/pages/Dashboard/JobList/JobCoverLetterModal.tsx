@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  Modal,
   ModalContent,
   ModalBody,
   ModalHeader,
@@ -10,10 +9,9 @@ import {
 
 interface JobDetailsModalProps {
   job: { id: string; title: string };
-  onClose: () => void;
 }
 
-const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose }) => {
+const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job }) => {
   const [coverLetter, setCoverLetter] = useState<{
     subject: string;
     message: string;
@@ -71,35 +69,33 @@ const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose }) => {
   };
 
   return (
-    <Modal>
-      <ModalContent>
-        <ModalHeader>
-          <span>Job Details: {job.title}</span>
-          <ModalClose onClick={onClose}>&times;</ModalClose>
-        </ModalHeader>
-        <ModalBody>
+    <ModalContent>
+      <ModalBody>
+        <CoverLetterContainer>
           {loading ? (
             <p>Loading...</p>
           ) : error ? (
             <p style={{ color: "red" }}>Error: {error}</p>
           ) : coverLetter ? (
-            <CoverLetterContainer>
+            <>
               <p>
-                <strong>Subject:</strong> {coverLetter.subject}
+                <strong>Subject:</strong>
+                {coverLetter.subject}
               </p>
               <p>
-                <strong>Message:</strong> {coverLetter.message}
+                <strong>Message:</strong>
+                {coverLetter.message}
               </p>
-            </CoverLetterContainer>
+            </>
           ) : (
             <p>No cover letter available.</p>
           )}
-          <button onClick={generateCoverLetter} disabled={loading}>
-            Generate Cover Letter
-          </button>
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+        </CoverLetterContainer>
+        <button onClick={generateCoverLetter} disabled={loading}>
+          Generate Cover Letter
+        </button>
+      </ModalBody>
+    </ModalContent>
   );
 };
 

@@ -19,6 +19,7 @@ import {
 } from "date-fns";
 import JobDetailsModal from "./JobDetailsModal";
 import Card from "../../../components/Card";
+import Modal from "../../../components/Modal";
 import JobCoverLetterModal from "./JobCoverLetterModal";
 
 // Helper function to calculate the time ago string
@@ -278,19 +279,13 @@ const JobList: React.FC = () => {
         </JobTable>
       </JobTableWrapper>
 
-      {selectedJob && (
-        <JobDetailsModal
-          job={selectedJob}
-          onClose={() => setSelectedJob(null)}
-        />
-      )}
-
-      {/* {selectedJob && (
-        <JobCoverLetterModal
-          job={selectedJob}
-          onClose={() => setSelectedJob(null)}
-        />
-      )} */}
+      <Modal
+        title="Job Details"
+        isOpen={!!selectedJob}
+        onClose={() => setSelectedJob(null)}
+      >
+        <JobDetailsModal job={selectedJob} />
+      </Modal>
     </Card>
   );
 };
@@ -309,9 +304,13 @@ const ViewCoverLetterButton = ({ job }) => {
       >
         View Cover Letter
       </button>
-      {showModal && (
-        <JobCoverLetterModal job={job} onClose={() => setShowModal(false)} />
-      )}
+      <Modal
+        title="Job Details"
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+      >
+        <JobCoverLetterModal job={job} />
+      </Modal>
     </>
   );
 };

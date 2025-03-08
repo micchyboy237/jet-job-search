@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 export const ModalBackdrop = styled.div`
   position: fixed;
@@ -11,7 +11,7 @@ export const ModalBackdrop = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 1000;
-`
+`;
 
 export const ModalContent = styled.div`
   background: ${({ theme }) => theme.colors.modalBackground};
@@ -24,7 +24,7 @@ export const ModalContent = styled.div`
   animation: fadeIn 0.3s ease-in-out;
 
   @media (min-width: 768px) {
-    max-width: 500px;
+    max-width: 1000px;
   }
 
   @keyframes fadeIn {
@@ -37,45 +37,44 @@ export const ModalContent = styled.div`
       transform: scale(1);
     }
   }
-`
+`;
 
 export const ModalHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
   border-bottom: 1px solid ${({ theme }) => theme.colors.border};
   padding: 1rem;
 
   @media (min-width: 480px) {
-    padding: 1.25rem;
+    padding: 1rem 1.25rem;
   }
 
   @media (min-width: 768px) {
-    padding: 1.5rem;
+    padding: 1rem 1.5rem;
   }
-`
+`;
 
 export const ModalBody = styled.div`
   padding: 1rem;
 
   @media (min-width: 480px) {
-    padding: 1.25rem;
+    padding: 1rem 1.25rem;
   }
 
   @media (min-width: 768px) {
-    padding: 1.5rem;
+    padding: 1rem 1.5rem;
   }
-`
+`;
 
 export const ModalTitle = styled.h3`
   margin: 0;
   font-size: 1.25rem;
-`
+`;
 
 export const CloseButton = styled.button`
   background: none;
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
-`
+`;

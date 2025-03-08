@@ -78,34 +78,10 @@ export const PaginationButton = styled.button`
 `;
 
 // Modal Styles
-export const Modal = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-`;
 
-export const ModalContent = styled.div`
-  background: ${({ theme }) => theme.colors.modalBackground};
-  padding: 2rem;
-  border-radius: 8px;
-  width: 80%;
-  max-width: 800px;
-  max-height: 80vh;
-  overflow-y: auto;
-  z-index: 1001;
-`;
+export const ModalContent = styled.div``;
 
 export const ModalBody = styled.div`
-  margin-top: 1rem;
-  max-height: 60vh;
-  overflow-y: auto;
   padding-right: 1rem;
   line-height: 1.5;
   font-size: 1rem;
@@ -134,7 +110,19 @@ export const ModalClose = styled.span`
   color: ${({ theme }) => theme.colors.text};
 `;
 
+export const JobDetailsContainer = styled.div`
+  strong {
+    display: block;
+  }
+  p {
+    white-space: pre;
+  }
+`;
+
 export const CoverLetterContainer = styled.div`
+  strong {
+    display: block;
+  }
   p {
     white-space: pre;
   }

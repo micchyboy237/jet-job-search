@@ -1,24 +1,18 @@
 import React, { useEffect } from "react";
+import Modal from "../../../components/Modal";
 import {
-  Modal,
   ModalContent,
   ModalHeader,
   ModalBody,
   ModalClose,
+  JobDetailsContainer,
 } from "./styles";
 
 interface JobDetailsModalProps {
   job: any;
-  onClose: () => void;
 }
 
-const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose }) => {
-  const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (event.target === event.currentTarget) {
-      onClose();
-    }
-  };
-
+const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job }) => {
   useEffect(() => {
     document.body.style.overflow = "hidden";
     return () => {
@@ -27,18 +21,15 @@ const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose }) => {
   }, []);
 
   return (
-    <Modal onClick={handleBackdropClick}>
-      <ModalContent>
-        <ModalHeader>
-          {job.company} - {job.title}
-          <ModalClose onClick={onClose}>&times;</ModalClose>
-        </ModalHeader>
-        <ModalBody>
+    <ModalContent>
+      <ModalBody>
+        <JobDetailsContainer>
           <p>
-            <strong>ID:</strong> {job.id}
+            <strong>ID:</strong>
+            {job.id}
           </p>
           <p>
-            <strong>Link:</strong>{" "}
+            <strong>Link:</strong>
             {job.link ? (
               <a href={job.link} target="_blank" rel="noopener noreferrer">
                 {job.link}
@@ -48,50 +39,56 @@ const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose }) => {
             )}
           </p>
           <p>
-            <strong>Search Keywords:</strong>{" "}
+            <strong>Search Keywords:</strong>
             {job.searchKeywords.join(", ") || "None"}
           </p>
           <p>
-            <strong>Matched Skills:</strong>{" "}
+            <strong>Matched Skills:</strong>
             {job.matched_skills.join(", ") || "None"}
           </p>
           <p>
-            <strong>Roles:</strong> {job.role.join(", ") || "None"}
+            <strong>Roles:</strong>
+            {job.role.join(", ") || "None"}
           </p>
           <p>
-            <strong>Applications:</strong>{" "}
+            <strong>Applications:</strong>
             {job.application.join(", ") || "None"}
           </p>
           <p>
-            <strong>Tech stack:</strong>{" "}
+            <strong>Tech stack:</strong>
             {job.technology_stack.join(", ") || "None"}
           </p>
           <p>
-            <strong>Qualifications:</strong>{" "}
+            <strong>Qualifications:</strong>
             {job.qualifications.join(", ") || "None"}
           </p>
           <p>
-            <strong>Posted:</strong> {job.posted_date || "Unknown"}
+            <strong>Posted:</strong>
+            {job.posted_date || "Unknown"}
           </p>
           <p>
-            <strong>Salary:</strong> {job.salary || "Not specified"}
+            <strong>Salary:</strong>
+            {job.salary || "Not specified"}
           </p>
           <p>
-            <strong>Job Type:</strong> {job.job_type || "Full-time"}
+            <strong>Job Type:</strong>
+            {job.job_type || "Full-time"}
           </p>
           <p>
-            <strong>Tags:</strong> {job.tags.join(", ") || "None"}
+            <strong>Tags:</strong>
+            {job.tags.join(", ") || "None"}
           </p>
           <p>
-            <strong>Domain:</strong> {job.domain || "No domain specified"}
+            <strong>Domain:</strong>
+            {job.domain || "No domain specified"}
           </p>
           <p>
-            <strong>Description:</strong> <br />
+            <strong>Description:</strong>
             {job.description || "No description provided."}
           </p>
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+        </JobDetailsContainer>
+      </ModalBody>
+    </ModalContent>
   );
 };
 
