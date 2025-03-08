@@ -5,6 +5,7 @@ import {
   ModalBody,
   ModalHeader,
   ModalClose,
+  CoverLetterContainer,
 } from "./styles";
 
 interface JobDetailsModalProps {
@@ -82,14 +83,14 @@ const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose }) => {
           ) : error ? (
             <p style={{ color: "red" }}>Error: {error}</p>
           ) : coverLetter ? (
-            <>
+            <CoverLetterContainer>
               <p>
                 <strong>Subject:</strong> {coverLetter.subject}
               </p>
               <p>
                 <strong>Message:</strong> {coverLetter.message}
               </p>
-            </>
+            </CoverLetterContainer>
           ) : (
             <p>No cover letter available.</p>
           )}

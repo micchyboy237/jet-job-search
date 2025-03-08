@@ -265,14 +265,12 @@ const JobList: React.FC = () => {
                     {job.link ? "View Job" : "No Link"}
                   </a>
                 </JobTableData>
-                <JobTableData>
-                  <button
-                    onClick={() => {
-                      setSelectedJob(job);
-                    }}
-                  >
-                    View Cover Letter
-                  </button>
+                <JobTableData
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
+                  <ViewCoverLetterButton job={job} />
                 </JobTableData>
               </JobTableRow>
             ))}
@@ -298,3 +296,22 @@ const JobList: React.FC = () => {
 };
 
 export default JobList;
+
+const ViewCoverLetterButton = ({ job }) => {
+  const [showModal, setShowModal] = useState(false);
+
+  return (
+    <>
+      <button
+        onClick={() => {
+          setShowModal(true);
+        }}
+      >
+        View Cover Letter
+      </button>
+      {showModal && (
+        <JobCoverLetterModal job={job} onClose={() => setShowModal(false)} />
+      )}
+    </>
+  );
+};

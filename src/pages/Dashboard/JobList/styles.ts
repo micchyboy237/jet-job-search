@@ -133,3 +133,9 @@ export const ModalClose = styled.span`
   font-size: 1.5rem;
   color: ${({ theme }) => theme.colors.text};
 `;
+
+export const CoverLetterContainer = styled.div`
+  p {
+    white-space: pre;
+  }
+`;
