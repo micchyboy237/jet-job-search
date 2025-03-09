@@ -46,11 +46,11 @@ export const fetchVectorNodesAtom = atom(
       const result: { data: JobResult[] } = await response.json();
 
       const vectorNodes: VectorNode[] = result.data.map((job) => ({
-        id: job.id,
         score: job.score,
         description: job.text,
         title: job.title,
         ...job.metadata,
+        id: job.id,
       }));
 
       const searchKeywords = query
@@ -60,10 +60,10 @@ export const fetchVectorNodesAtom = atom(
       // const searchKeywords = MY_SKILLS_KEYWORDS;
 
       const updatedVectorNodes: VectorNode[] = vectorNodes.map((node) => {
-        const nodeTechnologyStack = node.technology_stack
+        const nodeTechnologyStack = node.entities.technology_stack
           .map((item) => item)
           .filter((item) => !!item);
-        const nodeApplication = (node?.application || [])
+        const nodeApplication = (node?.entities.application || [])
           .map((item) => item)
           .filter((item) => !!item);
         const baseSkillKeywords = [
@@ -163,7 +163,7 @@ export const uiFiltersHandlerAtom = atom(
       // const filtersKeywords = newFilters.keywords.map((item) =>
       //   item
       // );
-      // const baseKeywords = [...node.keywords, ...node.technology_stack].map(
+      // const baseKeywords = [...node.keywords, ...node.entities.technology_stack].map(
       //   (item) => item
       // );
       // const matchesKeywords =

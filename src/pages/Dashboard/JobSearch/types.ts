@@ -121,10 +121,12 @@ export interface VectorNode {
   tags: string[];
   keywords: string[];
   role: string[];
-  application: string[];
-  technology_stack: string[];
-  qualifications: string[];
-  matched_skills: string[];
+  entities: {
+    application: string[];
+    technology_stack: string[];
+    qualifications: string[];
+    matched_skills: string[];
+  };
 }
 
 export interface JobGraph {}
