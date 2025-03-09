@@ -4,7 +4,7 @@ import { vectorNodesAtom } from "../JobSearch/state";
 import { VectorNode } from "../JobSearch/types";
 import { GET_COVER_LETTERS_URL } from "./config";
 
-const API_BASE_URL = "http://jetairm1:8002/api/v1/job/cover-letter";
+const API_BASE_URL = "http://0.0.0.0:8002/api/v1/job/cover-letter";
 
 const initialData: UIJobCoverLetter[] = [];
 

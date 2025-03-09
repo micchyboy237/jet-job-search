@@ -27,7 +27,7 @@ const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job }) => {
         setLoading(true);
         setError(null);
         const response = await fetch(
-          `http://jetairm1:8002/api/v1/job/cover-letter/${job.id}`
+          `http://0.0.0.0:8002/api/v1/job/cover-letter/${job.id}`
         );
         if (!response.ok) throw new Error(`Failed: ${response.statusText}`);
         const data = await response.json();
@@ -51,7 +51,7 @@ const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job }) => {
       setLoading(true);
       setError(null);
       const response = await fetch(
-        "http://jetairm1:8002/api/v1/job/cover-letter/generate-cover-letter",
+        "http://0.0.0.0:8002/api/v1/job/cover-letter/generate-cover-letter",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

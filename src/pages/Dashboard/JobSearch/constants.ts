@@ -27,23 +27,7 @@ export const DEFAULT_FILTERS: QueryOptions = {
   ],
   exclude_json_attributes: [],
   // metadata_attributes: ["entities"],
-  metadata_attributes: [
-    "id",
-    "title",
-    "link",
-    "company",
-    "posted_date",
-    "salary",
-    "job_type",
-    "hours_per_week",
-    "domain",
-    "tags",
-    "keywords",
-    "entities.role",
-    "entities.application",
-    "entities.technology_stack",
-    "entities.qualifications",
-  ],
+  metadata_attributes: ["id", "link"],
   system: `You are a job applicant providing tailored responses during an interview.
   Always answer questions using the provided context as if it is your resume, 
   and avoid referencing the context directly.
@@ -53,7 +37,7 @@ export const DEFAULT_FILTERS: QueryOptions = {
   chunk_size: null,
   chunk_overlap: 40,
   sub_chunk_sizes: [512, 256, 128],
-  with_hierarchy: false,
+  with_hierarchy: true,
   top_k: null,
   model: "llama3.2",
   embed_model: "mxbai-embed-large",
@@ -63,7 +47,7 @@ export const DEFAULT_FILTERS: QueryOptions = {
   score_threshold: 0.0,
   split_mode: [],
   fusion_mode: "relative_score",
-  disable_chunking: true,
+  disable_chunking: false,
 };
 
 export const DEFAULT_UI_FILTERS: UIOptions = {
@@ -114,12 +98,6 @@ export const DEFAULT_FILTER_OPTIONS: Array<Filter> = [
   //   type: "list",
   //   placeholder: "Enter sub chunk sizes",
   //   options: [512, 256, 128],
-  // },
-  // {
-  //   name: "With Hierarchy",
-  //   key: "with_hierarchy",
-  //   type: "boolean",
-  //   placeholder: "Enable hierarchy",
   // },
   // {
   //   name: "Top K",
@@ -202,6 +180,12 @@ export const DEFAULT_FILTER_OPTIONS: Array<Filter> = [
     key: "disable_chunking",
     type: "boolean",
     placeholder: "Disable chunking",
+  },
+  {
+    name: "With Hierarchy",
+    key: "with_hierarchy",
+    type: "boolean",
+    placeholder: "Enable hierarchy",
   },
 ];
 
