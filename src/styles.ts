@@ -30,15 +30,31 @@ export const AppBody = styled.div`
   gap: 1.25rem;
   justify-items: center;
   align-items: stretch;
-  grid-template-columns: 1fr; // Adjust to a single column for full width layout
+  grid-template-columns: 1fr; // Default: Single column layout
   grid-template-rows: auto;
-  @media (min-width: 768px) {
-    grid-template-columns: 1fr;
-  }
+
   @media (min-width: 1024px) {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 3fr; // Sidebar first (1 part), Content second (3 parts)
     gap: 1.5rem;
   }
+`;
+
+export const Sidebar = styled.aside`
+  width: 100%;
+  background: ${({ theme }) => theme.colors.background};
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+
+  @media (min-width: 1024px) {
+    width: auto;
+    max-width: 300px; // Restrict sidebar width
+    justify-self: start; // Push sidebar to the left
+  }
+`;
+
+export const Content = styled.main`
+  width: 100%;
 `;
 
 export const TabButtons = styled.div`

@@ -37,7 +37,7 @@ exclude_files = [
     "*/JobDetailsModal.tsx",
 ]
 include_files = [
-    # "package.json",
+    "package.json",
     # "*.ts",
     # "*.json",
 
@@ -45,19 +45,11 @@ include_files = [
     # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/theme/*",
 
     # Features code
-    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/SettingsPanel/*"
-    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobSummary/*",
-    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobSearch/*",
-    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobSearch/types.ts",
-    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobList/*",
-    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobCoverLetters/*",
-    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobCoverLetters/state.ts",
-    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobCoverLetters/types.ts",
-    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobList/index.tsx",
-    # "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/pages/Dashboard/JobList/styles.ts",
+    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/App.tsx",
+    "/Users/jethroestrada/Desktop/External_Projects/PortfolioBaseTemplates/jet-job-search/src/styles.ts",
 ]
 structure_include = [
-    # "*"
+    "*"
 ]
 structure_exclude = [
     # "src",
@@ -68,11 +60,11 @@ exclude_content = []
 
 # Args defaults
 SHORTEN_FUNCTS = False
-INCLUDE_FILE_STRUCTURE = False
+INCLUDE_FILE_STRUCTURE = True
 
 DEFAULT_QUERY_MESSAGE = """
-- Which data should I display to better understand my current data?
-- Update index to have multiple buttons change the graph data including the current one
+Browse latest usage of @react-router to replace the need for react-router-dom
+Update code to apply
 """.strip()
 
 DEFAULT_SYSTEM_MESSAGE = """
@@ -92,6 +84,13 @@ DEFAULT_QUERY_MESSAGE += (
 )
 
 DEFAULT_INSTRUCTIONS_MESSAGE = """
+For components, try to follow these files:
+- index.tsx
+- styles.ts
+Optional
+- state.ts
+- types.ts
+- constants.ts
 """.strip()
 
 # For existing projects

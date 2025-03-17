@@ -10,6 +10,7 @@ import { Filter, QueryOptions, UIOptions } from "../JobSearch/types";
 import styled from "styled-components";
 import { isEqual } from "../../../utils/comparison";
 import { DEFAULT_FILTER_OPTIONS } from "./constants";
+import Sidebar from "../Sidebar";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   type?: React.HTMLInputTypeAttribute;
@@ -169,7 +170,10 @@ const StyledButton = styled.button`
   }
 `;
 
-const FilterContainer = styled.form`
+const Container = styled.form`
+  display: flex;
+  height: 100%;
+  gap: 1.5rem;
   width: 100%;
   padding: 1rem;
   background: ${({ theme }) => theme.colors.background};
@@ -214,7 +218,13 @@ const SliderContainer = styled.div`
   }
 `;
 
-const Slider = ({ min = 0, max = 100, value, defaultValue = 0, onChange }) => {
+export const Slider = ({
+  min = 0,
+  max = 100,
+  value,
+  defaultValue = 0,
+  onChange,
+}) => {
   return (
     <SliderContainer>
       <input
@@ -236,22 +246,15 @@ interface SearchProps {
 
 type SearchOptions = QueryOptions & UIOptions;
 
-const JobSearch: React.FC<SearchProps> = ({ onSubmit }) => {
+const JobSearch: React.FC = () => {
   const [, fetchVectorNodes] = useAtom(fetchVectorNodesAtom);
   const [query, setQuery] = useAtom(queryAtom);
   const [filters, setFilters] = useAtom(filtersAtom);
   const [uiFilters, setUIFilters] = useAtom(uiFiltersHandlerAtom);
-
   const prevQueryRef = useRef(null);
-  const prevFiltersRef = useRef<QueryOptions | null>(null);
+  const prevFiltersRef = useRef(null);
 
   const handleFilterChange = (key: string, value: any) => {
-    const option = DEFAULT_FILTER_OPTIONS.find((item) => key === item.key);
-
-    if (option.type === "number") {
-      value = !value ? 0 : Number(value);
-    }
-
     if (Object.keys(uiFilters).includes(key)) {
       setUIFilters({ ...uiFilters, [key]: value });
     } else {
@@ -259,30 +262,9 @@ const JobSearch: React.FC<SearchProps> = ({ onSubmit }) => {
     }
   };
 
-  const handleSearch = (e?: React.FormEvent) => {
-    if (e) {
-      e.preventDefault();
-    }
-    if (!query) {
-      return;
-    }
-
-    // const prevFilters = {
-    //   ...prevFiltersRef.current,
-    //   query,
-    // };
-    // const newFilters = {
-    //   ...filters,
-    //   query,
-    // };
-
-    // if (!isEqual(prevFilters, newFilters)) {
+  const handleSearch = () => {
+    if (!query) return;
     fetchVectorNodes(query);
-    // }
-
-    if (onSubmit) {
-      onSubmit(query, filters);
-    }
   };
 
   useEffect(() => {
@@ -293,7 +275,7 @@ const JobSearch: React.FC<SearchProps> = ({ onSubmit }) => {
       const handleKeyDown = (event: KeyboardEvent) => {
         if (event.key === "Enter") {
           event.preventDefault();
-          handleSearch(event);
+          handleSearch();
         }
       };
 
@@ -309,99 +291,26 @@ const JobSearch: React.FC<SearchProps> = ({ onSubmit }) => {
     prevFiltersRef.current = filters;
   }, [query, filters]);
 
-  const filter_options = useMemo(() => {
-    return DEFAULT_FILTER_OPTIONS.map((option) => {
-      let value;
-      if (Object.keys(uiFilters).includes(option.key)) {
-        value = uiFilters[option.key];
-      } else {
-        value = filters[option.key];
-      }
-
-      if (option.type === "number") {
-        value = String(value || 0);
-      }
-
-      return {
-        ...option,
-        value,
-      };
-    });
+  const filterOptions = useMemo(() => {
+    return DEFAULT_FILTER_OPTIONS.map((option) => ({
+      ...option,
+      value: Object.keys(uiFilters).includes(option.key)
+        ? uiFilters[option.key]
+        : filters[option.key],
+    }));
   }, [filters, uiFilters]);
 
   return (
-    <FilterContainer onSubmit={handleSearch}>
-      <SearchBar>
-        <Input
-          type="text"
-          placeholder="Search jobs..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
-        <Button type="submit">Search</Button>
-      </SearchBar>
-      <Filters>
-        {filter_options.map((filter) => (
-          <FilterItem key={filter.key}>
-            <label>{filter.name}</label>
-            {filter.type === "radio" ? (
-              <RadioGroup
-                options={filter.options}
-                value={filter.value || ""}
-                onChange={(value) => handleFilterChange(filter.key, value)}
-              />
-            ) : filter.type === "text" ? (
-              <Input
-                type={filter.type}
-                placeholder={filter.placeholder}
-                value={filter.value || ""}
-                onChange={(e) => handleFilterChange(filter.key, e.target.value)}
-              />
-            ) : filter.type === "number" ? (
-              <Input
-                type={filter.type}
-                value={filter.value || ""}
-                onChange={(e) => handleFilterChange(filter.key, e.target.value)}
-                {...filter}
-              />
-            ) : filter.type === "select" ? (
-              <Select
-                options={filter.options}
-                value={filter.value || ""}
-                onChange={(e) => handleFilterChange(filter.key, e.target.value)}
-              />
-            ) : filter.type === "boolean" ? (
-              <Switch
-                checked={filter.value || false}
-                onChange={(value) => handleFilterChange(filter.key, value)}
-              />
-            ) : filter.type === "slider" ? (
-              <Slider
-                min={filter.min}
-                max={filter.max}
-                defaultValue={filter.default}
-                value={filter.value}
-                onChange={(value) => handleFilterChange(filter.key, value)}
-              />
-            ) : filter.type === "list" ? (
-              filter.options.map((option) => (
-                <Checkbox
-                  key={option}
-                  label={option}
-                  checked={filter.value?.includes(option) || false}
-                  onChange={(e) => {
-                    const newValues = e.target.checked
-                      ? [...(filter.value || []), option]
-                      : filter.value?.filter((v) => v !== option);
-                    handleFilterChange(filter.key, newValues);
-                  }}
-                />
-              ))
-            ) : null}
-          </FilterItem>
-        ))}
-      </Filters>
-    </FilterContainer>
+    <Container onSubmit={handleSearch}>
+      <Sidebar
+        query={query}
+        setQuery={setQuery}
+        filters={filters}
+        handleFilterChange={handleFilterChange}
+        filterOptions={filterOptions}
+        onSearch={handleSearch}
+      />
+    </Container>
   );
 };
 
